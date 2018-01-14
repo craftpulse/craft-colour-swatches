@@ -1,5 +1,10 @@
 ![Icon](./src/icon.svg)
 
+[![Latest Version](https://img.shields.io/github/release/rias500/craft-colour-swatches.svg?style=flat-square)](https://github.com/rias500/craft-colour-swatches/releases)
+[![Quality Score](https://img.shields.io/scrutinizer/g/rias500/craft-colour-swatches.svg?style=flat-square)](https://scrutinizer-ci.com/g/rias500/craft-colour-swatches)
+[![StyleCI](https://styleci.io/repos/117454863/shield)](https://styleci.io/repos/117454863)
+[![Total Downloads](https://img.shields.io/packagist/dt/rias/craft-colour-swatches.svg?style=flat-square)](https://packagist.org/packages/rias/craft-colour-swatches)
+
 # Colour Swatches plugin for Craft CMS 3.x
 
 Let clients choose from a predefined set of colours.
