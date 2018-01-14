@@ -1,15 +1,16 @@
 <?php
 /**
- * color-swatches plugin for Craft CMS 3.x
+ * color-swatches plugin for Craft CMS 3.x.
  *
  * Let clients choose from a predefined set of colours.
  *
  * @link      https://rias.be
+ *
  * @copyright Copyright (c) 2018 Rias
  */
 
 /**
- * color-swatches config.php
+ * color-swatches config.php.
  *
  * This file exists only as a template for the color-swatches settings.
  * It does nothing on its own.
@@ -25,6 +26,6 @@
 return [
 
     // This controls blah blah blah
-    "someAttribute" => true,
+    'someAttribute' => true,
 
 ];

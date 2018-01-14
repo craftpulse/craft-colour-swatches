@@ -1,10 +1,11 @@
 <?php
 /**
- * color-swatches plugin for Craft CMS 3.x
+ * color-swatches plugin for Craft CMS 3.x.
  *
  * Let clients choose from a predefined set of colours.
  *
  * @link      https://rias.be
+ *
  * @copyright Copyright (c) 2018 Rias
  */
 
@@ -16,7 +17,7 @@ use craft\web\assets\cp\CpAsset;
 
 /**
  * @author    Rias
- * @package   Colour Swatches
+ *
  * @since     1.0.0
  */
 class ColourSwatchesFieldAsset extends AssetBundle
@@ -25,11 +26,11 @@ class ColourSwatchesFieldAsset extends AssetBundle
     // =========================================================================
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function init()
     {
-        $this->sourcePath = "@rias/colourswatches/assetbundles/colourswatchesfield/dist";
+        $this->sourcePath = '@rias/colourswatches/assetbundles/colourswatchesfield/dist';
 
         $this->depends = [
             CpAsset::class,
