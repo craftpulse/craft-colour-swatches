@@ -1,0 +1,67 @@
+/**
+ * color-swatches plugin for Craft CMS
+ *
+ * ColourSwatches Field CSS
+ *
+ * @author    Rias
+ * @copyright Copyright (c) 2018 Rias
+ * @link      https://rias.be
+ * @package   Colour Swatches
+ * @since     1.0.0
+ */
+
+.color-swatches-options {
+    width: 50%;
+}
+
+.color-swatches {
+    font-size: 0;
+}
+
+.color-swatches li {
+    border: 1px solid #e3e5e8;
+    border-radius: 3px;
+    display: inline-block;
+    padding: 5px;
+    margin: 0 10px 10px 0;
+}
+
+.color-swatches input {
+    opacity: 0;
+    position: absolute;
+}
+
+.color-swatches label {
+    border-radius: 3px;
+    cursor: pointer;
+    display: block;
+    height: 100px;
+    position: relative;
+    width: 100px;
+}
+
+.color-swatches input:checked + label::before {
+    background: #fff;
+    border: 1px solid #e3e5e8;
+    border-radius: 50%;
+    content: '';
+    height: 30px;
+    left: 50%;
+    margin: -15px 0 0 -15px;
+    position: absolute;
+    top: 50%;
+    width: 30px;
+}
+
+.color-swatches input:checked + label::after {
+    border: solid #576575;
+    border-width: 0 1px 1px 0;
+    content: '';
+    height: 16px;
+    left: 50%;
+    margin: -8px 0 0 -4px;
+    position: absolute;
+    top: 50%;
+    transform: rotate(44deg);
+    width: 8px;
+}

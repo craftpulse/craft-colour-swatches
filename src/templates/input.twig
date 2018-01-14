@@ -1,0 +1,43 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * color-swatches plugin for Craft CMS 3.x
+ *
+ * ColourSwatches Field Input
+ *
+ * @author    Rias
+ * @copyright Copyright (c) 2018 Rias
+ * @link      https://rias.be
+ * @package   Colour Swatches
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+<ul class="color-swatches">
+    {% for option in field.options %}
+        {% set optionId = namespacedId ~ '-option-' ~ loop.index %}
+        {% set value = {
+            label: option.label,
+            color: option.color,
+            colours: option.color | split(',')
+        } %}
+
+            <li>
+                <input type="radio" name="{{ name }}" id="{{ optionId }}" value="{{ value | json_encode }}"{% if (option.default and not value.color) or (value.color == option.color) %} checked{% endif %}>
+
+                <label for="{{ optionId }}" style="
+                    {% switch value.colours | length %}
+                            {% case 1 %}
+                                background: {{ value.color }};
+                            {% default %}
+                                {% set percentage = 100 / value.colours | length %}
+                                background: linear-gradient(to bottom right, {% for colour in value.colours %}{{ colour }} {{ percentage * loop.index0 }}%, {{ colour }} {{ percentage * loop.index }}%{% if not loop.last %},{% endif %}{% endfor %});
+                    {% endswitch %}
+                ">
+                    {{ option.color }}
+                </label>
+            </li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,20 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * color-swatches plugin for Craft CMS
+ *
+ * ColourSwatches Field Settings
+ *
+ * @author    Rias
+ * @copyright Copyright (c) 2018 Rias
+ * @link      https://rias.be
+ * @package   Colour Swatches
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+<div class="color-swatches-options">
+    {{ forms.editableTable(config) }}
+</div>

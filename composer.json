@@ -1,0 +1,41 @@
+{
+    "name": "rias/craft-colour-swatches",
+    "description": "Let clients choose from a predefined set of colours.",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "colour-swatches"
+    ],
+    "support": {
+        "docs": "https://github.com/Rias500/craft-colour-swatches/blob/master/README.md",
+        "issues": "https://github.com/Rias500/craft-colour-swatches/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rias",
+            "homepage": "https://rias.be"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "rias\\colourswatches\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "colour-swatches",
+        "handle": "colour-swatches",
+        "schemaVersion": "1.0.0",
+        "hasCpSettings": false,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/Rias500/craft-colour-swatches/master/CHANGELOG.md",
+        "class": "rias\\colourswatches\\ColourSwatches"
+    }
+}
