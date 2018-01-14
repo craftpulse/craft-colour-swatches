@@ -1,3 +1,5 @@
+![Icon](./src/icon.svg)
+
 # Colour Swatches plugin for Craft CMS 3.x
 
 Let clients choose from a predefined set of colours.
