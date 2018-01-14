@@ -18,7 +18,7 @@ class ColourSwatches
 
     public function __call($name, $arguments)
     {
-        if ($name === "colours") {
+        if ($name === 'colours') {
             return explode(',', $this->value->color);
         }
 
