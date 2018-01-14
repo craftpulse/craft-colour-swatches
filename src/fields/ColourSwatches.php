@@ -1,27 +1,25 @@
 <?php
 /**
- * colour-swatches plugin for Craft CMS 3.x
+ * colour-swatches plugin for Craft CMS 3.x.
  *
  * Let clients choose from a predefined set of colours.
  *
  * @link      https://rias.be
+ *
  * @copyright Copyright (c) 2018 Rias
  */
 
 namespace rias\colourswatches\fields;
 
-use craft\validators\ArrayValidator;
-use rias\colourswatches\assetbundles\colourswatchesfield\ColourSwatchesFieldAsset;
-
 use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
+use rias\colourswatches\assetbundles\colourswatchesfield\ColourSwatchesFieldAsset;
 use yii\db\Schema;
-use craft\helpers\Json;
 
 /**
  * @author    Rias
- * @package   Colour Swatches
+ *
  * @since     1.0.0
  */
 class ColourSwatches extends Field
@@ -30,7 +28,7 @@ class ColourSwatches extends Field
     // =========================================================================
 
     /**
-     * Available options
+     * Available options.
      *
      * @var string
      */
@@ -40,7 +38,7 @@ class ColourSwatches extends Field
     // =========================================================================
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function displayName(): string
     {
@@ -51,7 +49,7 @@ class ColourSwatches extends Field
     // =========================================================================
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
@@ -59,11 +57,12 @@ class ColourSwatches extends Field
         $rules = array_merge($rules, [
             ['options', 'each', 'rule' => ['required']],
         ]);
+
         return $rules;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getContentColumnType(): string
     {
@@ -71,7 +70,7 @@ class ColourSwatches extends Field
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function normalizeValue($value, ElementInterface $element = null)
     {
@@ -79,7 +78,7 @@ class ColourSwatches extends Field
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function serializeValue($value, ElementInterface $element = null)
     {
@@ -87,7 +86,7 @@ class ColourSwatches extends Field
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getSettingsHtml()
     {
@@ -99,33 +98,33 @@ class ColourSwatches extends Field
             'cols'         => [
                 'label' => [
                     'heading' => Craft::t('colour-swatches', 'Label'),
-                    'type' => 'singleline'
+                    'type'    => 'singleline',
                 ],
                 'color' => [
                     'heading' => Craft::t('colour-swatches', 'Hex Colours (comma seperated)'),
-                    'type' => 'singleline'
+                    'type'    => 'singleline',
                 ],
                 'default' => [
                     'heading'      => Craft::t('colour-swatches', 'Default?'),
                     'type'         => 'checkbox',
-                    'class'        => 'thin'
+                    'class'        => 'thin',
                 ],
             ],
-            'rows' => $this->options
+            'rows' => $this->options,
         ];
 
         // Render the settings template
         return Craft::$app->getView()->renderTemplate(
             'colour-swatches/settings',
             [
-                'field' => $this,
+                'field'  => $this,
                 'config' => $config,
             ]
         );
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getInputHtml($value, ElementInterface $element = null): string
     {
@@ -140,10 +139,10 @@ class ColourSwatches extends Field
         return Craft::$app->getView()->renderTemplate(
             'colour-swatches/input',
             [
-                'name' => $this->handle,
-                'value' => $value,
-                'field' => $this,
-                'id' => $id,
+                'name'         => $this->handle,
+                'value'        => $value,
+                'field'        => $this,
+                'id'           => $id,
                 'namespacedId' => $namespacedId,
             ]
         );
