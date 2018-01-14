@@ -9,7 +9,7 @@
 
 Let clients choose from a predefined set of colours.
 
-![Screenshot](./resources/img/screenshot.png)
+<img src="./resources/img/screenshot.png" width="500">
 
 ## Requirements
 
