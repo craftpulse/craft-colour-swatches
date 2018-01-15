@@ -13,7 +13,7 @@ class ColourSwatches
 
     public function __toString()
     {
-        return (string) $this->value->label;
+        return (string) isset($this->value->label) ? $this->value->label : '';
     }
 
     public function __call($name, $arguments)
