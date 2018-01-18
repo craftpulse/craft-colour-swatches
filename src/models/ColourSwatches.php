@@ -8,7 +8,7 @@ class ColourSwatches
 
     public function __construct($value)
     {
-        $this->value = json_decode($value);
+        $this->value = json_decode($value)->value;
     }
 
     public function __toString()
