@@ -2,8 +2,6 @@
 
 namespace rias\colourswatches\models;
 
-use Craft;
-
 class ColourSwatches
 {
     /**
@@ -35,5 +33,4 @@ class ColourSwatches
     {
         return explode(',', $this->color);
     }
-
 }
