@@ -2,26 +2,38 @@
 
 namespace rias\colourswatches\models;
 
+use Craft;
+
 class ColourSwatches
 {
-    public $value;
+    /**
+     * @var string
+     */
+    public $label;
+
+    /**
+     * @var string
+     */
+    public $color;
 
     public function __construct($value)
     {
-        $this->value = json_decode($value)->value;
+        if (!empty($value)) {
+            $value = json_decode($value);
+
+            $this->label = $value->label;
+            $this->color = $value->color;
+        }
     }
 
     public function __toString()
     {
-        return (string) isset($this->value->label) ? $this->value->label : '';
+        return $this->label;
     }
 
-    public function __call($name, $arguments)
+    public function colours()
     {
-        if ($name === 'colours') {
-            return explode(',', $this->value->color);
-        }
-
-        return $this->value->$name;
+        return explode(',', $this->color);
     }
+
 }

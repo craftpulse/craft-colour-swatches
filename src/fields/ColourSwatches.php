@@ -15,6 +15,7 @@ use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use rias\colourswatches\assetbundles\colourswatchesfield\ColourSwatchesFieldAsset;
+use rias\colourswatches\models\ColourSwatches as ColourSwatchesModel;
 use yii\db\Schema;
 
 /**
@@ -74,7 +75,11 @@ class ColourSwatches extends Field
      */
     public function normalizeValue($value, ElementInterface $element = null)
     {
-        return new \rias\colourswatches\models\ColourSwatches($value);
+        if ($value instanceof ColourSwatchesModel) {
+            return $value;
+        }
+
+        return new ColourSwatchesModel($value);
     }
 
     /**
@@ -82,7 +87,11 @@ class ColourSwatches extends Field
      */
     public function serializeValue($value, ElementInterface $element = null)
     {
-        return parent::serializeValue($value, $element);
+        if ($value instanceof ColourSwatchesModel) {
+            return $value;
+        }
+
+        return new ColourSwatchesModel($value);
     }
 
     /**
@@ -94,7 +103,7 @@ class ColourSwatches extends Field
             'instructions' => Craft::t('colour-swatches', 'Define the available colors.'),
             'id'           => 'options',
             'name'         => 'options',
-            'addRowLabel'  => Craft::t('colour-swatches', 'Add a color'),
+            'addRowLabel'  => Craft::t('colour-swatches', 'Add a colour'),
             'cols'         => [
                 'label' => [
                     'heading' => Craft::t('colour-swatches', 'Label'),
@@ -140,7 +149,7 @@ class ColourSwatches extends Field
             'colour-swatches/input',
             [
                 'name'         => $this->handle,
-                'value'        => $value,
+                'fieldValue'   => $value,
                 'field'        => $this,
                 'id'           => $id,
                 'namespacedId' => $namespacedId,
