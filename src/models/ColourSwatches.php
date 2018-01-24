@@ -7,12 +7,12 @@ class ColourSwatches
     /**
      * @var string
      */
-    public $label;
+    public $label = '';
 
     /**
      * @var string
      */
-    public $color;
+    public $color = '';
 
     public function __construct($value)
     {
