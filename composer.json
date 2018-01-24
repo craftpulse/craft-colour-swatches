@@ -2,7 +2,7 @@
     "name": "rias/craft-colour-swatches",
     "description": "Let clients choose from a predefined set of colours.",
     "type": "craft-plugin",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "keywords": [
         "craft",
         "cms",
