@@ -16,13 +16,15 @@ class ColourSwatches
 
     public function __construct($value)
     {
-        if (is_array($value)) {
-            $this->label = $value['label'];
-            $this->color = $value['color'];
-        } else {
-            $value = json_decode($value);
-            $this->label = $value->label;
-            $this->color = $value->color;
+        if (!empty($value)) {
+            if (is_array($value)) {
+                $this->label = $value['label'];
+                $this->color = $value['color'];
+            } else {
+                $value = json_decode($value);
+                $this->label = $value->label;
+                $this->color = $value->color;
+            }
         }
     }
 

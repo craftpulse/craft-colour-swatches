@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.0.6 - 2018-02-11
+### Fixed
+- Fix a regression
+
 ## 1.0.5 - 2018-02-11
 ### Fixed
 - Fixes an error when saving a draft and having a colour field inside a matrix
