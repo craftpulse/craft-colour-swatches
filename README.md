@@ -57,3 +57,8 @@ You can access both the label and color in your template. By default, the label 
 Based on the awesome [Craft 2 plugin](https://github.com/vigetlabs/craft-color-swatches) from Vigetlabs
 
 Brought to you by [Rias](https://rias.be)
+
+## Support on Beerpay
+Hey dude! Help me out for a couple of :beers:!
+
+[![Beerpay](https://beerpay.io/Rias500/craft-colour-swatches/badge.svg?style=beer-square)](https://beerpay.io/Rias500/craft-colour-swatches)  [![Beerpay](https://beerpay.io/Rias500/craft-colour-swatches/make-wish.svg?style=flat-square)](https://beerpay.io/Rias500/craft-colour-swatches?focus=wish)
