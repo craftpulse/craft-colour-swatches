@@ -11,6 +11,12 @@ Let clients choose from a predefined set of colours.
 
 <img src="./resources/img/screenshot.png" width="500">
 
+## Support Open Source. Buy beer.
+
+This plugin is licensed under a MIT license, which means that it's completely free open source software, and you can use it for whatever and however you wish. If you're using it and want to support the development, buy me a beer over at Beerpay!
+
+[![Beerpay](https://beerpay.io/Rias500/craft-colour-swatches/badge.svg?style=beer-square)](https://beerpay.io/Rias500/craft-colour-swatches)
+
 ## Requirements
 
 This plugin requires Craft CMS 3.0.0-beta.23 or later.
@@ -57,8 +63,3 @@ You can access both the label and color in your template. By default, the label 
 Based on the awesome [Craft 2 plugin](https://github.com/vigetlabs/craft-color-swatches) from Vigetlabs
 
 Brought to you by [Rias](https://rias.be)
-
-## Support on Beerpay
-Hey dude! Help me out for a couple of :beers:!
-
-[![Beerpay](https://beerpay.io/Rias500/craft-colour-swatches/badge.svg?style=beer-square)](https://beerpay.io/Rias500/craft-colour-swatches)  [![Beerpay](https://beerpay.io/Rias500/craft-colour-swatches/make-wish.svg?style=flat-square)](https://beerpay.io/Rias500/craft-colour-swatches?focus=wish)
