@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.1.0 - 2018-04-05
+### Added
+- Added the possibility to split the colours by using `;`, which allows for `rgba()` colours to be defined.
+
+### Changed
+- Now requires Craft CMS 3.0.0
+
 ## 1.0.6 - 2018-02-11
 ### Fixed
 - Fix a regression

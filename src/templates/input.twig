@@ -22,7 +22,11 @@
             label: option.label,
             color: option.color,
         } %}
-        {% set colours = value.color | split(',') %}
+        {% if ';' in value.color %}
+            {% set colours = value.color | split(';') %}
+        {% else %}
+            {% set colours = value.color | split(',') %}
+        {% endif %}
             <li>
                 <input type="radio" name="{{ name }}" id="{{ optionId }}" value="{{ value | json_encode }}"{% if (option.default and not fieldValue.color) or (fieldValue.color == option.color) %} checked{% endif %}>
 

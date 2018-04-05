@@ -35,6 +35,10 @@ class ColourSwatches
 
     public function colours()
     {
+        if (strstr($this->color, ';') !== false) {
+            return explode(';', $this->color);
+        }
+
         return explode(',', $this->color);
     }
 }
