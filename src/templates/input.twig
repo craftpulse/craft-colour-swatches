@@ -28,13 +28,14 @@
             {% set colours = value.color | split(',') %}
         {% endif %}
 
-        <button type="button" data-value="{{ value | json_encode }}" class="option {% if (option.default and not fieldValue.color) or (fieldValue.color == option.color) %} active{% endif %}" style="
+        <button type="button" data-value="{{ value | json_encode }}" class="option {% if (option.default and not fieldValue.color) or (fieldValue.color == option.color) %} active{% endif %}"
+                style="
             {% switch colours | length %}
                     {% case 1 %}
-                        background: {{ value.color }};
+                        background: {{ value.color|parseRefs|raw }};
                     {% default %}
                         {% set percentage = 100 / colours | length %}
-                        background: linear-gradient(to bottom right, {% for colour in colours %}{{ colour }} {{ percentage * loop.index0 }}%, {{ colour }} {{ percentage * loop.index }}%{% if not loop.last %},{% endif %}{% endfor %});
+                        background: linear-gradient(to bottom right, {% for colour in colours %}{{ colour|parseRefs|raw }} {{ percentage * loop.index0 }}%, {{ colour|parseRefs|raw }} {{ percentage * loop.index }}%{% if not loop.last %},{% endif %}{% endfor %});
             {% endswitch %}
         "></button>
     {% endfor %}

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.1.2 - 2018-05-21
+### Added
+- Colours are now parse for references so you can add globals.
+
 ## 1.1.1 - 2018-05-21
 ### Changed
 - New design for the colours thanks to @skramstad
