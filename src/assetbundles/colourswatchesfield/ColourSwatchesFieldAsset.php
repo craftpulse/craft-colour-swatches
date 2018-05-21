@@ -40,6 +40,10 @@ class ColourSwatchesFieldAsset extends AssetBundle
             'css/ColourSwatches.css',
         ];
 
+        $this->js = [
+            'js/ColourSwatches.js',
+        ];
+
         parent::init();
     }
 }

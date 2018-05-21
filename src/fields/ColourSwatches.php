@@ -144,6 +144,8 @@ class ColourSwatches extends Field
         $id = Craft::$app->getView()->formatInputId($this->handle);
         $namespacedId = Craft::$app->getView()->namespaceInputId($id);
 
+        Craft::$app->getView()->registerJs("new ColourSelectInput('{$namespacedId}');");
+
         // Render the input template
         return Craft::$app->getView()->renderTemplate(
             'colour-swatches/input',

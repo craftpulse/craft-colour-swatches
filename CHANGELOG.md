@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.1.1 - 2018-05-21
+### Changed
+- New design for the colours thanks to @skramstad
+- Colours can now be unchecked
+
 ## 1.1.0 - 2018-04-05
 ### Added
 - Added the possibility to split the colours by using `;`, which allows for `rgba()` colours to be defined.
