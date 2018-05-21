@@ -19,11 +19,9 @@
 }
 
 .color-swatches li {
-    border: 1px solid #e3e5e8;
-    border-radius: 3px;
     display: inline-block;
+    margin: 0 5px 5px 0;
     padding: 5px;
-    margin: 0 10px 10px 0;
 }
 
 .color-swatches input {
@@ -32,36 +30,16 @@
 }
 
 .color-swatches label {
-    border-radius: 3px;
+    border: 3px solid white;
+    border-radius: 50%;
     cursor: pointer;
     display: block;
-    height: 100px;
+    height: 40px;
+    width: 40px;
     position: relative;
-    width: 100px;
+    transition: box-shadow 200ms ease 0s;
 }
 
-.color-swatches input:checked + label::before {
-    background: #fff;
-    border: 1px solid #e3e5e8;
-    border-radius: 50%;
-    content: '';
-    height: 30px;
-    left: 50%;
-    margin: -15px 0 0 -15px;
-    position: absolute;
-    top: 50%;
-    width: 30px;
-}
-
-.color-swatches input:checked + label::after {
-    border: solid #576575;
-    border-width: 0 1px 1px 0;
-    content: '';
-    height: 16px;
-    left: 50%;
-    margin: -8px 0 0 -4px;
-    position: absolute;
-    top: 50%;
-    transform: rotate(44deg);
-    width: 8px;
+.color-swatches input:checked + label {
+    box-shadow: 0 0 0 3px #F2842D;
 }
