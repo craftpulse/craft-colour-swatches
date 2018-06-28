@@ -19,7 +19,7 @@
 }
 
 .color-swatches button {
-    border: 3px solid white;
+    border: 3px solid #E7E8EB;
     border-radius: 50%;
     cursor: pointer;
     display: inline-block;

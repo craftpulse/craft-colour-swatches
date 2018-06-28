@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.1.3 - 2018-06-28
+### Changed
+- Improve design for colours when selecting light colours.
+
 ## 1.1.2 - 2018-05-21
 ### Added
 - Colours are now parse for references so you can add globals.
