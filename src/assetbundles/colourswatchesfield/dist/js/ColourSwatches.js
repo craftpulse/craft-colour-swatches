@@ -27,7 +27,9 @@ ColourSelectInput = Garnish.Base.extend({
             return;
         }
 
-        this.$selectedOption.removeClass('active');
+        if (this.$selectedOption) {
+            this.$selectedOption.removeClass('active');
+        }
         this.$selectedOption = $option.addClass('active');
         this.$input.val(JSON.stringify($option.data('value')));
     }
