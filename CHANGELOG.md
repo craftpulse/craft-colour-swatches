@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.1.4 - 2018-07-30
+### Fixed
+- Fix a JS error when deselecting the colour
+- Default value is now correctly filled
+- Removed focus outline from buttons
+
 ## 1.1.3 - 2018-06-28
 ### Changed
 - Improve design for colours when selecting light colours.
