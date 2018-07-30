@@ -15,6 +15,8 @@
 
 {% import "_includes/forms" as forms %}
 
+{% set defaultValue = null %}
+
 <div id="{{ id }}" class="color-swatches">
     {% for option in field.options %}
         {% set optionId = namespacedId ~ '-option-' ~ loop.index %}
@@ -26,6 +28,11 @@
             {% set colours = value.color | split(';') %}
         {% else %}
             {% set colours = value.color | split(',') %}
+        {% endif %}
+
+        {# Set the default value #}
+        {% if option.default and not fieldValue.color %}
+            {% set defaultValue = value|json_encode %}
         {% endif %}
 
         <button type="button" title="{{ option.label }}" data-value="{{ value | json_encode }}" class="option {% if (option.default and not fieldValue.color) or (fieldValue.color == option.color) %} active{% endif %}"
@@ -42,4 +49,4 @@
 
 </div>
 
-<input id="{{ namespacedId }}" type="hidden" name="{{ name }}" value="{{ fieldValue|json_encode }}">
+<input id="{{ namespacedId }}" type="hidden" name="{{ name }}" value="{{ defaultValue ?? fieldValue|json_encode }}">
