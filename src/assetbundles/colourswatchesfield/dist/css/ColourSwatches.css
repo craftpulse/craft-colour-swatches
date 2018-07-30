@@ -30,6 +30,10 @@
     margin: 0 10px 0 0;
 }
 
+.color-swatches button:focus {
+    outline: none;
+}
+
 .color-swatches button.active {
     box-shadow: 0 0 0 3px #F2842D;
 }
