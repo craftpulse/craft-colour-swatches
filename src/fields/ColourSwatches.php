@@ -132,8 +132,8 @@ class ColourSwatches extends Field
         return Craft::$app->getView()->renderTemplate(
             'colour-swatches/settings',
             [
-                'field'  => $this,
-                'config' => $config,
+                'field'         => $this,
+                'config'        => $config,
                 'configOptions' => Plugin::$plugin->settings->colours,
             ]
         );
