@@ -49,6 +49,43 @@ Multiple colours are possible by seperating them with a comma
 
 ![Screenshot](./resources/img/multiple.png)
 
+## Using the config file
+
+You can create a `config/colour-swatches.php` file to predefine the possible colours. Take a look at the [config file]() in this repo for an example.
+
+```php
+return [
+
+    // Predefined colours
+    'colours' => [
+        [
+            'label' => 'red',
+            'color' => '#ff0000',
+            'default' => false,
+        ],
+        [
+            'label' => 'green',
+            'color' => '#00ff00',
+            'default' => false,
+        ],
+        [
+            'label' => 'blue',
+            'color' => '#0000ff',
+            'default' => false,
+        ],
+        [
+            'label' => 'pink',
+            'color' => '#ff00ff',
+            'default' => false,
+        ]
+    ],
+];
+```
+
+In your field settings you can then have the possibility to have it use the predefined colours.
+
+![Screenshot](./resources/img/config.png)
+
 ## Using Colour Swatches
 
 You can access both the label and color in your template. By default, the label will display:

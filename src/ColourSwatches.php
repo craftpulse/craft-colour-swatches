@@ -16,6 +16,7 @@ use craft\base\Plugin;
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Fields;
 use rias\colourswatches\fields\ColourSwatches as ColourSwatchesField;
+use rias\colourswatches\models\Settings;
 use yii\base\Event;
 
 /**
@@ -53,5 +54,10 @@ class ColourSwatches extends Plugin
                 $event->types[] = ColourSwatchesField::class;
             }
         );
+    }
+
+    protected function createSettingsModel()
+    {
+        return new Settings();
     }
 }

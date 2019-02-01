@@ -16,9 +16,9 @@
 {% import "_includes/forms" as forms %}
 
 {% set defaultValue = null %}
-
+{% set options = field.useConfigFile ? configOptions : field.options %}
 <div id="{{ id }}" class="color-swatches">
-    {% for option in field.options %}
+    {% for option in options %}
         {% set optionId = namespacedId ~ '-option-' ~ loop.index %}
         {% set value = {
             label: option.label,

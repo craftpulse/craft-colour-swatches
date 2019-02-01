@@ -15,6 +15,7 @@ use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use rias\colourswatches\assetbundles\colourswatchesfield\ColourSwatchesFieldAsset;
+use rias\colourswatches\ColourSwatches as Plugin;
 use rias\colourswatches\models\ColourSwatches as ColourSwatchesModel;
 use yii\db\Schema;
 
@@ -31,9 +32,12 @@ class ColourSwatches extends Field
     /**
      * Available options.
      *
-     * @var string
+     * @var array
      */
-    public $options = [['color' => '']];
+    public $options = [];
+
+    /** @var bool */
+    public $useConfigFile = false;
 
     // Static Methods
     // =========================================================================
@@ -99,6 +103,8 @@ class ColourSwatches extends Field
      */
     public function getSettingsHtml()
     {
+        Craft::$app->getView()->registerAssetBundle(ColourSwatchesFieldAsset::class);
+
         $config = [
             'instructions' => Craft::t('colour-swatches', 'Define the available colors.'),
             'id'           => 'options',
@@ -119,7 +125,7 @@ class ColourSwatches extends Field
                     'class'        => 'thin',
                 ],
             ],
-            'rows' => $this->options,
+            'rows' => count($this->options) ? $this->options : Plugin::$plugin->settings->colours,
         ];
 
         // Render the settings template
@@ -128,6 +134,7 @@ class ColourSwatches extends Field
             [
                 'field'  => $this,
                 'config' => $config,
+                'configOptions' => Plugin::$plugin->settings->colours,
             ]
         );
     }
@@ -155,6 +162,7 @@ class ColourSwatches extends Field
                 'field'        => $this,
                 'id'           => $id,
                 'namespacedId' => $namespacedId,
+                'configOptions'=> Plugin::$plugin->settings->colours,
             ]
         );
     }
