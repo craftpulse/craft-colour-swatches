@@ -75,18 +75,18 @@ return [
         ],
         'buttons' => [
             [
-                'label' => 'blue-white',
-                'color' => '#0000ff,#ffffff',
+                'label'   => 'blue-white',
+                'color'   => '#0000ff,#ffffff',
                 'default' => false,
             ],
             [
-                'label' => 'red-white',
-                'color' => '#ff0000, #ffffff',
+                'label'   => 'red-white',
+                'color'   => '#ff0000, #ffffff',
                 'default' => false,
             ],
             [
-                'label' => 'green-white',
-                'color' => '#00ff00, #ffffff',
+                'label'   => 'green-white',
+                'color'   => '#00ff00, #ffffff',
                 'default' => false,
             ],
         ],

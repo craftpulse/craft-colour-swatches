@@ -139,12 +139,12 @@ class ColourSwatches extends Field
             'rows' => $rows,
         ];
         
-        $paletteOptions = array();
+        $paletteOptions = [];
         $paletteOptions[] = [
                 'label' => null,
                 'value' => null,
             ];
-        foreach (array_keys((array)Plugin::$plugin->settings->palettes) as $palette) {
+        foreach (array_keys((array) Plugin::$plugin->settings->palettes) as $palette) {
             $paletteOptions[] = [
                 'label' => $palette,
                 'value' => $palette,
@@ -161,7 +161,7 @@ class ColourSwatches extends Field
                 'config'            => $config,
                 'configOptions'     => Plugin::$plugin->settings->colours,
                 'paletteOptions'    => $paletteOptions,
-                'palettes'          => Plugin::$plugin->settings->palettes
+                'palettes'          => Plugin::$plugin->settings->palettes,
             ]
         );
     }
