@@ -48,4 +48,47 @@ return [
             'default' => false,
         ],
     ],
+
+    'palettes' => [
+        'allSolids' => [
+            [
+                'label'   => 'red',
+                'color'   => '#ff0000',
+                'default' => false,
+            ],
+            [
+                'label'   => 'green',
+                'color'   => '#00ff00',
+                'default' => false,
+            ],
+            [
+                'label'   => 'blue',
+                'color'   => '#0000ff',
+                'default' => false,
+            ],
+            [
+                'label'   => 'pink',
+                'color'   => '#ff00ff',
+                'default' => false,
+            ],
+
+        ],
+        'buttons' => [
+            [
+                'label' => 'blue-white',
+                'color' => '#0000ff,#ffffff',
+                'default' => false,
+            ],
+            [
+                'label' => 'red-white',
+                'color' => '#ff0000, #ffffff',
+                'default' => false,
+            ],
+            [
+                'label' => 'green-white',
+                'color' => '#00ff00, #ffffff',
+                'default' => false,
+            ],
+        ],
+    ],
 ];

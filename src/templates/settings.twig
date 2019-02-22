@@ -29,35 +29,59 @@
 </div>
 
 <div id="preview" class="{{ field.useConfigFile ? '' : 'hidden' }}">
-    {% set defaultValue = null %}
-    <div class="color-swatches">
-        {% for option in configOptions %}
-            {% set optionId = '1-option-' ~ loop.index %}
-            {% set value = {
-                label: option.label,
-                color: option.color,
-            } %}
-            {% if ';' in value.color %}
-                {% set colours = value.color | split(';') %}
-            {% else %}
-                {% set colours = value.color | split(',') %}
-            {% endif %}
-
-            {# Set the default value #}
-            {% if option.default %}
-                {% set defaultValue = value|json_encode %}
-            {% endif %}
-
-            <button type="button" title="{{ option.label }}" data-value="{{ value | json_encode }}" class="option {% if option.default %} active{% endif %}"
-                    style="
-                    {% switch colours | length %}
-                            {% case 1 %}
-                                background: {{ value.color|parseRefs|raw }};
-                            {% default %}
-                                {% set percentage = 100 / colours | length %}
-                                background: linear-gradient(to bottom right, {% for colour in colours %}{{ colour|parseRefs|raw }} {{ percentage * loop.index0 }}%, {{ colour|parseRefs|raw }} {{ percentage * loop.index }}%{% if not loop.last %},{% endif %}{% endfor %});
-                    {% endswitch %}
-                            "></button>
-        {% endfor %}
+    
+    <div class="field {{ paletteOptions|length > 1 ? '' : 'hidden' }}">
+        {{ forms.selectField({
+            label: 'Palette'|t('colour-swatches'),
+            name: 'palette',
+            options: paletteOptions,
+            value: field.palette ? field.palette : null,
+            toggle: true,
+            targetPrefix: 'palette-'
+        }) }}
     </div>
+
+    {% if not paletteOptions|length %}
+        {% set palettes = [configOptions] %}
+    {% endif %}
+
+    {% for key, palette in palettes %}
+        {% if palettes|length > 1 %}
+            {% set condition = field.palette == key %}
+        {% else %}
+            {% set condition = field.useConfigFile %}
+        {% endif %}
+
+        {% set defaultValue = null %}
+        <div id="palette-{{ key }}" class="color-swatches {{ condition ? '' : 'hidden' }}">
+            {% for option in palette %}
+                {% set optionId = '1-option-' ~ loop.index %}
+                {% set value = {
+                    label: option.label,
+                    color: option.color,
+                } %}
+                {% if ';' in value.color %}
+                    {% set colours = value.color | split(';') %}
+                {% else %}
+                    {% set colours = value.color | split(',') %}
+                {% endif %}
+
+                {# Set the default value #}
+                {% if option.default %}
+                    {% set defaultValue = value|json_encode %}
+                {% endif %}
+
+                <button type="button" title="{{ option.label }}" data-value="{{ value | json_encode }}" class="option {% if option.default %} active{% endif %}"
+                        style="
+                        {% switch colours | length %}
+                                {% case 1 %}
+                                    background: {{ value.color|parseRefs|raw }};
+                                {% default %}
+                                    {% set percentage = 100 / colours | length %}
+                                    background: linear-gradient(to bottom right, {% for colour in colours %}{{ colour|parseRefs|raw }} {{ percentage * loop.index0 }}%, {{ colour|parseRefs|raw }} {{ percentage * loop.index }}%{% if not loop.last %},{% endif %}{% endfor %});
+                        {% endswitch %}
+                                "></button>
+            {% endfor %}
+        </div>
+    {% endfor %}
 </div>
