@@ -39,6 +39,9 @@ class ColourSwatches extends Field
     /** @var bool */
     public $useConfigFile = false;
 
+    /** @var string */
+    public $palette = null;
+
     // Static Methods
     // =========================================================================
 
@@ -105,6 +108,14 @@ class ColourSwatches extends Field
     {
         Craft::$app->getView()->registerAssetBundle(ColourSwatchesFieldAsset::class);
 
+        if (count($this->options)) {
+            $rows = $this->options;
+        } elseif ($this->palette) {
+            $rows = Plugin::$plugin->settings->palettes[$this->palette];
+        } else {
+            $rows = Plugin::$plugin->settings->colours;
+        }
+
         $config = [
             'instructions' => Craft::t('colour-swatches', 'Define the available colors.'),
             'id'           => 'options',
@@ -125,16 +136,30 @@ class ColourSwatches extends Field
                     'class'        => 'thin',
                 ],
             ],
-            'rows' => count($this->options) ? $this->options : Plugin::$plugin->settings->colours,
+            'rows' => $rows,
         ];
+        
+        $paletteOptions = [];
+        $paletteOptions[] = [
+            'label' => 'Colour config',
+            'value' => null,
+        ];
+        foreach (array_keys((array) Plugin::$plugin->settings->palettes) as $palette) {
+            $paletteOptions[] = [
+                'label' => $palette,
+                'value' => $palette,
+            ];
+        }
 
         // Render the settings template
         return Craft::$app->getView()->renderTemplate(
             'colour-swatches/settings',
             [
-                'field'         => $this,
-                'config'        => $config,
-                'configOptions' => Plugin::$plugin->settings->colours,
+                'field'             => $this,
+                'config'            => $config,
+                'configOptions'     => Plugin::$plugin->settings->colours,
+                'paletteOptions'    => $paletteOptions,
+                'palettes'          => Plugin::$plugin->settings->palettes,
             ]
         );
     }
@@ -163,6 +188,7 @@ class ColourSwatches extends Field
                 'id'           => $id,
                 'namespacedId' => $namespacedId,
                 'configOptions'=> Plugin::$plugin->settings->colours,
+                'palettes'     => Plugin::$plugin->settings->palettes,
             ]
         );
     }

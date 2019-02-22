@@ -48,4 +48,31 @@ return [
             'default' => false,
         ],
     ],
+
+    'palettes' => [
+        'Red Green' => [
+            [
+                'label'   => 'red',
+                'color'   => '#ff0000',
+                'default' => false,
+            ],
+            [
+                'label'   => 'green',
+                'color'   => '#00ff00',
+                'default' => false,
+            ],
+        ],
+        'Buttons' => [
+            [
+                'label'   => 'blue-white',
+                'color'   => '#0000ff,#ffffff',
+                'default' => false,
+            ],
+            [
+                'label'   => 'red-white',
+                'color'   => '#ff0000, #ffffff',
+                'default' => false,
+            ],
+        ],
+    ],
 ];
