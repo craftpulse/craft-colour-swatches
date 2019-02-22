@@ -138,6 +138,20 @@ class ColourSwatches extends Field
             ],
             'rows' => $rows,
         ];
+        
+        $paletteOptions = [];
+        $paletteOptions[] = [
+                'label' => null,
+                'value' => null,
+            ];
+        foreach (array_keys((array) Plugin::$plugin->settings->palettes) as $palette) {
+            $paletteOptions[] = [
+                'label' => $palette,
+                'value' => $palette,
+            ];
+        }
+
+        $currentPalette = $this->palette;
 
         $paletteOptions = [];
         $paletteOptions[] = [
