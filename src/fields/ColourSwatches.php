@@ -138,7 +138,7 @@ class ColourSwatches extends Field
             ],
             'rows' => $rows,
         ];
-        
+
         $paletteOptions = [];
         $paletteOptions[] = [
             'label' => 'Colour config',
