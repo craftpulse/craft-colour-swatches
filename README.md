@@ -51,7 +51,8 @@ Multiple colours are possible by seperating them with a comma
 
 ## Using the config file
 
-You can create a `config/colour-swatches.php` file to predefine the possible colours. Take a look at the [config file]() in this repo for an example.
+You can create a `config/colour-swatches.php` file to predefine the possible colours or define different palettes.
+Take a look at the [config file](https://github.com/Rias500/craft-colour-swatches/blob/master/src/config.php) in this repo for an example.
 
 ```php
 return [
@@ -78,6 +79,33 @@ return [
             'color' => '#ff00ff',
             'default' => false,
         ]
+    ],
+    
+    'palettes' => [
+        'Red Green' => [
+            [
+                'label'   => 'red',
+                'color'   => '#ff0000',
+                'default' => false,
+            ],
+            [
+                'label'   => 'green',
+                'color'   => '#00ff00',
+                'default' => false,
+            ],
+        ],
+        'Buttons' => [
+            [
+                'label'   => 'blue-white',
+                'color'   => '#0000ff,#ffffff',
+                'default' => false,
+            ],
+            [
+                'label'   => 'red-white',
+                'color'   => '#ff0000, #ffffff',
+                'default' => false,
+            ],
+        ],
     ],
 ];
 ```

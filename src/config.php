@@ -50,7 +50,7 @@ return [
     ],
 
     'palettes' => [
-        'allSolids' => [
+        'Red Green' => [
             [
                 'label'   => 'red',
                 'color'   => '#ff0000',
@@ -61,19 +61,8 @@ return [
                 'color'   => '#00ff00',
                 'default' => false,
             ],
-            [
-                'label'   => 'blue',
-                'color'   => '#0000ff',
-                'default' => false,
-            ],
-            [
-                'label'   => 'pink',
-                'color'   => '#ff00ff',
-                'default' => false,
-            ],
-
         ],
-        'buttons' => [
+        'Buttons' => [
             [
                 'label'   => 'blue-white',
                 'color'   => '#0000ff,#ffffff',
@@ -82,11 +71,6 @@ return [
             [
                 'label'   => 'red-white',
                 'color'   => '#ff0000, #ffffff',
-                'default' => false,
-            ],
-            [
-                'label'   => 'green-white',
-                'color'   => '#00ff00, #ffffff',
                 'default' => false,
             ],
         ],

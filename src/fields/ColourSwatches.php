@@ -153,6 +153,18 @@ class ColourSwatches extends Field
 
         $currentPalette = $this->palette;
 
+        $paletteOptions = [];
+        $paletteOptions[] = [
+            'label' => 'Colour config',
+            'value' => null,
+        ];
+        foreach (array_keys((array) Plugin::$plugin->settings->palettes) as $palette) {
+            $paletteOptions[] = [
+                'label' => $palette,
+                'value' => $palette,
+            ];
+        }
+
         // Render the settings template
         return Craft::$app->getView()->renderTemplate(
             'colour-swatches/settings',
