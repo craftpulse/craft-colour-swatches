@@ -121,6 +121,7 @@ You can access both the label and color in your template. By default, the label 
 ```twig
 {{ fieldName }}
 {{ fieldName.label }}
+{{ fieldName.labels }} {# Returns an array of all labels #}
 {{ fieldName.color }}
 {{ fieldName.colours }} {# Returns an array of all colours #}
 ```
