@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.2.2 - 2019-03-07
+### Added
+- Adds functionality to return comma separated label value as an array. Thanks @chasegiunta
+
 ## 1.2.1 - 2019-02-22
 ### Added
 - Added the possibility to define palettes in the config file. Thanks @chasegiunta for the great PR!
