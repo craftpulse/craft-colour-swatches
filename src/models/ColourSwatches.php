@@ -41,4 +41,9 @@ class ColourSwatches
 
         return explode(',', $this->color);
     }
+
+    public function labels()
+    {
+        return explode(',', $this->label);
+    }
 }
