@@ -108,7 +108,7 @@ class ColourSwatches extends Field
     {
         Craft::$app->getView()->registerAssetBundle(ColourSwatchesFieldAsset::class);
 
-        if (count($this->options)) {
+        if ($this->options && count($this->options)) {
             $rows = $this->options;
         } elseif ($this->palette) {
             $rows = Plugin::$plugin->settings->palettes[$this->palette];
