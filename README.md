@@ -1,7 +1,7 @@
 ![Icon](./src/icon.svg)
 
-[![Latest Version](https://img.shields.io/github/release/rias500/craft-colour-swatches.svg?style=flat-square)](https://github.com/rias500/craft-colour-swatches/releases)
-[![Quality Score](https://img.shields.io/scrutinizer/g/rias500/craft-colour-swatches.svg?style=flat-square)](https://scrutinizer-ci.com/g/rias500/craft-colour-swatches)
+[![Latest Version](https://img.shields.io/github/release/riasvdv/craft-colour-swatches.svg?style=flat-square)](https://github.com/riasvdv/craft-colour-swatches/releases)
+[![Quality Score](https://img.shields.io/scrutinizer/g/riasvdv/craft-colour-swatches.svg?style=flat-square)](https://scrutinizer-ci.com/g/riasvdv/craft-colour-swatches)
 [![StyleCI](https://styleci.io/repos/117454863/shield)](https://styleci.io/repos/117454863)
 [![Total Downloads](https://img.shields.io/packagist/dt/rias/craft-colour-swatches.svg?style=flat-square)](https://packagist.org/packages/rias/craft-colour-swatches)
 
@@ -52,7 +52,7 @@ Multiple colours are possible by seperating them with a comma
 ## Using the config file
 
 You can create a `config/colour-swatches.php` file to predefine the possible colours or define different palettes.
-Take a look at the [config file](https://github.com/Rias500/craft-colour-swatches/blob/master/src/config.php) in this repo for an example.
+Take a look at the [config file](https://github.com/riasvdv/craft-colour-swatches/blob/master/src/config.php) in this repo for an example.
 
 ```php
 return [
