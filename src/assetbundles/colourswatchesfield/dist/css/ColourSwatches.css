@@ -42,7 +42,7 @@
 }
 
 .color-swatches button::after {
-  background-color: var(--color);
+  background: var(--color);
 }
 
 .color-swatches button::before {
