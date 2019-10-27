@@ -4,9 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 1.2.3 - 2019-10-27
+## 1.2.4 - 2019-10-27
 ### Added
 - background pattern to show transparent color option
+
+## 1.2.3
+### Fix
+- PHP fix
 
 ## 1.2.2 - 2019-03-07
 ### Added
