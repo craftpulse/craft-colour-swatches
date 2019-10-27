@@ -11,7 +11,6 @@
 
 namespace rias\colourswatches;
 
-use Craft;
 use craft\base\Plugin;
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Fields;
