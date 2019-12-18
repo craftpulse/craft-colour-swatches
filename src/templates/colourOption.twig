@@ -8,11 +8,6 @@
     {% set colours = value.color | split(',') %}
 {% endif %}
 
-{# Set the default value #}
-{% if option.default %}
-    {% set defaultValue = value|json_encode %}
-{% endif %}
-
 <button type="button" title="{{ option.label }}" data-value="{{ value | json_encode }}" class="option {% if (option.default and (not fieldValue is defined or (fieldValue is defined and not fieldValue.color))) or (fieldValue is defined and fieldValue.color == option.color) %} active{% endif %}"
         style="
         {% switch colours | length %}
