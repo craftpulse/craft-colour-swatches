@@ -36,4 +36,4 @@
     {% endfor %}
 </div>
 
-<input id="{{ namespacedId }}" type="hidden" name="{{ name }}" value="{{ defaultValue ?? fieldValue|json_encode }}">
+<input id="{{ namespacedId }}" type="hidden" name="{{ name }}" value="{% if fieldValue != '' %}{{ fieldValue|json_encode }}{% else %}{{ defaultValue }}{% endif %}">
