@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.2.7 - 2020-01-03
+### Fixed
+- Fix default value being reset
+
 ## 1.2.6 - 2019-12-18
 ### Fixed
 - Actual fix for default
