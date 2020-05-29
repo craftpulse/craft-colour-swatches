@@ -4,18 +4,18 @@
  *
  * Let clients choose from a predefined set of colours.
  *
- * @link      https://rias.be
+ * @link      https://percipio.london
  *
- * @copyright Copyright (c) 2018 Rias
+ * @copyright Copyright (c) 2020 Percipio Global Ltd.
  */
 
-namespace rias\colourswatches\assetbundles\colourswatchesfield;
+namespace percipioglobal\colourswatches\assetbundles\colourswatchesfield;
 
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
 
 /**
- * @author    Rias
+ * @author    Percipio Global Ltd.
  *
  * @since     1.0.0
  */
@@ -29,7 +29,7 @@ class ColourSwatchesFieldAsset extends AssetBundle
      */
     public function init()
     {
-        $this->sourcePath = '@rias/colourswatches/assetbundles/colourswatchesfield/dist';
+        $this->sourcePath = '@percipioglobal/colourswatches/assetbundles/colourswatchesfield/dist';
 
         $this->depends = [
             CpAsset::class,

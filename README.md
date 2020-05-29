@@ -1,21 +1,10 @@
 ![Icon](./src/icon.svg)
 
-[![Latest Version](https://img.shields.io/github/release/riasvdv/craft-colour-swatches.svg?style=flat-square)](https://github.com/riasvdv/craft-colour-swatches/releases)
-[![Quality Score](https://img.shields.io/scrutinizer/g/riasvdv/craft-colour-swatches.svg?style=flat-square)](https://scrutinizer-ci.com/g/riasvdv/craft-colour-swatches)
-[![StyleCI](https://styleci.io/repos/117454863/shield)](https://styleci.io/repos/117454863)
-[![Total Downloads](https://img.shields.io/packagist/dt/rias/craft-colour-swatches.svg?style=flat-square)](https://packagist.org/packages/rias/craft-colour-swatches)
-
 # Colour Swatches plugin for Craft CMS 3.x
 
 Let clients choose from a predefined set of colours.
 
 <img src="./resources/img/screenshot.png" width="500">
-
-## Support Open Source. Buy beer.
-
-This plugin is licensed under a MIT license, which means that it's completely free open source software, and you can use it for whatever and however you wish. If you're using it and want to support the development, buy me a beer over at Beerpay!
-
-[![Beerpay](https://beerpay.io/riasvdv/craft-colour-swatches/badge.svg?style=beer-square)](https://beerpay.io/riasvdv/craft-colour-swatches)
 
 ## Requirements
 
@@ -31,7 +20,7 @@ To install the plugin, follow these instructions.
 
 2. Then tell Composer to load the plugin:
 
-        composer require rias/craft-colour-swatches
+        composer require percipioglobal/craft-colour-swatches
 
 3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Colour Swatches.
 
@@ -52,7 +41,7 @@ Multiple colours are possible by seperating them with a comma
 ## Using the config file
 
 You can create a `config/colour-swatches.php` file to predefine the possible colours or define different palettes.
-Take a look at the [config file](https://github.com/riasvdv/craft-colour-swatches/blob/master/src/config.php) in this repo for an example.
+Take a look at the [config file](https://github.com/percipioglobal/craft-colour-swatches/blob/master/src/config.php) in this repo for an example.
 
 ```php
 return [
@@ -128,4 +117,4 @@ You can access both the label and color in your template. By default, the label 
 
 Based on the awesome [Craft 2 plugin](https://github.com/vigetlabs/craft-color-swatches) from Vigetlabs
 
-Brought to you by [Rias](https://rias.be)
+Brought to you by [Percipio](https://percipio.london)

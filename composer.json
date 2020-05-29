@@ -1,7 +1,8 @@
 {
-    "name": "rias/craft-colour-swatches",
+    "name": "percipioglobal/craft-colour-swatches",
     "description": "Let clients choose from a predefined set of colours.",
     "type": "craft-plugin",
+    "version": "1.2.8",
     "keywords": [
         "craft",
         "cms",
@@ -10,14 +11,14 @@
         "colour-swatches"
     ],
     "support": {
-        "docs": "https://github.com/riasvdv/craft-colour-swatches/blob/master/README.md",
-        "issues": "https://github.com/riasvdv/craft-colour-swatches/issues"
+        "docs": "https://github.com/percipioglobal/craft-colour-swatches/blob/master/README.md",
+        "issues": "https://github.com/percipioglobal/craft-colour-swatches/issues"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": "Rias",
-            "homepage": "https://rias.be"
+            "name": "Percipio Global",
+            "homepage": "https://percipio.london"
         }
     ],
     "require": {
@@ -25,7 +26,7 @@
     },
     "autoload": {
         "psr-4": {
-          "rias\\colourswatches\\": "src/"
+            "percipioglobal\\colourswatches\\": "src/"
         }
     },
     "extra": {
@@ -34,7 +35,7 @@
         "schemaVersion": "1.0.0",
         "hasCpSettings": false,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/riasvdv/craft-colour-swatches/master/CHANGELOG.md",
-        "class": "rias\\colourswatches\\ColourSwatches"
+        "changelogUrl": "https://raw.githubusercontent.com/percipioglobal/craft-colour-swatches/master/CHANGELOG.md",
+        "class": "percipioglobal\\colourswatches\\ColourSwatches"
     }
 }

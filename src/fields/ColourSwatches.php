@@ -4,23 +4,23 @@
  *
  * Let clients choose from a predefined set of colours.
  *
- * @link      https://rias.be
+ * @link      https://percipio.london
  *
- * @copyright Copyright (c) 2018 Rias
+ * @copyright Copyright (c) 2020 Percipio Global Ltd.
  */
 
-namespace rias\colourswatches\fields;
+namespace percipioglobal\colourswatches\fields;
 
 use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
-use rias\colourswatches\assetbundles\colourswatchesfield\ColourSwatchesFieldAsset;
-use rias\colourswatches\ColourSwatches as Plugin;
-use rias\colourswatches\models\ColourSwatches as ColourSwatchesModel;
+use percipioglobal\colourswatches\assetbundles\colourswatchesfield\ColourSwatchesFieldAsset;
+use percipioglobal\colourswatches\ColourSwatches as Plugin;
+use percipioglobal\colourswatches\models\ColourSwatches as ColourSwatchesModel;
 use yii\db\Schema;
 
 /**
- * @author    Rias
+ * @author    Percipio Global Ltd.
  *
  * @since     1.0.0
  */
