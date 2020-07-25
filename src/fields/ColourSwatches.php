@@ -14,6 +14,7 @@ namespace percipioglobal\colourswatches\fields;
 use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
+use craft\base\PreviewableFieldInterface;
 use percipioglobal\colourswatches\assetbundles\colourswatchesfield\ColourSwatchesFieldAsset;
 use percipioglobal\colourswatches\ColourSwatches as Plugin;
 use percipioglobal\colourswatches\models\ColourSwatches as ColourSwatchesModel;
@@ -24,7 +25,7 @@ use yii\db\Schema;
  *
  * @since     1.0.0
  */
-class ColourSwatches extends Field
+class ColourSwatches extends Field implements PreviewableFieldInterface
 {
     // Public Properties
     // =========================================================================
@@ -205,5 +206,19 @@ class ColourSwatches extends Field
                 'palettes'     => Plugin::$plugin->settings->palettes,
             ]
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTableAttributeHtml($value, ElementInterface $element): string
+    {
+        /** @var ColorData|null $value */
+        if (!$value) {
+            return '<div class="color small static"><div class="color-preview"></div></div>';
+        }
+
+        return "<div class='color small static'><div class='color-preview' style='background-color: {$value->color};'></div></div>" .
+            "<div class='colorhex code'>{$value->label}</div>";
     }
 }
