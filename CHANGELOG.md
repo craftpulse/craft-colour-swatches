@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.2.9 - 2020-07-25
+### Added
+- An element index preview based on Craft's default colour picker. Thanks @pixelmachine for the great PR!
+
+### Fixed
+- Fix spelling for https://github.com/percipioglobal/craft-colour-swatches/issues/37. Thanks @pixelmachine for the great PR!
+
 ## 1.2.7 - 2020-01-03
 ### Fixed
 - Fix default value being reset
