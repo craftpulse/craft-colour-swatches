@@ -121,7 +121,7 @@ return [
                 ]
             ],
             [
-                'label'   => 'terciary', // custom label
+                'label'   => 'tertiary', // custom label
                 'default' => false,
                 'color'   =>  [
                     [
