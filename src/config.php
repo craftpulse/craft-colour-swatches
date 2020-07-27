@@ -28,50 +28,121 @@ return [
     // Predefined colours
     'colours' => [
         [
-            'label'   => 'red',
-            'color'   => '#ff0000',
+            'label'   => 'red', 
+            'color'   => '#F56565',
+            'class'   => 'red-500',     // custom attribute
+            'default' => true,
+        ],
+        [
+            'label'   => 'orange',
+            'color'   => '#ED8936',
+            'class'   => 'orange-500',  // custom attribute
+            'default' => false,
+        ],
+        [
+            'label'   => 'yellow',
+            'color'   => '#ECC94B',
+            'class'   => 'yellow-500',  // custom attribute
             'default' => false,
         ],
         [
             'label'   => 'green',
-            'color'   => '#00ff00',
+            'color'   => '#48BB78',
+            'class'   => 'green-500',   // custom attribute
+            'default' => false,
+        ],
+        [
+            'label'   => 'teal',
+            'color'   => '#38B2AC',
+            'class'   => 'teal-500',    // custom attribute
             'default' => false,
         ],
         [
             'label'   => 'blue',
-            'color'   => '#0000ff',
+            'color'   => '#4299E1',
+            'class'   => 'blue-500',    // custom attribute
+            'default' => false,
+        ],
+        [
+            'label'   => 'indigo',
+            'color'   => '#667EEA',
+            'class'   => 'indigo-500',   // custom attribute
+            'default' => false,
+        ],
+        [
+            'label'   => 'purple',
+            'color'   => '#9F7AEA',
+            'class'   => 'purple-500',   // custom attribute
             'default' => false,
         ],
         [
             'label'   => 'pink',
-            'color'   => '#ff00ff',
+            'color'   => '#ED64A6',
+            'class'   => 'pink-500',    // custom attribute
             'default' => false,
         ],
     ],
 
     'palettes' => [
-        'Red Green' => [
+        'Primary' => [  // custom label
             [
-                'label'   => 'red',
-                'color'   => '#ff0000',
+                'label'   => 'primary', // custom label
                 'default' => false,
+                'color'   =>  [
+                    [
+                        'color'     => '#38B2AC',  // the colour shown in the fieldtype (required)
+                        'class'     => 'teal-500', // custom attribute
+                        'btnClass' => 'blue-500', // custom attribute,
+                    ],
+                ]
             ],
             [
-                'label'   => 'green',
-                'color'   => '#00ff00',
+                'label'   => 'secondary', // custom label
                 'default' => false,
+                'color'   =>  [
+                    [
+                        'color'     => '#4299E1',   // the colour shown in the fieldtype (required)
+                        'class'     => 'blue-500',  // custom attribute
+                        'btnClass' => 'teal-500',  // custom attribute
+                    ],
+                ]
+            ],
+            [
+                'label'   => 'tertiary', // custom label
+                'default' => false,
+                'color'   =>  [
+                    [
+                        'color'     => '#ED64A6',   // the colour shown in the fieldtype (required)
+                        'class'     => 'pink-500',  // custom attribute
+                        'btnClass' => 'blue-500',  // custom attribute
+                    ],
+                ]
             ],
         ],
-        'Buttons' => [
+        'Gradients' => [
             [
-                'label'   => 'blue-white',
-                'color'   => '#0000ff,#ffffff',
+                'label'   => 'primary', 
                 'default' => false,
+                'color'   =>  [
+                    [
+                        'color'     => '#38B2AC',   // the colour shown in the fieldtype (required)
+                    ],
+                    [
+                        'color'     => '#434190',  // the next colour in this loop
+                    ],
+                ]
             ],
             [
-                'label'   => 'red-white',
-                'color'   => '#ff0000, #ffffff',
+                'label'   => 'secondary', // custom label
                 'default' => false,
+                'color'   =>  [
+                    [
+                        'color'     => '#434190',   // the colour shown in the fieldtype (required)
+                    ],
+                    [
+                        'color'     => '#ED64A6',  // the next colour in this loop
+                    ],
+                ]
             ],
         ],
     ],

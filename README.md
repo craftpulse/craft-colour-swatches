@@ -4,7 +4,8 @@
 
 Let clients choose from a predefined set of colours.
 
-<img src="./resources/img/screenshot.png" width="500">
+![Screenshot](./resources/img/screenshot-1.png)
+![Screenshot](./resources/img/screenshot-2.png)
 
 ## Requirements
 
@@ -45,54 +46,116 @@ Take a look at the [config file](https://github.com/percipioglobal/craft-colour-
 
 ```php
 return [
-
-    // Predefined colours
+    // Predefined colours, fixed options [label, colour, default (boolean)]
     'colours' => [
         [
-            'label' => 'red',
-            'color' => '#ff0000',
+            'label'   => 'red', 
+            'color'   => '#F56565',
+            'default' => true,
+        ],
+        [
+            'label'   => 'orange',
+            'color'   => '#ED8936',
             'default' => false,
         ],
         [
-            'label' => 'green',
-            'color' => '#00ff00',
+            'label'   => 'yellow',
+            'color'   => '#ECC94B',
             'default' => false,
         ],
         [
-            'label' => 'blue',
-            'color' => '#0000ff',
+            'label'   => 'green',
+            'color'   => '#48BB78',
             'default' => false,
         ],
         [
-            'label' => 'pink',
-            'color' => '#ff00ff',
+            'label'   => 'teal',
+            'color'   => '#38B2AC',
             'default' => false,
-        ]
+        ],
+        [
+            'label'   => 'blue',
+            'color'   => '#4299E1',
+            'default' => false,
+        ],
+        [
+            'label'   => 'indigo',
+            'color'   => '#667EEA',
+            'default' => false,
+        ],
+        [
+            'label'   => 'purple',
+            'color'   => '#9F7AEA',
+            'default' => false,
+        ],
+        [
+            'label'   => 'pink',
+            'color'   => '#ED64A6',
+            'default' => false,
+        ],
     ],
-    
+
+    // Custom  palettes, fixed options [label, default (boolean), colour (array(colour, customOptions)) ]
     'palettes' => [
-        'Red Green' => [
+        'Primary' => [  // custom label
             [
-                'label'   => 'red',
-                'color'   => '#ff0000',
+                'label'   => 'primary', // custom label
                 'default' => false,
+                'color'   =>  [
+                    [
+                        'color'     => '#38B2AC',  // the colour shown in the fieldtype (required)
+                        'class'     => 'teal-500', // custom attribute
+                        'btnClass' => 'blue-500', // custom attribute,
+                    ],
+                ]
             ],
             [
-                'label'   => 'green',
-                'color'   => '#00ff00',
+                'label'   => 'secondary', // custom label
                 'default' => false,
+                'color'   =>  [
+                    [
+                        'color'     => '#4299E1',   // the colour shown in the fieldtype (required)
+                        'class'     => 'blue-500',  // custom attribute
+                        'btnClass' => 'teal-500',  // custom attribute
+                    ],
+                ]
+            ],
+            [
+                'label'   => 'tertiary', // custom label
+                'default' => false,
+                'color'   =>  [
+                    [
+                        'color'     => '#ED64A6',   // the colour shown in the fieldtype (required)
+                        'class'     => 'pink-500',  // custom attribute
+                        'btnClass' => 'blue-500',  // custom attribute
+                    ],
+                ]
             ],
         ],
-        'Buttons' => [
+        'Gradients' => [
             [
-                'label'   => 'blue-white',
-                'color'   => '#0000ff,#ffffff',
+                'label'   => 'primary', 
                 'default' => false,
+                'color'   =>  [
+                    [
+                        'color'     => '#38B2AC',   // the colour shown in the fieldtype (required)
+                    ],
+                    [
+                        'color'     => '#434190',  // the next colour in this loop
+                    ],
+                ]
             ],
             [
-                'label'   => 'red-white',
-                'color'   => '#ff0000, #ffffff',
+                'label'   => 'secondary', // custom label
                 'default' => false,
+                'color'   =>  [
+                    [
+                        'color'     => '#434190',   // the colour shown in the fieldtype (required)
+                    ],
+                    [
+                        'color'     => '#ED64A6',  // the next colour in this loop
+                    ],
+                ]
             ],
         ],
     ],
@@ -101,7 +164,8 @@ return [
 
 In your field settings you can then have the possibility to have it use the predefined colours.
 
-![Screenshot](./resources/img/config.png)
+![Screenshot](./resources/img/config-1.png)
+![Screenshot](./resources/img/config-2.png)
 
 ## Using Colour Swatches
 
@@ -114,7 +178,14 @@ You can access both the label and color in your template. By default, the label 
 {{ fieldName.color }}
 {{ fieldName.colours }} {# Returns an array of all colours #}
 ```
+OR to access custom attributes from the config file
 
+```twig
+{% for field in fieldName.color %}
+    {{ field.color }}
+    {{ field.CUSTOM }}
+{% endfor %}
+```
 Based on the awesome [Craft 2 plugin](https://github.com/vigetlabs/craft-color-swatches) from Vigetlabs
 
 Brought to you by [Percipio](https://percipio.london)
