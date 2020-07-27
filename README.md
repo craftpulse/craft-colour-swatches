@@ -4,8 +4,8 @@
 
 Let clients choose from a predefined set of colours.
 
-<img src="./resources/img/screenshot.png" width="500">
-<img src="./resources/img/screenshot-2.png" width="500">
+![Screenshot](./resources/img/screenshot-1.png)
+![Screenshot](./resources/img/screenshot-2.png)
 
 ## Requirements
 
@@ -164,7 +164,7 @@ return [
 
 In your field settings you can then have the possibility to have it use the predefined colours.
 
-![Screenshot](./resources/img/config.png)
+![Screenshot](./resources/img/config-1.png)
 ![Screenshot](./resources/img/config-2.png)
 
 ## Using Colour Swatches
