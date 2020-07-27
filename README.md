@@ -179,7 +179,7 @@ You can access both the label and color in your template. By default, the label 
 {{ fieldName.colours }} {# Returns an array of all colours #}
 ```
 OR to access custom attributes from the config file
-``` 
+
 ```twig
 {% for field in fieldName.color %}
     {{ field.color }}
