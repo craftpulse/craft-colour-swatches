@@ -15,5 +15,5 @@
  * @since     1.0.0
  */
 return [
-    'color-swatches plugin loaded' => 'color-swatches plugin loaded',
+    'color-swatches plugin loaded' => 'colour-swatches plugin loaded',
 ];

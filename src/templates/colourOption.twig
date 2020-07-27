@@ -1,20 +1,39 @@
-{% set value = {
-    label: option.label,
-    color: option.color,
-} %}
-{% if ';' in value.color %}
-    {% set colours = value.color | split(';') %}
+{% if option.color is iterable %}
+	{# option.color is an array #}
+	{% set value = {
+        label: option.label,
+        color: option.color,
+    } %}
+
+	{% set colours = option.color %}
+	<button type="button" title="{{ option.label }}" data-value="{{ value | json_encode }}" class="option {% if (option.default and (not fieldValue is defined or (fieldValue is defined and not fieldValue.color))) or (fieldValue is defined and fieldValue.color == option.color) %} active{% endif %}" style="
+		{% switch colours | length %}
+		{% case 1 %}
+            --color: {{ value.color[0].color|parseRefs|raw }};
+		{% default %}
+            {% set percentage = 100 / colours | length %}
+            --color: linear-gradient(to bottom right, {% for color in colours %}{{ color.color|parseRefs|raw }} {{ percentage * loop.index0 }}%, {{ color.color|parseRefs|raw }} {{ percentage * loop.index }}%{% if not loop.last %},{% endif %}{% endfor %});
+		{% endswitch %}
+		"></button>
 {% else %}
-    {% set colours = value.color | split(',') %}
+	{# option.color is a string #}
+	{% set value = {
+        label: option.label,
+        color: option.color,
+    } %}
+	{% if ';' in value.color %}
+		{% set colours = value.color | split(';') %}
+	{% else %}
+		{% set colours = value.color | split(',') %}
+	{% endif %}
+	<button type="button" title="{{ option.label }}" data-value="{{ value | json_encode }}" class="option {% if (option.default and (not fieldValue is defined or (fieldValue is defined and not fieldValue.color))) or (fieldValue is defined and fieldValue.color == option.color) %} active{% endif %}" style="
+		{% switch colours | length %}
+		{% case 1 %}
+            --color: {{ value.color|parseRefs|raw }};
+		{% default %}
+		{% set percentage = 100 / colours | length %}
+            --color: linear-gradient(to bottom right, {% for colour in colours %}{{ colour|parseRefs|raw }} {{ percentage * loop.index0 }}%, {{ colour|parseRefs|raw }} {{ percentage * loop.index }}%{% if not loop.last %},{% endif %}{% endfor %});
+		{% endswitch %}
+		"></button>
 {% endif %}
 
-<button type="button" title="{{ option.label }}" data-value="{{ value | json_encode }}" class="option {% if (option.default and (not fieldValue is defined or (fieldValue is defined and not fieldValue.color))) or (fieldValue is defined and fieldValue.color == option.color) %} active{% endif %}"
-        style="
-        {% switch colours | length %}
-                {% case 1 %}
-                    --color: {{ value.color|parseRefs|raw }};
-                {% default %}
-                    {% set percentage = 100 / colours | length %}
-                    --color: linear-gradient(to bottom right, {% for colour in colours %}{{ colour|parseRefs|raw }} {{ percentage * loop.index0 }}%, {{ colour|parseRefs|raw }} {{ percentage * loop.index }}%{% if not loop.last %},{% endif %}{% endfor %});
-        {% endswitch %}
-"></button>
