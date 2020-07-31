@@ -2,7 +2,7 @@
     "name": "percipioglobal/craft-colour-swatches",
     "description": "Let clients choose from a predefined set of colours.",
     "type": "craft-plugin",
-    "version": "1.3.0",
+    "version": "1.3.0.1",
     "keywords": [
         "craft",
         "cms",
