@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 1.3.1 - 2020-8-03 Bugfix
+Updated save function to ensure custom array fields remain selected on resave / edit
+Allowed swtch between config or palette option in field settings
+
 ## 1.3.0.1 - 2020-7-31 HOTFIX
 temp fixed broken settings page, expect more robust repair next week :)
 

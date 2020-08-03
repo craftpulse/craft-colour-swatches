@@ -25,7 +25,7 @@
 }) }}
 
 <div id="settings" class="color-swatches-options {{ field.useConfigFile ? 'hidden' : '' }}">
-    {% if config is not iterable %}
+    {% if field.useConfigFile == 0 %}
         {{ forms.editableTable(config) }}
     {% endif %}
 </div>
