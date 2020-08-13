@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 1.3.2 - 2020-8-13 Bugfix
+ElementInterface updated to allow colour preview for custom arrays. Fixes issue #42
+fieldValue conditions for standard colour strings udpated to reflect null update in version 1.3.1. Fixes issue #43
+
+
 ## 1.3.1 - 2020-8-03 Bugfix
 Updated save function to ensure custom array fields remain selected on resave / edit
 Allowed swtch between config or palette option in field settings

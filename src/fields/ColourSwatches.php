@@ -214,11 +214,17 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {
         /** @var ColorData|null $value */
+        $fieldValue;
         if (!$value) {
             return '<div class="color small static"><div class="color-preview"></div></div>';
         }
+        if (is_array($value->color)) {
+            $fieldValue = $value->color[0]->color;
+        } else {
+            $fieldValue = $value->color;
+        }
+        return "<div class='color small static'><div class='color-preview' style='background-color: {$fieldValue};'></div></div>";
+        // . "<div class='colorhex code'>{$value->label}</div>";
 
-        return "<div class='color small static'><div class='color-preview' style='background-color: {$value->color};'></div></div>" .
-            "<div class='colorhex code'>{$value->label}</div>";
     }
 }
