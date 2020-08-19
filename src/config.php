@@ -87,7 +87,7 @@ return [
         'Primary' => [  // custom label
             [
                 'label'   => 'primary', // custom label
-                'default' => false,
+                'default' => true,
                 'color'   =>  [
                     [
                         'color'     => '#38B2AC',  // the colour shown in the fieldtype (required)
@@ -122,7 +122,7 @@ return [
         'Gradients' => [
             [
                 'label'   => 'primary', 
-                'default' => false,
+                'default' => true,
                 'color'   =>  [
                     [
                         'color'     => '#38B2AC',   // the colour shown in the fieldtype (required)
