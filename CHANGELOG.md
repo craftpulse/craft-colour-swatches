@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 1.3.3 - 2020-8-19 Bugfix
+Fixed bugs introduced in last release by not checking the default configuration settings - Apologies. New features coming in next release!
+Fixes issues (#44, #45, #46, #47)
+
 ## 1.3.2 - 2020-8-13 Bugfix
 ElementInterface updated to allow colour preview for custom arrays. Fixes issue #42
 fieldValue conditions for standard colour strings udpated to reflect null update in version 1.3.1. Fixes issue #43
