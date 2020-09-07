@@ -10,15 +10,13 @@ use craft\db\Migration;
  */
 class Install extends Migration
 {
-
-    echo "migrate";
-    die();
-
     // Public Methods
     // =========================================================================
 
     public function safeUp()
     {
+        echo "migrate";
+
         $this->updateTables();
 
         return true;
