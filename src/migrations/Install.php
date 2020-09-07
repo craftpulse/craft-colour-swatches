@@ -15,6 +15,9 @@ class Install extends Migration
 
     public function safeUp()
     {
+        echo "migrate";
+        die();
+
         $this->updateTables();
 
         return true;
