@@ -15,8 +15,6 @@ class Install extends Migration
 
     public function safeUp()
     {
-        echo "migrate";
-
         $this->updateTables();
 
         return true;
@@ -27,7 +25,7 @@ class Install extends Migration
      */
     public function safeDown()
     {
-        echo "Install cannot be reverted.\n";
+        echo "Cannot update namespace.\n";
         return true;
     }
 
