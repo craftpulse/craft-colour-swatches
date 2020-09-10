@@ -27,11 +27,6 @@ use yii\base\Event;
  */
 class ColourSwatches extends Plugin
 {
-    // Public Properties
-    // =========================================================================
-
-    public $schemaVersion = '1.4.0';
-
     // Static Properties
     // =========================================================================
 

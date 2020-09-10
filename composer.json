@@ -32,7 +32,7 @@
     "extra": {
         "name": "Colour Swatches",
         "handle": "colour-swatches",
-        "schemaVersion": "1.0.0",
+        "schemaVersion": "1.4.0",
         "hasCpSettings": false,
         "hasCpSection": false,
         "changelogUrl": "https://raw.githubusercontent.com/percipioglobal/craft-colour-swatches/master/CHANGELOG.md",
