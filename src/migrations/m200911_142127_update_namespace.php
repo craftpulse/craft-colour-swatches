@@ -6,13 +6,13 @@ use Craft;
 use craft\db\Migration;
 
 /**
- * Install migration.
+ * m200911_142127_update_namespace migration.
  */
-class update_namespace extends Migration
+class m200911_142127_update_namespace extends Migration
 {
-    // Public Methods
-    // =========================================================================
-
+    /**
+     * @inheritdoc
+     */
     public function safeUp()
     {
         echo "update_namespace updating .\n";
@@ -36,7 +36,7 @@ class update_namespace extends Migration
      */
     public function safeDown()
     {
-        echo "update_namespace cannot be reverted.\n";
-        return true;
+        echo "m200911_142127_update_namespace cannot be reverted.\n";
+        return false;
     }
 }
