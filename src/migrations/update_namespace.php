@@ -8,32 +8,15 @@ use craft\db\Migration;
 /**
  * Install migration.
  */
-class Install extends Migration
+class update_namespace extends Migration
 {
     // Public Methods
     // =========================================================================
 
     public function safeUp()
     {
-        $this->updateTables();
+        echo "update_namespace updating .\n";
 
-        return true;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function safeDown()
-    {
-        echo "Cannot update namespace.\n";
-        return true;
-    }
-
-    // Protected Methods
-    // =========================================================================
-
-    protected function updateTables()
-    {
         $this->update(
             '{{%fields}}',
             [
@@ -44,5 +27,16 @@ class Install extends Migration
                 ':riastype' => 'rias\\colourswatches\\fields\\ColourSwatches'
             ]
         );
+
+        return true;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function safeDown()
+    {
+        echo "update_namespace cannot be reverted.\n";
+        return true;
     }
 }
