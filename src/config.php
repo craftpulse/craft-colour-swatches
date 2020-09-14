@@ -26,9 +26,9 @@
 return [
 
     // Predefined colours
-    'colours' => [
+    'colors' => [
         [
-            'label'   => 'red', 
+            'label'   => 'red',
             'color'   => '#F56565',
             'class'   => 'red-500',     // custom attribute
             'default' => true,
@@ -90,7 +90,7 @@ return [
                 'default' => true,
                 'color'   =>  [
                     [
-                        'color'     => '#38B2AC',  // the colour shown in the fieldtype (required)
+                        'color'     => '#38B2AC',  // the color shown in the fieldtype (required)
                         'class'     => 'teal-500', // custom attribute
                         'btnClass' => 'blue-500', // custom attribute,
                     ],
@@ -101,7 +101,7 @@ return [
                 'default' => false,
                 'color'   =>  [
                     [
-                        'color'     => '#4299E1',   // the colour shown in the fieldtype (required)
+                        'color'     => '#4299E1',   // the color shown in the fieldtype (required)
                         'class'     => 'blue-500',  // custom attribute
                         'btnClass' => 'teal-500',  // custom attribute
                     ],
@@ -112,7 +112,7 @@ return [
                 'default' => false,
                 'color'   =>  [
                     [
-                        'color'     => '#ED64A6',   // the colour shown in the fieldtype (required)
+                        'color'     => '#ED64A6',   // the color shown in the fieldtype (required)
                         'class'     => 'pink-500',  // custom attribute
                         'btnClass' => 'blue-500',  // custom attribute
                     ],
@@ -121,14 +121,14 @@ return [
         ],
         'Gradients' => [
             [
-                'label'   => 'primary', 
+                'label'   => 'primary',
                 'default' => true,
                 'color'   =>  [
                     [
-                        'color'     => '#38B2AC',   // the colour shown in the fieldtype (required)
+                        'color'     => '#38B2AC',   // the color shown in the fieldtype (required)
                     ],
                     [
-                        'color'     => '#434190',  // the next colour in this loop
+                        'color'     => '#434190',  // the next color in this loop
                     ],
                 ]
             ],
@@ -137,10 +137,10 @@ return [
                 'default' => false,
                 'color'   =>  [
                     [
-                        'color'     => '#434190',   // the colour shown in the fieldtype (required)
+                        'color'     => '#434190',   // the color shown in the fieldtype (required)
                     ],
                     [
-                        'color'     => '#ED64A6',  // the next colour in this loop
+                        'color'     => '#ED64A6',  // the next color in this loop
                     ],
                 ]
             ],

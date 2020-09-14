@@ -114,7 +114,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
         } elseif ($this->palette) {
             $rows = Plugin::$plugin->settings->palettes[$this->palette];
         } else {
-            $rows = Plugin::$plugin->settings->colours;
+            $rows = Plugin::$plugin->settings->colors ? Plugin::$plugin->settings->colors : Plugin::$plugin->settings->colours;
         }
 
         $config = [
@@ -172,7 +172,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
             [
                 'field'             => $this,
                 'config'            => $config,
-                'configOptions'     => Plugin::$plugin->settings->colours,
+                'configOptions'     => Plugin::$plugin->settings->colors ? Plugin::$plugin->settings->colors : Plugin::$plugin->settings->colours,
                 'paletteOptions'    => $paletteOptions,
                 'palettes'          => Plugin::$plugin->settings->palettes,
             ]
@@ -202,7 +202,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
                 'field'        => $this,
                 'id'           => $id,
                 'namespacedId' => $namespacedId,
-                'configOptions'=> Plugin::$plugin->settings->colours,
+                'configOptions'=> Plugin::$plugin->settings->colors ? Plugin::$plugin->settings->colors : Plugin::$plugin->settings->colours,
                 'palettes'     => Plugin::$plugin->settings->palettes,
             ]
         );
