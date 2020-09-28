@@ -13,17 +13,20 @@ class ColourSwatches
      * @var string
      */
     public $color = '';
+    public $colour = '';
 
     public function __construct($value)
     {
         if (!empty($value)) {
             if (is_array($value)) {
                 $this->label = $value['label'];
-                $this->color = $value['color'];
+                $this->color = $value['color'] ? $value['color'] : $value['colour'];
+                $this->colour = $this->color;
             } else {
                 $value = json_decode($value);
                 $this->label = $value->label;
-                $this->color = $value->color;
+                $this->color = $this->fetchColorOrColour($value);
+                $this->colour = $this->color;
             }
         }
     }
@@ -35,15 +38,38 @@ class ColourSwatches
 
     public function colours()
     {
-        if (strstr($this->color, ';') !== false) {
-            return explode(';', $this->color);
-        }
+        return $this->colorsToArray();
+    }
 
-        return explode(',', $this->color);
+    public function colors()
+    {
+       return $this->colorsToArray();
     }
 
     public function labels()
     {
         return explode(',', $this->label);
+    }
+
+    protected function fetchColorOrColour($value){
+        if(property_exists($value, "colour") && "" === $value->color ){
+            return $value->colour;
+        }
+
+        return $value->color;
+    }
+
+    protected function colorsToArray()
+    {
+        if(is_array($this->color))
+        {
+            return $this->color;
+        }
+
+        if (strstr($this->color, ';') !== false) {
+            return explode(';', $this->color);
+        }
+
+        return explode(',', $this->color);
     }
 }
