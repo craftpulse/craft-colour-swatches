@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.5.0 - 2020-11-27
+
+### Fixed
+- Fixes issue #32(https://github.com/percipioglobal/craft-colour-swatches/issues/32) where required field was not honoured
+- Fixed issue #56(https://github.com/percipioglobal/craft-colour-swatches/issues/56) where default color was not set when saving entry
+
+### Changed
+- Dropped support for `colour` - all color output references now require `color`
+
+### Added
+- Added preview support for gradients in entry table columns
+
+Fixes issues (#36, #50)
+
 ## 1.4.0 - 2020-9-11 Bugfix
 Migrate namespace from rias to percipioglobal after upgrade. Also converted config php to 'colors' instead of 'colours'. Still supports 'colours' for older versions.
 Fixes issues (#36, #50)
