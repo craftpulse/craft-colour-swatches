@@ -14,6 +14,7 @@ namespace percipioglobal\colourswatches;
 use craft\base\Plugin;
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Fields;
+use craft\services\Plugins;
 use percipioglobal\colourswatches\fields\ColourSwatches as ColourSwatchesField;
 use percipioglobal\colourswatches\models\Settings;
 use yii\base\Event;

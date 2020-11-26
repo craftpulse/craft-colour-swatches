@@ -14,12 +14,12 @@ Fixes issues (#44, #45, #46, #47)
 
 ## 1.3.2 - 2020-8-13 Bugfix
 ElementInterface updated to allow colour preview for custom arrays. Fixes issue #42
-fieldValue conditions for standard colour strings udpated to reflect null update in version 1.3.1. Fixes issue #43
+fieldValue conditions for standard colour strings updated to reflect null update in version 1.3.1. Fixes issue #43
 
 
 ## 1.3.1 - 2020-8-03 Bugfix
 Updated save function to ensure custom array fields remain selected on resave / edit
-Allowed swtch between config or palette option in field settings
+Allowed switch between config or palette option in field settings
 
 ## 1.3.0.1 - 2020-7-31 HOTFIX
 temp fixed broken settings page, expect more robust repair next week :)

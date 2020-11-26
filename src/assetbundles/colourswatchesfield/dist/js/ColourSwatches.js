@@ -19,6 +19,7 @@ ColourSelectInput = Garnish.Base.extend({
     {
         var $option = $(ev.currentTarget);
 
+        // enables toggle on/off function of color buttons
         if ($option.hasClass('active'))
         {
             $option.removeClass('active');

@@ -7,69 +7,35 @@ class ColourSwatches
     /**
      * @var string
      */
-    public $label = '';
-
-    /**
-     * @var string
-     */
-    public $color = '';
-    public $colour = '';
 
     public function __construct($value)
     {
-        if (!empty($value)) {
-            if (is_array($value)) {
-                $this->label = $value['label'];
-                $this->color = $value['color'] ? $value['color'] : $value['colour'];
-                $this->colour = $this->color;
-            } else {
-                $value = json_decode($value);
-                $this->label = $value->label;
-                $this->color = $this->fetchColorOrColour($value);
-                $this->colour = $this->color;
-            }
+        if($this->validateJson($value)){
+            // typecast our object to an array
+            $colorData = (array)json_decode($value);
+            $value = null;
+            $color = array_filter($colorData);
+                // if our array has usable data
+                if (!empty($colorData['label']))
+                  {
+                    $this->label = $colorData['label'];
+                    $this->color = $colorData['color'];
+                  }
+                // else ensure we return a null value (only really needed for old data stores)
+                else {
+                    $value = null;
+                }
+         // else ensure we return a null value
+        } else {
+            $value = null;
         }
     }
 
-    public function __toString()
+    // making sure we have json data, returns boolean(true) if this is the case
+    public function validateJson($value)
     {
-        return $this->label;
+        $json = json_decode($value);
+        return $json && $value != $json;
     }
 
-    public function colours()
-    {
-        return $this->colorsToArray();
-    }
-
-    public function colors()
-    {
-       return $this->colorsToArray();
-    }
-
-    public function labels()
-    {
-        return explode(',', $this->label);
-    }
-
-    protected function fetchColorOrColour($value){
-        if(property_exists($value, "colour") && "" === $value->color ){
-            return $value->colour;
-        }
-
-        return $value->color;
-    }
-
-    protected function colorsToArray()
-    {
-        if(is_array($this->color))
-        {
-            return $this->color;
-        }
-
-        if (strstr($this->color, ';') !== false) {
-            return explode(';', $this->color);
-        }
-
-        return explode(',', $this->color);
-    }
 }

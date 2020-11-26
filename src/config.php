@@ -90,9 +90,9 @@ return [
                 'default' => true,
                 'color'   =>  [
                     [
-                        'color'     => '#38B2AC',  // the color shown in the fieldtype (required)
-                        'class'     => 'teal-500', // custom attribute
-                        'btnClass' => 'blue-500', // custom attribute,
+                        'color'     => '#38B2AC',   // the color shown in the fieldtype (required)
+                        'class'     => 'teal-500',  // custom attribute
+                        'btnClass' => 'blue-500',   // custom attribute,
                     ],
                 ]
             ],
@@ -103,7 +103,7 @@ return [
                     [
                         'color'     => '#4299E1',   // the color shown in the fieldtype (required)
                         'class'     => 'blue-500',  // custom attribute
-                        'btnClass' => 'teal-500',  // custom attribute
+                        'btnClass' => 'teal-500',   // custom attribute
                     ],
                 ]
             ],
@@ -114,12 +114,12 @@ return [
                     [
                         'color'     => '#ED64A6',   // the color shown in the fieldtype (required)
                         'class'     => 'pink-500',  // custom attribute
-                        'btnClass' => 'blue-500',  // custom attribute
+                        'btnClass' => 'blue-500',   // custom attribute
                     ],
                 ]
             ],
         ],
-        'Gradients' => [
+        'Gradients' => [  // custom label
             [
                 'label'   => 'primary',
                 'default' => true,
