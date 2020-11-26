@@ -47,9 +47,9 @@ Take a look at the [config file](https://github.com/percipioglobal/craft-colour-
 ```php
 return [
     // Predefined colours, fixed options [label, colour, default (boolean)]
-    'colours' => [
+    'colors' => [
         [
-            'label'   => 'red', 
+            'label'   => 'red',
             'color'   => '#F56565',
             'default' => true,
         ],
@@ -116,7 +116,7 @@ return [
                     [
                         'color'     => '#4299E1',   // the colour shown in the fieldtype (required)
                         'class'     => 'blue-500',  // custom attribute
-                        'btnClass' => 'teal-500',  // custom attribute
+                        'btnClass' => 'teal-500',   // custom attribute
                     ],
                 ]
             ],
@@ -127,14 +127,14 @@ return [
                     [
                         'color'     => '#ED64A6',   // the colour shown in the fieldtype (required)
                         'class'     => 'pink-500',  // custom attribute
-                        'btnClass' => 'blue-500',  // custom attribute
+                        'btnClass' => 'blue-500',   // custom attribute
                     ],
                 ]
             ],
         ],
-        'Gradients' => [
+        'Gradients' => [  // custom label
             [
-                'label'   => 'primary', 
+                'label'   => 'primary',
                 'default' => false,
                 'color'   =>  [
                     [
@@ -176,7 +176,7 @@ You can access both the label and color in your template. By default, the label 
 {{ fieldName.label }}
 {{ fieldName.labels }} {# Returns an array of all labels #}
 {{ fieldName.color }}
-{{ fieldName.colours }} {# Returns an array of all colours #}
+{{ fieldName.colors }} {# Returns an array of all colours #}
 ```
 OR to access custom attributes from the config file
 

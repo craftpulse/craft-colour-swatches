@@ -58,3 +58,8 @@
 .color-swatches button.active {
     box-shadow: 0 0 0 3px #F2842D;
 }
+
+.color-swatches pre {
+    font-size: 0.75rem;
+    font-family: courier;
+}
