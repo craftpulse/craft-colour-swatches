@@ -8,6 +8,9 @@ class ColourSwatches
      * @var string
      */
 
+    public $label = '';
+    public $color = '';
+
     public function __construct($value)
     {
         if($this->validateJson($value)){
@@ -36,6 +39,21 @@ class ColourSwatches
     {
         $json = json_decode($value);
         return $json && $value != $json;
+    }
+
+    public function __toString()
+    {
+        return $this->label;
+    }
+
+    public function colors()
+    {
+        return $this->color;
+    }
+    
+    public function labels()
+    {
+        return $this->label;
     }
 
 }
