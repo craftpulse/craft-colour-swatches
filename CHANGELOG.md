@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Fixed issue #56(https://github.com/percipioglobal/craft-colour-swatches/issues/56) where default color was not set when saving entry
 
 ### Changed
-- Dropped support for `colour` - all color output references now require `color`
+- Dropped support for `colour` in twig templates in favour of the W3C css color property keyword - all field color output references now require `color`
 
 ### Added
 - Added preview support for gradients in entry table columns

@@ -46,7 +46,7 @@ Take a look at the [config file](https://github.com/percipioglobal/craft-colour-
 
 ```php
 return [
-    // Predefined colours, fixed options [label, colour, default (boolean)]
+    // Predefined colors, fixed options [label, color, default (boolean)]
     'colors' => [
         [
             'label'   => 'red',
@@ -103,7 +103,7 @@ return [
                 'default' => false,
                 'color'   =>  [
                     [
-                        'color'     => '#38B2AC',  // the colour shown in the fieldtype (required)
+                        'color'     => '#38B2AC',  // the color shown in the fieldtype (required)
                         'class'     => 'teal-500', // custom attribute
                         'btnClass' => 'blue-500', // custom attribute,
                     ],
@@ -114,7 +114,7 @@ return [
                 'default' => false,
                 'color'   =>  [
                     [
-                        'color'     => '#4299E1',   // the colour shown in the fieldtype (required)
+                        'color'     => '#4299E1',   // the color shown in the fieldtype (required)
                         'class'     => 'blue-500',  // custom attribute
                         'btnClass' => 'teal-500',   // custom attribute
                     ],
@@ -125,7 +125,7 @@ return [
                 'default' => false,
                 'color'   =>  [
                     [
-                        'color'     => '#ED64A6',   // the colour shown in the fieldtype (required)
+                        'color'     => '#ED64A6',   // the color shown in the fieldtype (required)
                         'class'     => 'pink-500',  // custom attribute
                         'btnClass' => 'blue-500',   // custom attribute
                     ],
@@ -138,7 +138,7 @@ return [
                 'default' => false,
                 'color'   =>  [
                     [
-                        'color'     => '#38B2AC',   // the colour shown in the fieldtype (required)
+                        'color'     => '#38B2AC',   // the color shown in the fieldtype (required)
                     ],
                     [
                         'color'     => '#434190',  // the next colour in this loop
@@ -150,7 +150,7 @@ return [
                 'default' => false,
                 'color'   =>  [
                     [
-                        'color'     => '#434190',   // the colour shown in the fieldtype (required)
+                        'color'     => '#434190',   // the color shown in the fieldtype (required)
                     ],
                     [
                         'color'     => '#ED64A6',  // the next colour in this loop
@@ -174,9 +174,7 @@ You can access both the label and color in your template. By default, the label 
 ```twig
 {{ fieldName }}
 {{ fieldName.label }}
-{{ fieldName.labels }} {# Returns an array of all labels #}
 {{ fieldName.color }}
-{{ fieldName.colors }} {# Returns an array of all colours #}
 ```
 OR to access custom attributes from the config file
 
@@ -186,6 +184,4 @@ OR to access custom attributes from the config file
     {{ field.CUSTOM }}
 {% endfor %}
 ```
-Based on the awesome [Craft 2 plugin](https://github.com/vigetlabs/craft-color-swatches) from Vigetlabs
-
 Brought to you by [Percipio](https://percipio.london)
