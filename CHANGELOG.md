@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## 1.4.1.1 - 2020-12-11
+
+- Fixes #59(https://github.com/percipioglobal/craft-colour-swatches/issues/59); another colour/color bug. 
+
 ## 1.4.1 - 2020-12-09
 
 ### Fixed
