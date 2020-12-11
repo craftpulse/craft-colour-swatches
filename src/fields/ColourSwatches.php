@@ -128,7 +128,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
                     $rows = Plugin::$plugin
                         ->settings->colors ? Plugin::$plugin
                         ->settings->colors : Plugin::$plugin
-                        ->settings->colours;
+                        ->settings->colors;
                 }
 
                 $config = ['instructions' => Craft::t('colour-swatches', 'Define the available colors.') , 'id' => 'options', 'name' => 'options', 'addRowLabel' => Craft::t('colour-swatches', 'Add a colour') , 'cols' => ['label' => ['heading' => Craft::t('colour-swatches', 'Label') , 'type' => 'singleline', ], 'color' => ['heading' => Craft::t('colour-swatches', 'Hex Colours (comma seperated)') , 'type' => 'singleline', ], 'default' => ['heading' => Craft::t('colour-swatches', 'Default?') , 'type' => 'checkbox', 'class' => 'thin', ], ], 'rows' => $rows, ];
