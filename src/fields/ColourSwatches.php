@@ -158,7 +158,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
                     ->renderTemplate('colour-swatches/settings', ['field' => $this, 'config' => $config, 'configOptions' => Plugin::$plugin
                     ->settings->colors ? Plugin::$plugin
                     ->settings->colors : Plugin::$plugin
-                    ->settings->colours, 'paletteOptions' => $paletteOptions, 'palettes' => Plugin::$plugin
+                    ->settings->colors, 'paletteOptions' => $paletteOptions, 'palettes' => Plugin::$plugin
                     ->settings->palettes, ]);
             }
 
