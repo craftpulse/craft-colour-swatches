@@ -88,6 +88,12 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
                 {
                     return $value;
                 }
+                
+                // Check to see if this is already an array, which happens in some cases (Vizy)
+                if (is_array($value)) {
+                    $value = json_encode($value);
+                }
+                
                 // quick array transform so that we can ensure and `required fields` fire an error
                 $valueData = (array)json_decode($value);
                 // if we have actual data return model
