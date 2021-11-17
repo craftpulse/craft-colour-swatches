@@ -55,7 +55,8 @@
     outline: none;
 }
 
-.color-swatches button.active {
+.reduce-focus-visibility .color-swatches button.active,
+.color-swatches .button-active {
     box-shadow: 0 0 0 3px #F2842D;
 }
 

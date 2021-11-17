@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.4.2.1 - 2021-11-17
+
+### Fixed
+- changed stylesheet to override the box shadow that Craft changed See #72(https://github.com/percipioglobal/craft-colour-swatches/issues/72) && #73(https://github.com/percipioglobal/craft-colour-swatches/issues/73)
+
 ## 1.4.2 - 2021-08-31
 
 - Vizy Support Added ( thanks to @engram-design )
