@@ -35,6 +35,7 @@
     <div class="field {{ paletteOptions|length > 1 ? '' : 'hidden' }}">
         {{ forms.selectField({
             label: 'Palette'|t('colour-swatches'),
+            instructions: 'Set your default colour in the `colour-swatches.php` config file.'|t('colour-swatches'),
             name: 'palette',
             options: paletteOptions,
             value: field.palette ? field.palette : null,
@@ -48,7 +49,7 @@
     {% endif %}
 
     {# Default config options #}
-    <div id="palette-" class="color-swatches {{ field.useConfigFile and not field.palette ? '' : 'hidden' }}">
+    <div id="palette-" class="color-swatches no-pointer {{ field.useConfigFile and not field.palette ? '' : 'hidden' }}">
         {% for option in configOptions %}
             {% include 'colour-swatches/colourOption' with {
                 optionId: '1-option-' ~ loop.index,
@@ -66,7 +67,7 @@
         {% endif %}
 
         {% set defaultValue = null %}
-        <div id="palette-{{ key }}" class="color-swatches {{ condition ? '' : 'hidden' }}">
+        <div id="palette-{{ key }}" class="color-swatches no-pointer {{ condition ? '' : 'hidden' }}">
             {% for option in palette %}
                 {% include 'colour-swatches/colourOption' with {
                     optionId: '1-option-' ~ loop.index,

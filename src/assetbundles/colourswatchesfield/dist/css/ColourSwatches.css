@@ -30,6 +30,10 @@
     margin: 0 10px 0 0;
 }
 
+.color-swatches.no-pointer button {
+    cursor: not-allowed;
+}
+
 .color-swatches button::after,
 .color-swatches button::before {
   border-radius: 50%;

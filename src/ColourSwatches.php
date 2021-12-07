@@ -11,13 +11,24 @@
 
 namespace percipioglobal\colourswatches;
 
+use percipioglobal\colourswatches\elements\ColourSwatches as ColourSwatchesElement;
+
+use Craft;
 use craft\base\Plugin;
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Fields;
 use craft\services\Plugins;
 use percipioglobal\colourswatches\fields\ColourSwatches as ColourSwatchesField;
 use percipioglobal\colourswatches\models\Settings;
+// console commands
+use craft\events\DefineConsoleActionsEvent;
+use craft\console\Controller;
+use craft\console\controllers\ResaveController;
+
+
 use yii\base\Event;
+
+
 
 /**
  * Class Colorswatches.
@@ -54,10 +65,30 @@ class ColourSwatches extends Plugin
                 $event->types[] = ColourSwatchesField::class;
             }
         );
+
+        $this->_registerResaveCommand();
     }
 
     protected function createSettingsModel()
     {
         return new Settings();
     }
+
+    private function _registerResaveCommand()
+    {
+
+        Event::on(ResaveController::class,
+            Controller::EVENT_DEFINE_ACTIONS, function(DefineConsoleActionsEvent $event) {
+            $event->actions['colour-swatches'] = [
+                'action' => function(): int {
+                    $controller = Craft::$app->controller;
+                    $query = ColourSwatchesElement::find();
+                    return $controller->saveElements($query);
+                },
+                'options' => [],
+                'helpSummary' => 'Re-saves colour swatches.',
+            ];
+        });
+    }
+
 }

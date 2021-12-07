@@ -19,6 +19,30 @@
 {% set options = field.useConfigFile ? field.palette ? palettes[field.palette] : configOptions : field.options %}
 {% spaceless %}
 <div id="{{ id }}" class="color-swatches">
+
+        {% set savedValue = fieldValue ? fieldValue : null %}
+            {# check if we have a saved valuie #}
+            {% if fieldValue.color is not defined %}
+                {% set fieldValue = null %}
+            {% endif %}
+        {% set match = 0 %}
+
+        {# fetch our existing options #}
+        {% for check in options %}
+            {# check our saved value exists in the config #}
+            {% if savedValue %}
+               <pre>{{  savedValue.label }}->{{ check.label }}</pre>
+                {% if savedValue.label == check.label %}
+                    {% set match = 1 %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+
+        {# if value doesn't exist in config, reset to default #}
+        {% if match == 0 %}
+            {% set fieldValue = null %}
+        {% endif %}
+
         {# fetch our color options #}
         {% for option in options %}
                 {% include 'colour-swatches/colourOption' with {
@@ -36,16 +60,15 @@
                 {% endif %}
         {% endfor %}
 
+    <pre>{{  fieldValue  }}</pre>
         {% if fieldValue.color is defined %}
                 {% set fieldValue = fieldValue|json_encode %}
-        {%  else %}
-                {% set fieldValue = '' %}
         {%  endif %}
         {% set fieldValue = fieldValue ? fieldValue : defaultValue %}
 
 </div>
 {% endspaceless -%}
-        {{ forms.hidden({
+        {{ forms.text({
             id: id ~ namespacedId,
             name: name,
             value: fieldValue,
