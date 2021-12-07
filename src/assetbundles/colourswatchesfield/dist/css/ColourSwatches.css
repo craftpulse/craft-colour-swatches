@@ -60,7 +60,7 @@
 }
 
 .color-swatches button.active {
-    box-shadow: 0 0 0 3px #F2842D;
+    box-shadow: 0 0 0 3px #F2842D!important;
 }
 
 .color-swatches pre {

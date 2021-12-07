@@ -24,14 +24,14 @@
     reverseToggle: 'settings',
 }) }}
 
-<div id="settings" class="color-swatches-options {{ field.useConfigFile ? 'hidden' : '' }}">
-    {% if field.useConfigFile == 0 %}
+<div id="settings" class="color-swatches-options {{ field.useConfigFile == 1 ? '' : 'hidden' }}">
+    {% if field.useConfigFile != 1 %}
         {{ forms.editableTable(config) }}
     {% endif %}
 </div>
 
 <div id="preview" class="{{ field.useConfigFile ? '' : 'hidden' }}">
-    
+
     <div class="field {{ paletteOptions|length > 1 ? '' : 'hidden' }}">
         {{ forms.selectField({
             label: 'Palette'|t('colour-swatches'),

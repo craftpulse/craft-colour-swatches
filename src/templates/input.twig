@@ -18,57 +18,34 @@
 {% set defaultValue = null %}
 {% set options = field.useConfigFile ? field.palette ? palettes[field.palette] : configOptions : field.options %}
 {% spaceless %}
-<div id="{{ id }}" class="color-swatches">
-
-        {% set savedValue = fieldValue ? fieldValue : null %}
-            {# check if we have a saved valuie #}
-            {% if fieldValue.color is not defined %}
-                {% set fieldValue = null %}
-            {% endif %}
-        {% set match = 0 %}
-
-        {# fetch our existing options #}
-        {% for check in options %}
-            {# check our saved value exists in the config #}
-            {% if savedValue %}
-               <pre>{{  savedValue.label }}->{{ check.label }}</pre>
-                {% if savedValue.label == check.label %}
-                    {% set match = 1 %}
-                {% endif %}
-            {% endif %}
-        {% endfor %}
-
-        {# if value doesn't exist in config, reset to default #}
-        {% if match == 0 %}
-            {% set fieldValue = null %}
-        {% endif %}
-
+    <div id="{{ id }}" class="color-swatches">
         {# fetch our color options #}
         {% for option in options %}
-                {% include 'colour-swatches/colourOption' with {
-                    optionId: namespacedId ~ '-option-' ~ loop.index,
-                    option: option,
-                } %}
+            {% include 'colour-swatches/colourOption' with {
+                optionId: namespacedId ~ '-option-' ~ loop.index,
+                option: option,
+            } %}
 
-                {# Set the default value #}
-                {% if option.default %}
-                    {% set value = {
-                        label: option.label,
-                        color: option.color is defined ? option.color : option.colour,
-                    } %}
-                    {% set defaultValue = value|json_encode %}
-                {% endif %}
+            {# Set the default value #}
+            {% if option.default %}
+                {% set value = {
+                    label: option.label,
+                    color: option.color is defined ? option.color : option.colour,
+                } %}
+                {% set defaultValue = value|json_encode %}
+            {% endif %}
         {% endfor %}
 
-    <pre>{{  fieldValue  }}</pre>
         {% if fieldValue.color is defined %}
-                {% set fieldValue = fieldValue|json_encode %}
+            {% set fieldValue = fieldValue|json_encode %}
+        {%  else %}
+            {% set fieldValue = '' %}
         {%  endif %}
         {% set fieldValue = fieldValue ? fieldValue : defaultValue %}
 
-</div>
+    </div>
 {% endspaceless -%}
-        {{ forms.text({
+        {{ forms.hidden({
             id: id ~ namespacedId,
             name: name,
             value: fieldValue,
