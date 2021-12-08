@@ -1,5 +1,5 @@
 {
-    "name": "percipioglobal/craft-colour-swatches-bf.55",
+    "name": "percipioglobal/craft-colour-swatches",
     "description": "Let clients choose from a predefined set of colours.",
     "type": "craft-plugin",
     "version": "1.4.2",
