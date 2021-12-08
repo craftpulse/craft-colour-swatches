@@ -27,7 +27,20 @@
     width: 40px;
     position: relative;
     transition: box-shadow 200ms ease 0s;
-    margin: 0 10px 0 0;
+    margin: 0 10px 10px 0;
+}
+
+.color-swatches button span{
+    position: absolute;
+    left: 50%;
+    top: 120%;
+    transform: translate(-50%, 0);
+    font-size: 10px;
+    width: 120%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #596773;
 }
 
 .color-swatches.no-pointer button {

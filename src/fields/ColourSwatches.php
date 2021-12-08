@@ -154,15 +154,6 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
         Craft::$app->getView()
             ->registerAssetBundle(ColourSwatchesFieldAsset::class);
 
-        // Get our id and namespace
-        $id = Craft::$app->getView()
-            ->formatInputId($this->handle);
-        $namespacedId = Craft::$app->getView()
-            ->namespaceInputId($id);
-
-        Craft::$app->getView()
-            ->registerJs("new ColourSelectInput('{$namespacedId}');");
-
         $config = ['instructions' => Craft::t('colour-swatches', 'Define the available colors.') , 'id' => 'options', 'name' => 'options', 'addRowLabel' => Craft::t('colour-swatches', 'Add a colour') , 'cols' => ['label' => ['heading' => Craft::t('colour-swatches', 'Label') , 'type' => 'singleline', ], 'color' => ['heading' => Craft::t('colour-swatches', 'Hex Colours (comma seperated)') , 'type' => 'singleline', ], 'default' => ['heading' => Craft::t('colour-swatches', 'Default?') , 'type' => 'checkbox', 'class' => 'thin', ], ], 'rows' => $this->options, ];
 
         $paletteOptions = [];
@@ -188,8 +179,6 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
             ->renderTemplate('colour-swatches/settings',
                 [
                     'field' => $this,
-                    'id' => $id,
-                    'namespacedId' => $namespacedId,
                     'config' => $config,
                     'configOptions' => Plugin::$plugin->settings->colors ?: [],
                     'paletteOptions' => $paletteOptions,

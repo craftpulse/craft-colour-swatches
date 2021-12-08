@@ -1,8 +1,5 @@
 {% set colours = option.color is defined ? option.color : option.colour %}
-{% set total = total ?? 0 %}
-{% set index = index ?? null %}
-{% set default = field.default ? field.default > total ? 0 : field.default : null %}
-{% set isDefault = default and index ? default == index : option.default %}
+{% set isDefault = option.default %}
 {% set active = null %}
 {% set fieldValue = fieldValue ?? null %}
 {% if fieldValue|length %}
