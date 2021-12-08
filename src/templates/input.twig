@@ -16,8 +16,25 @@
 {% import "_includes/forms" as forms %}
 
 {% set defaultValue = null %}
-{% set options = field.useConfigFile ? field.palette ? palettes[field.palette] : configOptions : field.options %}
+{% set options = field.useConfigFile
+    ? palettes[field.palette] is defined
+        ? palettes[field.palette]
+        : field.palette == ''
+            ? configOptions
+            : []
+    : field.options
+%}
+{#{% set options = field.useConfigFile#}
+{#    ? palettes[field.palette] is defined#}
+{#        ? palettes[field.palette]#}
+{#        : configOptions#}
+{#    : field.options %}#}
 {% spaceless %}
+
+    {% if options|length == 0 %}
+        <p>{{ "There selected colour palette for this field isn\'t defined in the colour-swatches.php"|t('colour-swatches') }}</p>
+    {% endif %}
+
     <div id="{{ id }}" class="color-swatches">
         {# fetch our color options #}
         {% for option in options %}
