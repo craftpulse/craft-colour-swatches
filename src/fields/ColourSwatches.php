@@ -43,6 +43,9 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     /** @var string */
     public $palette = null;
 
+    /** @var int */
+    public $default = null;
+
     // Static Methods
     // =========================================================================
 
@@ -109,7 +112,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
         $settingsPalette = $this->options;
         $saveValue = null;
 
-        // if useConfigFile got setted, fetch the objects from taht file
+        // if useConfigFile got setted, fetch the objects from that file
         if($this->useConfigFile){
             if(Plugin::$plugin->settings->palettes[$this->palette]){
                 //if the palette with the value exists, return this as the settings palette
@@ -132,8 +135,8 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
 
         //if nothing got set, use the default if that exists
         if(!$saveValue){
-            foreach($settingsPalette as $palette){
-                if(is_array($palette) && $palette['default'] == 1){
+            foreach($settingsPalette as $key => $palette){
+                if(is_array($palette) && ($key + 1) == $this->default){
                     $saveValue = $palette;
                 }
             }
@@ -147,42 +150,29 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
      */
     public function getSettingsHtml()
     {
+        // Register our asset bundle
         Craft::$app->getView()
             ->registerAssetBundle(ColourSwatchesFieldAsset::class);
 
-        if ($this->options && count($this->options))
-        {
-            // defined colours by user
-            $rows = $this->options;
-        }
-        elseif($this->useConfigFile != 1){
-            $rows = Plugin::$plugin->settings->colors;
-        }
-        elseif ($this->palette)
-        {
-            // selected colour palette in dropdown --> fetch in config
-            $rows = Plugin::$plugin
-                ->settings
-                ->palettes[$this->palette];
-        }
-        else
-        {
-            // select default colors palette in config
-            $rows = Plugin::$plugin->settings->colors ? Plugin::$plugin->settings->colors : Plugin::$plugin->settings->colors;
-        }
+        // Get our id and namespace
+        $id = Craft::$app->getView()
+            ->formatInputId($this->handle);
+        $namespacedId = Craft::$app->getView()
+            ->namespaceInputId($id);
 
-        $config = ['instructions' => Craft::t('colour-swatches', 'Define the available colors.') , 'id' => 'options', 'name' => 'options', 'addRowLabel' => Craft::t('colour-swatches', 'Add a colour') , 'cols' => ['label' => ['heading' => Craft::t('colour-swatches', 'Label') , 'type' => 'singleline', ], 'color' => ['heading' => Craft::t('colour-swatches', 'Hex Colours (comma seperated)') , 'type' => 'singleline', ], 'default' => ['heading' => Craft::t('colour-swatches', 'Default?') , 'type' => 'checkbox', 'class' => 'thin', ], ], 'rows' => $rows, ];
+        Craft::$app->getView()
+            ->registerJs("new ColourSelectInput('{$namespacedId}');");
+
+        $config = ['instructions' => Craft::t('colour-swatches', 'Define the available colors.') , 'id' => 'options', 'name' => 'options', 'addRowLabel' => Craft::t('colour-swatches', 'Add a colour') , 'cols' => ['label' => ['heading' => Craft::t('colour-swatches', 'Label') , 'type' => 'singleline', ], 'color' => ['heading' => Craft::t('colour-swatches', 'Hex Colours (comma seperated)') , 'type' => 'singleline', ], 'default' => ['heading' => Craft::t('colour-swatches', 'Default?') , 'type' => 'checkbox', 'class' => 'thin', ], ], 'rows' => $this->options, ];
 
         $paletteOptions = [];
-        $paletteOptions[] = ['label' => 'colors', 'value' => null, ];
+        $paletteOptions[] = ['label' => 'Colors', 'value' => null, ];
         foreach (array_keys((array)Plugin::$plugin
             ->settings
             ->palettes) as $palette)
         {
             $paletteOptions[] = ['label' => $palette, 'value' => $palette, ];
         }
-
-        $currentPalette = $this->palette;
 
         $paletteOptions = [];
         $paletteOptions[] = ['label' => 'Colour config', 'value' => null, ];
@@ -198,8 +188,10 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
             ->renderTemplate('colour-swatches/settings',
                 [
                     'field' => $this,
+                    'id' => $id,
+                    'namespacedId' => $namespacedId,
                     'config' => $config,
-                    'configOptions' => Plugin::$plugin->settings->colors ? Plugin::$plugin->settings->colors : Plugin::$plugin->settings->colors,
+                    'configOptions' => Plugin::$plugin->settings->colors ?: [],
                     'paletteOptions' => $paletteOptions,
                     'palettes' => Plugin::$plugin->settings->palettes
                 ]

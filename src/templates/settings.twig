@@ -24,56 +24,67 @@
     reverseToggle: 'settings',
 }) }}
 
-<div id="settings" class="color-swatches-options {{ field.useConfigFile == 1 ? '' : 'hidden' }}">
-    {% if field.useConfigFile != 1 %}
-        {{ forms.editableTable(config) }}
-    {% endif %}
+<div id="settings" class="color-swatches-options {{ field.useConfigFile ? 'hidden' : '' }}">
+    {{ forms.editableTable(config) }}
 </div>
 
-<div id="preview" class="{{ field.useConfigFile ? '' : 'hidden' }}">
+<div id="{{ id }}">
+    <div id="preview" class="{{ field.useConfigFile ? '' : 'hidden' }}">
 
-    <div class="field {{ paletteOptions|length > 1 ? '' : 'hidden' }}">
-        {{ forms.selectField({
-            label: 'Palette'|t('colour-swatches'),
-            instructions: 'Set your default colour in the `colour-swatches.php` config file.'|t('colour-swatches'),
-            name: 'palette',
-            options: paletteOptions,
-            value: field.palette ? field.palette : null,
-            toggle: true,
-            targetPrefix: 'palette-'
-        }) }}
-    </div>
+        <div class="field {{ paletteOptions|length > 1 ? '' : 'hidden' }}">
+            {{ forms.selectField({
+                label: 'Palette'|t('colour-swatches'),
+                name: 'palette',
+                options: paletteOptions,
+                value: field.palette ? field.palette : null,
+                toggle: true,
+                targetPrefix: 'palette-'
+            }) }}
+        </div>
 
-    {% if not paletteOptions|length %}
-        {% set palettes = [configOptions] %}
-    {% endif %}
-
-    {# Default config options #}
-    <div id="palette-" class="color-swatches no-pointer {{ field.useConfigFile and not field.palette ? '' : 'hidden' }}">
-        {% for option in configOptions %}
-            {% include 'colour-swatches/colourOption' with {
-                optionId: '1-option-' ~ loop.index,
-                option: option,
-            } %}
-        {% endfor %}
-    </div>
-
-    {# Palette options #}
-    {% for key, palette in palettes %}
-        {% if palettes|length > 1 %}
-            {% set condition = field.palette == key %}
-        {% else %}
-            {% set condition = field.useConfigFile %}
+        {% if not paletteOptions|length %}
+            {% set palettes = [configOptions] %}
         {% endif %}
 
-        {% set defaultValue = null %}
-        <div id="palette-{{ key }}" class="color-swatches no-pointer {{ condition ? '' : 'hidden' }}">
-            {% for option in palette %}
-                {% include 'colour-swatches/colourOption' with {
+        {# Default config options #}
+        <div id="palette-" class="color-swatches {{ field.useConfigFile and not field.palette ? '' : 'hidden' }}">
+            {% for option in configOptions %}
+                {% include 'colour-swatches/colourOptionSettings' with {
                     optionId: '1-option-' ~ loop.index,
+                    index: loop.index,
+                    total: configOptions|length,
                     option: option,
                 } %}
             {% endfor %}
         </div>
-    {% endfor %}
+
+        {# Palette options #}
+        {% for key, palette in palettes %}
+            {% if palettes|length > 1 %}
+                {% set condition = field.palette == key %}
+            {% else %}
+                {% set condition = field.useConfigFile %}
+            {% endif %}
+
+            {% set defaultValue = null %}
+            <div id="palette-{{ key }}" class="color-swatches {{ condition ? '' : 'hidden' }}">
+                {% for option in palette %}
+                    {% include 'colour-swatches/colourOptionSettings' with {
+                        optionId: '1-option-' ~ loop.index,
+                        index: loop.index,
+                        total: palette|length,
+                        option: option,
+                    } %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+    </div>
 </div>
+
+{{ forms.hidden({
+    id: id ~ namespacedId,
+    name: 'default',
+    value: field.default,
+    class: 'color-swatches-input'})
+}}
