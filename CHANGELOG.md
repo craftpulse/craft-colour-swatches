@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.5.0-RC.1 - 2021-12-09
+
+### Added
+
+- Added labels in the colour swatches for better accessibility (part of [#71](https://github.com/percipioglobal/craft-colour-swatches/issues/71)) 
+- Added extra checks if config file doesn't contain the correct indexes [#62](https://github.com/percipioglobal/craft-colour-swatches/issues/62)
+
+### Fixed 
+
+- Fixed an issue where the default values were not respected when used within a supertable field [#59](https://github.com/percipioglobal/craft-colour-swatches/issues/67)
+- Fixed an issue where updating the config file wouldn't take effect on a resave [#55](https://github.com/percipioglobal/craft-colour-swatches/issues/55)
+- Fixed an issue where the selected color wouldn't always be highlighted in the entry page [#72](https://github.com/percipioglobal/craft-colour-swatches/issues/72)
+
+
 ## 1.4.2 - 2021-08-31
 
 - Vizy Support Added ( thanks to @engram-design )
