@@ -2,7 +2,9 @@
 
 namespace percipioglobal\colourswatches\models;
 
-class ColourSwatches
+use craft\base\Model;
+
+class ColourSwatches extends Model
 {
     /**
      * @var string
@@ -14,6 +16,7 @@ class ColourSwatches
     public function __construct($value)
     {
         if($this->validateJson($value)){
+
             // typecast our object to an array
             $colorData = (array)json_decode($value);
             $value = null;
@@ -50,7 +53,7 @@ class ColourSwatches
     {
         return $this->color;
     }
-    
+
     public function labels()
     {
         return $this->label;

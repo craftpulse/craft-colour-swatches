@@ -27,7 +27,32 @@
     width: 40px;
     position: relative;
     transition: box-shadow 200ms ease 0s;
-    margin: 0 10px 0 0;
+    margin: 0 10px 12px 0;
+}
+
+.color-swatches button:hover span{
+    overflow: visible;
+    z-index: 999;
+    width: auto;
+}
+
+.color-swatches button span{
+    position: absolute;
+    left: 0;
+    left: 50%;
+    top: 120%;
+    transform: translate(-50%, 0);
+    font-size: 10px;
+    width: 48px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #596773;
+    background: white;
+}
+
+.color-swatches.no-pointer button {
+    cursor: not-allowed;
 }
 
 .color-swatches button::after,
@@ -56,7 +81,7 @@
 }
 
 .color-swatches button.active {
-    box-shadow: 0 0 0 3px #F2842D;
+    box-shadow: 0 0 0 3px #F2842D!important;
 }
 
 .color-swatches pre {
