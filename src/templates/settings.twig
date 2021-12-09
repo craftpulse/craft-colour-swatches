@@ -17,7 +17,7 @@
 
 {{ forms.lightswitchField({
     label: 'Use config options'|t('colour-swatches'),
-    instructions: 'Whether to use the config options or palettes defined in `colour-swatches.php` or a custom config.'|t('colour-swatches'),
+    instructions: 'Use CMS based config options or your colour palettes defined in `colour-swatches.php`.'|t('colour-swatches'),
     name: 'useConfigFile',
     on: field.useConfigFile,
     toggle: 'preview',
@@ -36,7 +36,7 @@
             name: 'palette',
             options: paletteOptions,
             value: field.palette ? field.palette : null,
-            instructions: 'If you want to change the default, please update in the `colour-swatches.php`'|t('colour-swatches'),
+            instructions: 'If you want to change the default, please update the `colour-swatches.php` config file.'|t('colour-swatches'),
             toggle: true,
             targetPrefix: 'palette-'
         }) }}
