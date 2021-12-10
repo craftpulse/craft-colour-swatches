@@ -7,8 +7,6 @@ Create custom colour pallets with flexibility & control.
 Instead of providing a user a full color picker, Colour Swatches is a configurable a fieldtype that gives an admin the ability to provide a selection of colours for a user to choose from. This allows you to create branded colour pallets with a bank of classnames ready to use in your templates. 
 
 ![Screenshot](./resources/img/colour-swatches-1.png)
-![Screenshot](./resources/img/colour-swatches-2.png)
-![Screenshot](./resources/img/colour-swatches-3.png)
 
 ## Requirements
 
