@@ -1,4 +1,4 @@
-![Icon](./src/icon.svg)
+![colour-swatches-banner-light](./resources/banner.png)
 
 Create custom colour pallets with flexibility & control.
 
