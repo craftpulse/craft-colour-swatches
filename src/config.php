@@ -6,7 +6,7 @@
  *
  * @link      https://percipio.london
  *
- * @copyright Copyright (c) 2020 Percipio Global Ltd.
+ * @copyright Copyright (c) 2020 Percipio.London
  */
 
 /**
@@ -25,125 +25,135 @@
 
 return [
 
-    // Predefined colours
-    'colors' => [
-        [
-            'label'   => 'red',
-            'color'   => '#F56565',
-            'class'   => 'red-500',     // custom attribute
-            'default' => true,
-        ],
-        [
-            'label'   => 'orange',
-            'color'   => '#ED8936',
-            'class'   => 'orange-500',  // custom attribute
-            'default' => false,
-        ],
-        [
-            'label'   => 'yellow',
-            'color'   => '#ECC94B',
-            'class'   => 'yellow-500',  // custom attribute
-            'default' => false,
-        ],
-        [
-            'label'   => 'green',
-            'color'   => '#48BB78',
-            'class'   => 'green-500',   // custom attribute
-            'default' => false,
-        ],
-        [
-            'label'   => 'teal',
-            'color'   => '#38B2AC',
-            'class'   => 'teal-500',    // custom attribute
-            'default' => false,
-        ],
-        [
-            'label'   => 'blue',
-            'color'   => '#4299E1',
-            'class'   => 'blue-500',    // custom attribute
-            'default' => false,
-        ],
-        [
-            'label'   => 'indigo',
-            'color'   => '#667EEA',
-            'class'   => 'indigo-500',   // custom attribute
-            'default' => false,
-        ],
-        [
-            'label'   => 'purple',
-            'color'   => '#9F7AEA',
-            'class'   => 'purple-500',   // custom attribute
-            'default' => false,
-        ],
-        [
-            'label'   => 'pink',
-            'color'   => '#ED64A6',
-            'class'   => 'pink-500',    // custom attribute
-            'default' => false,
-        ],
-    ],
-
+    // Custom  palettes, fixed options [label, default (boolean), colour (array(colour, customOptions)) ]
     'palettes' => [
-        'Primary' => [  // custom label
+        'Tailwind' => [  // custom label
             [
-                'label'   => 'primary', // custom label
-                'default' => true,
-                'color'   =>  [
-                    [
-                        'color'     => '#38B2AC',   // the color shown in the fieldtype (required)
-                        'class'     => 'teal-500',  // custom attribute
-                        'btnClass' => 'blue-500',   // custom attribute,
-                    ],
-                ]
-            ],
-            [
-                'label'   => 'secondary', // custom label
+                'label'   => 'Red',
                 'default' => false,
                 'color'   =>  [
                     [
-                        'color'     => '#4299E1',   // the color shown in the fieldtype (required)
-                        'class'     => 'blue-500',  // custom attribute
-                        'btnClass' => 'teal-500',   // custom attribute
-                    ],
+                        'color'             => '#ef4444',               // the colour shown in the fieldtype (required)
+                        'background'        => 'bg-red-500',
+                        'backgroundHover'   => 'hover:bg-red-700',
+                        'text'              => 'text-white',
+                        'textHover'         => 'hover:text-zinc-200'
+                    ]
                 ]
             ],
             [
-                'label'   => 'tertiary', // custom label
+                'label'   => 'Amber',
                 'default' => false,
                 'color'   =>  [
                     [
-                        'color'     => '#ED64A6',   // the color shown in the fieldtype (required)
-                        'class'     => 'pink-500',  // custom attribute
-                        'btnClass' => 'blue-500',   // custom attribute
-                    ],
-                ]
-            ],
-        ],
-        'Gradients' => [  // custom label
-            [
-                'label'   => 'primary',
-                'default' => true,
-                'color'   =>  [
-                    [
-                        'color'     => '#38B2AC',   // the color shown in the fieldtype (required)
-                    ],
-                    [
-                        'color'     => '#434190',  // the next color in this loop
-                    ],
+                        'color'             => '#f59e0b',               // the colour shown in the fieldtype (required)
+                        'background'        => 'bg-amber-500',
+                        'backgroundHover'   => 'hover:bg-amber-700',
+                        'text'              => 'text-white',
+                        'textHover'         => 'hover:text-zinc-200'
+                    ]
                 ]
             ],
             [
-                'label'   => 'secondary', // custom label
+                'label'   => 'Green',
                 'default' => false,
                 'color'   =>  [
                     [
-                        'color'     => '#434190',   // the color shown in the fieldtype (required)
-                    ],
-                    [
-                        'color'     => '#ED64A6',  // the next color in this loop
-                    ],
+                        'color'             => '#22c55e',               // the colour shown in the fieldtype (required)
+                        'background'        => 'bg-green-500',
+                        'backgroundHover'   => 'hover:bg-green-700',
+                        'text'              => 'text-white',
+                        'textHover'         => 'hover:text-zinc-200'
+                    ]
                 ]
             ],
-        ],
-    ],
+            [
+                'label'   => 'Blue',
+                'default' => false,
+                'color'   =>  [
+                    [
+                        'color'             => '#3b82f6',               // the colour shown in the fieldtype (required)
+                        'background'        => 'bg-blue-500',
+                        'backgroundHover'   => 'hover:bg-blue-700',
+                        'text'              => 'text-white',
+                        'textHover'         => 'hover:text-zinc-200'
+                    ]
+                ]
+            ],
+            [
+                'label'   => 'Purple',
+                'default' => false,
+                'color'   =>  [
+                    [
+                        'color'             => '#a855f7',               // the colour shown in the fieldtype (required)
+                        'background'        => 'bg-purple-500',
+                        'backgroundHover'   => 'hover:bg-purple-700',
+                        'text'              => 'text-white',
+                        'textHover'         => 'hover:text-zinc-200'
+                    ]
+                ]
+            ],
+            [
+                'label'   => 'Yellow/Emerald',
+                'default' => false,
+                'color'   =>  [
+                    [
+                        'color'             => '#eab308',               // the colour shown in the fieldtype (required)
+                        'background'        => 'bg-yellow-500',
+                        'backgroundHover'   => 'hover:bg-yellow-700',
+                        'text'              => 'text-white',
+                        'textHover'         => 'hover:text-zinc-200'
+                    ],
+                    [
+                        'color'             => '#059669',               // the colour shown in the fieldtype (required)
+                        'background'        => 'bg-emerald-600',
+                        'backgroundHover'   => 'hover:bg-emerald-800',
+                        'text'              => 'text-white',
+                        'textHover'         => 'hover:text-zinc-200'
+                    ]
+                ]
+            ],
+            [
+                'label'   => 'Red/Amber',
+                'default' => false,
+                'color'   =>  [
+                    [
+                        'color'             => '#a855f7',               // the colour shown in the fieldtype (required)
+                        'background'        => 'bg-red-500',
+                        'backgroundHover'   => 'hover:bg-red-700',
+                        'text'              => 'text-white',
+                        'textHover'         => 'hover:text-zinc-200'
+                    ],
+                    [
+                        'color'             => '#f59e0b',               // the colour shown in the fieldtype (required)
+                        'background'        => 'bg-amber-500',
+                        'backgroundHover'   => 'hover:bg-amber-700',
+                        'text'              => 'text-white',
+                        'textHover'         => 'hover:text-zinc-200'
+                    ]
+                ]
+            ],
+            [
+                'label'   => 'Sky/Rose',
+                'default' => false,
+                'color'   =>  [
+                    [
+                        'color'             => '#0ea5e9',               // the colour shown in the fieldtype (required)
+                        'background'        => 'bg-sky-500',
+                        'backgroundHover'   => 'hover:bg-sky-700',
+                        'text'              => 'text-white',
+                        'textHover'         => 'hover:text-zinc-200'
+                    ],
+                    [
+                        'color'             => '#e11d48',               // the colour shown in the fieldtype (required)
+                        'background'        => 'bg-rose-600',
+                        'backgroundHover'   => 'hover:bg-rose-800',
+                        'text'              => 'text-white',
+                        'textHover'         => 'hover:text-zinc-200'
+                    ]
+                ]
+            ],
+        ]
+    ]
+
 ];
