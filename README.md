@@ -1,4 +1,4 @@
-![colour-swatches-banner-light](./resources/banner.png)
+![colour-swatches-banner-light](./resources/img/banner.png)
 
 Create custom colour palettes with flexibility & control.
 
