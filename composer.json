@@ -2,7 +2,7 @@
     "name": "percipioglobal/craft-colour-swatches",
     "description": "Let clients choose from a predefined set of colours and utilise associated colour codes and class names in your templates.",
     "type": "craft-plugin",
-    "version": "1.5.0-RC.1",
+    "version": "1.5.0",
     "keywords": [
         "craft",
         "cms",
