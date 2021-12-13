@@ -19,10 +19,10 @@ use craft\web\twig\variables\CraftVariable;
 
 use nystudio107\pluginvite\services\VitePluginService;
 
-use percipioglobal\colourswatches\assetbundles\colorswatches\ColorSwatchesAsset;
+use percipioglobal\colourswatches\assetbundles\colourswatches\ColourSwatchesAsset;
 use percipioglobal\colourswatches\fields\ColourSwatches as ColourSwatchesField;
 use percipioglobal\colourswatches\models\SettingsModel;
-use percipioglobal\colourswatches\variables\ColorSwatchesVariable;
+use percipioglobal\colourswatches\variables\ColourSwatchesVariable;
 
 use yii\base\Event;
 
@@ -90,12 +90,12 @@ class ColourSwatches extends Plugin
             'colourswatches' => ColourSwatches::class,
             'vite' => [
                 'class' => VitePluginService::class,
-                'assetClass' => ColorSwatchesAsset::class,
+                'assetClass' => ColourSwatchesAsset::class,
                 'useDevServer' => true,
                 'devServerPublic' => 'http://localhost:3001',
                 'serverPublic' => 'http://localhost:8000',
                 'errorEntry' => '/src/js/swatches.ts',
-                'devServerInternal' => 'http://craft-colorswatches-buildchain:3001',
+                'devServerInternal' => 'http://craft-colour-swatches-buildchain:3001',
                 'checkDevServer' => true,
             ]
         ];
@@ -134,8 +134,8 @@ class ColourSwatches extends Plugin
         Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function (Event $event) {
             /** @var CraftVariable $variable */
             $variable = $event->sender;
-            $variable->set('colorswatches', [
-                'class' => ColorSwatchesVariable::class,
+            $variable->set('colourswatches', [
+                'class' => ColourSwatchesVariable::class,
                 'viteService' => $this->vite,
             ]);
         });

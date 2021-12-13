@@ -27,7 +27,7 @@ use Throwable;
 
 
 /**
- * Class Colorswatches.
+ * Class Colourswatches.
  *
  * @author    Percipio Global Ltd.
  *

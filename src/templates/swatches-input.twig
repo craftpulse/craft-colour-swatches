@@ -15,11 +15,11 @@
 
 {% set scriptTagOptions = {
     'depends': [
-        'percipioglobal\\colourswatches\\assetbundles\\colorswatches\\ColorSwatchesAsset'
+        'percipioglobal\\colourswatches\\assetbundles\\colourswatches\\ColourSwatchesAsset'
     ],
 } %}
 
-{{ craft.colorswatches.register('/src/js/swatches.ts', false, scriptTagOptions) }}
+{{ craft.colourswatches.register('/src/js/swatches.ts', false, scriptTagOptions) }}
 
 {% import "_includes/forms" as forms %}
 
@@ -32,14 +32,10 @@
             : []
     : field.options
 %}
-{#{% set options = field.useConfigFile#}
-{#    ? palettes[field.palette] is defined#}
-{#        ? palettes[field.palette]#}
-{#        : configOptions#}
-{#    : field.options %}#}
+
 {% spaceless %}
 
-    <div class="h-8 bg-green-500 text-white">
+    <div class="h-8 bg-green-500 text-white p-8">
         Tailwind Test
     </div>
 
