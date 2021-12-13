@@ -1,0 +1,27 @@
+{
+    "name": "buildchain",
+    "description": "A drop-in buildchain for using Vite in your Craft CMS plugins or modules",
+    "author": {
+        "email": "support@percipio.london",
+        "name": "percipio.london",
+        "url": "https://percipio.london"
+    },
+    "dependencies": {
+        "vue": "^3.0.5",
+        "vue-confetti": "^2.0.8"
+    },
+    "devDependencies": {
+        "@rollup/plugin-node-resolve": "^13.0.0",
+        "@vitejs/plugin-vue": "^1.2.2",
+        "@vue/compiler-sfc": "^3.0.5",
+        "autoprefixer": "^10.2.5",
+        "postcss": "^8.2.12",
+        "tailwindcss": "^2.1.2",
+        "vite": "^2.3.2",
+        "vite-plugin-restart": "0.0.2"
+    },
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    }
+}

@@ -15,7 +15,7 @@ use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
-use percipioglobal\colourswatches\assetbundles\colourswatchesfield\ColourSwatchesFieldAsset;
+use percipioglobal\colourswatches\assetbundles\colorswatches\ColorSwatchesAsset as ColorSwatchesFieldAsset;
 use percipioglobal\colourswatches\ColourSwatches as Plugin;
 use percipioglobal\colourswatches\models\ColourSwatches as ColourSwatchesModel;
 use yii\db\Schema;
@@ -152,7 +152,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     {
         // Register our asset bundle
         Craft::$app->getView()
-            ->registerAssetBundle(ColourSwatchesFieldAsset::class);
+            ->registerAssetBundle(ColorSwatchesFieldAsset::class);
 
         $config = ['instructions' => Craft::t('colour-swatches', 'Define the available colors.') , 'id' => 'options', 'name' => 'options', 'addRowLabel' => Craft::t('colour-swatches', 'Add a colour') , 'cols' => ['label' => ['heading' => Craft::t('colour-swatches', 'Label') , 'type' => 'singleline', ], 'color' => ['heading' => Craft::t('colour-swatches', 'Hex Colours (comma seperated)') , 'type' => 'singleline', ], 'default' => ['heading' => Craft::t('colour-swatches', 'Default?') , 'type' => 'checkbox', 'class' => 'thin', ], ], 'rows' => $this->options, ];
 
@@ -176,7 +176,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
 
         // Render the settings template
         return Craft::$app->getView()
-            ->renderTemplate('colour-swatches/settings',
+            ->renderTemplate('colour-swatches/swatches-settings',
                 [
                     'field' => $this,
                     'config' => $config,
@@ -194,7 +194,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     {
         // Register our asset bundle
         Craft::$app->getView()
-            ->registerAssetBundle(ColourSwatchesFieldAsset::class);
+            ->registerAssetBundle(ColorSwatchesFieldAsset::class);
 
         // Get our id and namespace
         $id = Craft::$app->getView()
@@ -207,7 +207,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
 
         // Render the input template
         return Craft::$app->getView()
-            ->renderTemplate('colour-swatches/input',
+            ->renderTemplate('colour-swatches/swatches-input',
             [
                 'name' => $this->handle,
                 'fieldValue' => $value,

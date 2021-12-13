@@ -9,38 +9,33 @@
  * @copyright Copyright (c) 2020 Percipio Global Ltd.
  */
 
-namespace percipioglobal\colourswatches\assetbundles\colourswatchesfield;
+namespace percipioglobal\colourswatches\assetbundles\colorswatches;
 
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
 
 /**
- * @author    Percipio Global Ltd.
  *
+ * @author    percipiolondon
+ * @package   Colour Swatches
  * @since     1.0.0
  */
-class ColourSwatchesFieldAsset extends AssetBundle
+class ColorSwatchesAsset extends AssetBundle
 {
     // Public Methods
     // =========================================================================
 
     /**
-     * {@inheritdoc}
+     * Initializes the bundle.
      */
     public function init()
     {
-        $this->sourcePath = '@percipioglobal/colourswatches/assetbundles/colourswatchesfield/dist';
+        // define the path that your publishable resources live
+        $this->sourcePath = "@percipioglobal/colourswatches/web/assets/dist";
 
+        // define the dependencies
         $this->depends = [
             CpAsset::class,
-        ];
-
-        $this->css = [
-            'css/ColourSwatches.css',
-        ];
-
-        $this->js = [
-            'js/ColourSwatches.js',
         ];
 
         parent::init();

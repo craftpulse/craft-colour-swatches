@@ -13,6 +13,8 @@
  */
 #}
 
+{% do view.registerAssetBundle("percipiolondon\\colourswatches\\assetbundles\\colorswatches\\ColorSwatchesAsset") %}
+
 {% import "_includes/forms" as forms %}
 
 {{ forms.lightswitchField({
@@ -49,7 +51,7 @@
     {# Default config options #}
     <div id="palette-" class="color-swatches no-pointer {{ field.useConfigFile and not field.palette ? '' : 'hidden' }}">
         {% for option in configOptions %}
-            {% include 'colour-swatches/colourOption' with {
+            {% include 'colour-swatches/swatches-options' with {
                 optionId: '1-option-' ~ loop.index,
                 option: option,
             } %}
@@ -67,7 +69,7 @@
         {% set defaultValue = null %}
         <div id="palette-{{ key }}" class="color-swatches no-pointer {{ condition ? '' : 'hidden' }}">
             {% for option in palette %}
-                {% include 'colour-swatches/colourOption' with {
+                {% include 'colour-swatches/swatches-options' with {
                     optionId: '1-option-' ~ loop.index,
                     option: option,
                 } %}

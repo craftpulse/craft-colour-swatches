@@ -13,6 +13,14 @@
  */
 #}
 
+{% set scriptTagOptions = {
+    'depends': [
+        'percipioglobal\\colourswatches\\assetbundles\\colorswatches\\ColorSwatchesAsset'
+    ],
+} %}
+
+{{ craft.colorswatches.register('/src/js/swatches.ts', false, scriptTagOptions) }}
+
 {% import "_includes/forms" as forms %}
 
 {% set defaultValue = null %}
@@ -31,6 +39,10 @@
 {#    : field.options %}#}
 {% spaceless %}
 
+    <div class="h-8 bg-green-500 text-white">
+        Tailwind Test
+    </div>
+
     {% if options|length == 0 %}
         <p>{{ "The selected colour palette for this field isn\'t defined in the `colour-swatches.php` config file"|t('colour-swatches') }}</p>
     {% endif %}
@@ -38,7 +50,7 @@
     <div id="{{ id }}" class="color-swatches">
         {# fetch our color options #}
         {% for option in options %}
-            {% include 'colour-swatches/colourOption' with {
+            {% include 'colour-swatches/swatches-options' with {
                 optionId: namespacedId ~ '-option-' ~ loop.index,
                 option: option,
             } %}
@@ -62,9 +74,10 @@
 
     </div>
 {% endspaceless -%}
-        {{ forms.hidden({
-            id: id ~ namespacedId,
-            name: name,
-            value: fieldValue,
-            class: 'color-swatches-input'})
-        }}
+
+{{ forms.hidden({
+    id: id ~ namespacedId,
+    name: name,
+    value: fieldValue,
+    class: 'color-swatches-input'})
+}}

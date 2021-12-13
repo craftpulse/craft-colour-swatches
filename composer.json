@@ -2,7 +2,7 @@
     "name": "percipioglobal/craft-colour-swatches",
     "description": "Let clients choose from a predefined set of colours and utilise associated colour codes and class names in your templates.",
     "type": "craft-plugin",
-    "version": "1.5.0",
+    "version": "1.6.0",
     "keywords": [
         "craft",
         "cms",
@@ -25,8 +25,19 @@
         }
     ],
     "require": {
-        "craftcms/cms": "^3.5.0"
+        "craftcms/cms": "^3.3.0",
+        "nystudio107/craft-plugin-vite": "^1.0.0"
     },
+    "require-dev": {
+        "codeception/codeception": "^3.0",
+        "vlucas/phpdotenv": "^3.0"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "percipioglobal\\colourswatches\\": "src/"
@@ -35,7 +46,8 @@
     "extra": {
         "name": "Colour Swatches",
         "handle": "colour-swatches",
-        "description": "Adding custom selectable colour palettes, gradients, classes and more to your field types.",
+        "developer": "percipiolondon",
+        "developerUrl": "https://percipio.london",
         "schemaVersion": "1.4.2",
         "changelogUrl": "https://raw.githubusercontent.com/percipioglobal/craft-colour-swatches/master/CHANGELOG.md",
         "class": "percipioglobal\\colourswatches\\ColourSwatches"
