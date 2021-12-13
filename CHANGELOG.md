@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.5.0.2 - 2021-12-13
+
+### Fixed
+- Fixed an issue where saving entries could still throw an internal server 500 error if it occured before updating. ( thanks to @ammannbe )
+
+## 1.5.0.1 - 2021-12-10
+### Changed
+- Plugin Icon
+- Plugin Assets
+
 ## 1.5.0 - 2021-12-10
 
 ### Changed
