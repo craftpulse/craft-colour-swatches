@@ -1,4 +1,4 @@
-TAG?=14-alpine
+TAG?=16-alpine
 CONTAINER?=$(shell basename $(dir $(CURDIR)))-buildchain
 DOCKERRUN=docker container run \
 	    --name ${CONTAINER} \
@@ -6,10 +6,11 @@ DOCKERRUN=docker container run \
 	    -t \
         --network craft-plugin-playground_default \
         -p 3001:3001 \
+		-e CPPFLAGS="-DPNG_ARM_NEON_OPT=0" \
         -v `pwd`/../:/app \
         ${CONTAINER}:${TAG}
 
-.PHONY: build dev docker install npm
+.PHONY: build dev docker install update update-clean npm
 
 build: docker install
 	${DOCKERRUN} \
@@ -24,6 +25,15 @@ docker:
 		--build-arg TAG=${TAG} \
 		--no-cache
 install: docker
+	${DOCKERRUN} \
+		install
+update: docker
+	rm -f buildchain/package-lock.json
+	${DOCKERRUN} \
+		install
+update-clean: docker
+	rm -f buildchain/package-lock.json
+	rm -rf buildchain/node_modules/
 	${DOCKERRUN} \
 		install
 npm: docker
