@@ -9,7 +9,7 @@ ColourSelectInput = Garnish.Base.extend({
     {
         this.$container = $('#'+id);
         this.$options = this.$container.find('.option');
-        this.$selectedOption = this.$options.filter('.active');
+        this.$selectedOption = this.$options.filter('.button-active');
         this.$input = this.$container.next('input');
 
         this.addListener(this.$options, 'click', 'onOptionSelect');
@@ -20,18 +20,18 @@ ColourSelectInput = Garnish.Base.extend({
         var $option = $(ev.currentTarget);
 
         // enables toggle on/off function of color buttons
-        if ($option.hasClass('active'))
+        if ($option.hasClass('button-active'))
         {
-            $option.removeClass('active');
+            $option.removeClass('button-active');
             this.$selectedOption = null;
-            this.$input.val("");
+            this.$input.val('');
             return;
         }
 
         if (this.$selectedOption) {
-            this.$selectedOption.removeClass('active');
+            this.$selectedOption.removeClass('button-active');
         }
-        this.$selectedOption = $option.addClass('active');
+        this.$selectedOption = $option.addClass('button-active');
         this.$input.val(JSON.stringify($option.data('value')));
     }
 

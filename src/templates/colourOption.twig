@@ -12,7 +12,7 @@
         label: option.label,
         color: colours,
     } %}
-    <button type="button" title="{{ option.label }}" data-value="{{ value | json_encode }}" class="option {% if (isDefault and active is null) or (active is not empty and (value.label == active)) %} active{% endif %}" style="
+    <button type="button" title="{{ option.label }}" data-value="{{ value | json_encode }}" class="option {% if (isDefault and active is null) or (active is not empty and (value.label == active)) %} button-active{% endif %}" style="
         {% switch colours | length %}
             {% case 1 %}
                 --color: {{ value.color[0].color is defined ? value.color[0].color : value.color[0].colour |parseRefs|raw }};
@@ -34,7 +34,7 @@
     {% else %}
         {% set colours = value.color | split(',') %}
     {% endif %}
-    <button type="button" title="{{ option.label }}" data-value="{{ value | json_encode }}" class="option {% if (isDefault and active is null) or (active is not empty and (value.label == active)) %} active{% endif %}" style="
+    <button type="button" title="{{ option.label }}" data-value="{{ value | json_encode }}" class="option {% if (isDefault and active is null) or (active is not empty and (value.label == active)) %} button-active{% endif %}" style="
         {% switch colours | length %}
         {% case 1 %}
             --color: {{ value.color|parseRefs|raw }};

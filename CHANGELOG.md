@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.5.0.4 - 2021-12-13
+
+### Fixed
+- Fixed issue where active class was not showing up correctly [#78](https://github.com/percipioglobal/craft-colour-swatches/issues/78)
+
 ## 1.5.0.3 - 2021-12-13
 
 ### Changed
