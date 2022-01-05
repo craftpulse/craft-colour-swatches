@@ -114,7 +114,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
 
         // if useConfigFile got setted, fetch the objects from that file
         if($this->useConfigFile){
-            if(Plugin::$plugin->settings->palettes[$this->palette]){
+            if(Plugin::$plugin->settings->palettes[$this->palette] ?? false){
                 //if the palette with the value exists, return this as the settings palette
                 $settingsPalette = Plugin::$plugin->settings->palettes[$this->palette];
             }else{
