@@ -13,6 +13,7 @@ export default ({ command }) => ({
         rollupOptions: {
             input: {
                 swatches: '/src/js/swatches.ts',
+                'swatches-field': '/src/js/swatches-field.ts',
             },
             output: {
                 sourcemap: true

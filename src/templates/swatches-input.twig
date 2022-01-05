@@ -20,10 +20,24 @@
 } %}
 
 {{ craft.colourswatches.register('/src/js/swatches.ts', false, scriptTagOptions) }}
+{{ craft.colourswatches.register('/src/js/swatches-field.ts', false, scriptTagOptions) }}
 
-{% import "_includes/forms" as forms %}
+{%- set colors = field.useConfigFile ? palettes[field.palette] is defined ? palettes[field.palette] : field.palette == '' ? configOptions : [] : field.options -%}
 
-{% set defaultValue = null %}
+{%- set options = {
+    palette: colors,
+    selectedSwatch: fieldValue ?? null,
+    id: id,
+    namespaceId: namespacedId
+} -%}
+
+<div id="{{- name -}}_swatches" class="mt-6">
+    <swatch-selection :options="{{- options | json_encode -}}"></swatch-selection>
+</div>
+
+{# {% import "_includes/forms" as forms %} #}
+
+{# {% set defaultValue = null %}
 {% set options = field.useConfigFile
     ? palettes[field.palette] is defined
         ? palettes[field.palette]
@@ -33,9 +47,9 @@
     : field.options
 %}
 
-{% spaceless %}
+{% spaceless %} #}
 
-    <div class="h-8 bg-green-500 text-white p-8">
+{#     <div class="h-8 bg-green-500 text-white p-8">
         Tailwind Test
     </div>
 
@@ -43,25 +57,26 @@
         <p>{{ "The selected colour palette for this field isn\'t defined in the `colour-swatches.php` config file"|t('colour-swatches') }}</p>
     {% endif %}
 
-    <div id="{{ id }}" class="color-swatches">
+    <div id="{{ id }}" class="color-swatches"> #}
+
         {# fetch our color options #}
-        {% for option in options %}
+        {#  {% for option in options %}
             {% include 'colour-swatches/swatches-options' with {
                 optionId: namespacedId ~ '-option-' ~ loop.index,
                 option: option,
-            } %}
+            } %} #}
 
             {# Set the default value #}
-            {% if option.default %}
+            {# {% if option.default %}
                 {% set value = {
                     label: option.label,
                     color: option.color is defined ? option.color : option.colour,
                 } %}
                 {% set defaultValue = value|json_encode %}
             {% endif %}
-        {% endfor %}
+        {% endfor %} #}
 
-        {% if fieldValue.color is defined %}
+        {# {% if fieldValue.color is defined %}
             {% set fieldValue = fieldValue|json_encode %}
         {%  else %}
             {% set fieldValue = '' %}
@@ -76,4 +91,4 @@
     name: name,
     value: fieldValue,
     class: 'color-swatches-input'})
-}}
+}} #}

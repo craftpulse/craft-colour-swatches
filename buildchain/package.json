@@ -11,6 +11,7 @@
     },
     "devDependencies": {
         "@rollup/plugin-node-resolve": "^13.0.0",
+        "@tailwindcss/line-clamp": "^0.3.0",
         "@vitejs/plugin-vue": "^1.10.0",
         "@vue/compiler-sfc": "^3.2.0",
         "autoprefixer": "^10.4.0",

@@ -15,9 +15,14 @@ use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
+use craft\base\SortableFieldInterface;
+
+use craft\helpers\Json;
+
 use percipioglobal\colourswatches\assetbundles\colourswatches\ColourSwatchesAsset as ColourSwatchesFieldAsset;
 use percipioglobal\colourswatches\ColourSwatches as Plugin;
 use percipioglobal\colourswatches\models\ColourSwatches as ColourSwatchesModel;
+
 use yii\db\Schema;
 
 /**
@@ -25,7 +30,7 @@ use yii\db\Schema;
  *
  * @since     1.0.0
  */
-class ColourSwatches extends Field implements PreviewableFieldInterface
+class ColourSwatches extends Field implements PreviewableFieldInterface, SortableFieldInterface
 {
     // Public Properties
     // =========================================================================
@@ -193,21 +198,17 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     public function getInputHtml($value, ElementInterface $element = null): string
     {
         // Register our asset bundle
-        Craft::$app->getView()
-            ->registerAssetBundle(ColourSwatchesFieldAsset::class);
+        Craft::$app->getView()->registerAssetBundle(ColourSwatchesFieldAsset::class);
 
         // Get our id and namespace
-        $id = Craft::$app->getView()
-            ->formatInputId($this->handle);
-        $namespacedId = Craft::$app->getView()
-            ->namespaceInputId($id);
+        $id = Craft::$app->getView()->formatInputId($this->handle);
+        $namespacedId = Craft::$app->getView()->namespaceInputId($id);
 
-        Craft::$app->getView()
-            ->registerJs("new ColourSelectInput('{$namespacedId}');");
+        
 
         // Render the input template
-        return Craft::$app->getView()
-            ->renderTemplate('colour-swatches/swatches-input',
+        return Craft::$app->getView()->renderTemplate(
+            'colour-swatches/swatches-input',
             [
                 'name' => $this->handle,
                 'fieldValue' => $value,
