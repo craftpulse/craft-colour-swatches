@@ -8,5 +8,5 @@ class Settings extends Model
 {
     public $colors = [];
     public $palettes = [];
-    public $default = 0;
+    public $default = null;
 }
