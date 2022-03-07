@@ -43,7 +43,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     /** @var string */
     public $palette = null;
 
-    /** @var int */
+    /** @var int|string */
     public $default = null;
 
     // Static Methods
@@ -136,7 +136,9 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
         //if nothing got set, use the default if that exists
         if(!$saveValue){
             foreach($settingsPalette as $key => $palette){
-                if(is_array($palette) && ($key + 1) == $this->default){
+                $paletteId = is_int($key) ? ($key + 1) : $key;
+
+                if(is_array($palette) && $paletteId == $this->default){
                     $saveValue = $palette;
                 }
             }
