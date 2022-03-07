@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.5.1 - 2021-03-07
+
+### Changed
+- It is now possible to also use string keys as indices rather than integers only. [#82](https://github.com/percipioglobal/craft-colour-swatches/issues/82) ( thanks to @timeverts )
+
 ## 1.5.0.4 - 2021-12-13
 
 ### Fixed
