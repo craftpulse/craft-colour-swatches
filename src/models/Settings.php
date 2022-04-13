@@ -1,6 +1,6 @@
 <?php
 
-namespace percipioglobal\colourswatches\models;
+namespace percipiolondon\colourswatches\models;
 
 use craft\base\Model;
 

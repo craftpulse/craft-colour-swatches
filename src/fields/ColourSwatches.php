@@ -9,15 +9,15 @@
  * @copyright Copyright (c) 2020 Percipio Global Ltd.
  */
 
-namespace percipioglobal\colourswatches\fields;
+namespace percipiolondon\colourswatches\fields;
 
 use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
-use percipioglobal\colourswatches\assetbundles\colourswatchesfield\ColourSwatchesFieldAsset;
-use percipioglobal\colourswatches\ColourSwatches as Plugin;
-use percipioglobal\colourswatches\models\ColourSwatches as ColourSwatchesModel;
+use percipiolondon\colourswatches\assetbundles\colourswatchesfield\ColourSwatchesFieldAsset;
+use percipiolondon\colourswatches\ColourSwatches as Plugin;
+use percipiolondon\colourswatches\models\ColourSwatches as ColourSwatchesModel;
 use yii\db\Schema;
 
 /**

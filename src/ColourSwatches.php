@@ -9,13 +9,13 @@
  * @copyright Copyright (c) 2020 Percipio Global Ltd.
  */
 
-namespace percipioglobal\colourswatches;
+namespace percipiolondon\colourswatches;
 
 use craft\base\Plugin;
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Fields;
-use percipioglobal\colourswatches\fields\ColourSwatches as ColourSwatchesField;
-use percipioglobal\colourswatches\models\Settings;
+use percipiolondon\colourswatches\fields\ColourSwatches as ColourSwatchesField;
+use percipiolondon\colourswatches\models\Settings;
 use yii\base\Event;
 
 /**

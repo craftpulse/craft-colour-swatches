@@ -1,6 +1,6 @@
 <?php
 
-namespace percipioglobal\colourswatches\migrations;
+namespace percipiolondon\colourswatches\migrations;
 
 use craft\db\Migration;
 

@@ -9,7 +9,7 @@
  * @copyright Copyright (c) 2020 Percipio Global Ltd.
  */
 
-namespace percipioglobal\colourswatches\elements;
+namespace percipiolondon\colourswatches\elements;
 
 use craft\base\Element;
 use craft\elements\db\ElementQueryInterface;
