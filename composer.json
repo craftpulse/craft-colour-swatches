@@ -9,13 +9,15 @@
         "craftcms",
         "craft-plugin",
         "colour-swatches",
-        "color-swatches"
+        "color-swatches",
+        "colors",
+        "colours",
+        "swatches"
     ],
     "support": {
         "email": "support@percipio.london",
         "docs": "https://github.com/percipioglobal/craft-colour-swatches/blob/v4/README.md",
-        "issues": "https://github.com/percipioglobal/craft-colour-swatches/issues",
-        "source": "https://github.com/percipioglobal/craft-colour-swatches"
+        "issues": "https://github.com/percipioglobal/craft-colour-swatches/issues"
     },
     "license": "MIT",
     "authors": [
@@ -27,15 +29,16 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
+        "php": "^8.0.2",
         "craftcms/cms": "^4.0.0-beta.1"
+    },
+    "require-dev": {
+        "craftcms/phpstan": "dev-main"
     },
     "autoload": {
         "psr-4": {
             "percipiolondon\\colourswatches\\": "src/"
         }
-    },
-    "scripts": {
-        "phpstan": "phpstan --memory-limit=1G"
     },
     "extra": {
         "name": "Colour Swatches",
@@ -44,5 +47,14 @@
         "schemaVersion": "1.4.2",
         "changelogUrl": "https://raw.githubusercontent.com/percipioglobal/craft-colour-swatches/v4/CHANGELOG.md",
         "class": "percipiolondon\\colourswatches\\ColourSwatches"
+    },
+    "scripts": {
+        "phpstan": "phpstan --memory-limit=1G"
+    },
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true,
+            "craftcms/plugin-installer": true
+        }
     }
 }
