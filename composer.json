@@ -45,6 +45,9 @@
         "handle": "colour-swatches",
         "description": "Adding custom selectable colour palettes, gradients, classes and more to your field types.",
         "schemaVersion": "1.4.2",
+        "developer": "percipiolondon",
+        "developerUrl": "https://percipio.london",
+        "documentationUrl": "https://github.com/percipioglobal/craft-colour-swatches/blob/v4/README.md",
         "changelogUrl": "https://raw.githubusercontent.com/percipioglobal/craft-colour-swatches/v4/CHANGELOG.md",
         "class": "percipiolondon\\colourswatches\\ColourSwatches"
     },
