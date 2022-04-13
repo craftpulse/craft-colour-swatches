@@ -15,23 +15,22 @@ class ColourSwatches extends Model
 
     public function __construct($value)
     {
-        if($this->validateJson($value)){
+        if ($this->validateJson($value)) {
 
             // typecast our object to an array
             $colorData = (array)json_decode($value);
             $value = null;
             $color = array_filter($colorData);
-                // if our array has usable data
-                if (!empty($colorData['label']))
-                  {
-                    $this->label = $colorData['label'];
-                    $this->color = $colorData['color'];
-                  }
-                // else ensure we return a null value (only really needed for old data stores)
-                else {
-                    $value = null;
-                }
-         // else ensure we return a null value
+            // if our array has usable data
+            if (!empty($colorData['label'])) {
+                $this->label = $colorData['label'];
+                $this->color = $colorData['color'];
+            }
+            // else ensure we return a null value (only really needed for old data stores)
+            else {
+                $value = null;
+            }
+            // else ensure we return a null value
         } else {
             $value = null;
         }
@@ -58,5 +57,4 @@ class ColourSwatches extends Model
     {
         return $this->label;
     }
-
 }

@@ -18,7 +18,6 @@ use percipioglobal\colourswatches\fields\ColourSwatches as ColourSwatchesField;
 use percipioglobal\colourswatches\models\Settings;
 use yii\base\Event;
 
-
 /**
  * Class Colorswatches.
  *
@@ -50,7 +49,7 @@ class ColourSwatches extends Plugin
         Event::on(
             Fields::class,
             Fields::EVENT_REGISTER_FIELD_TYPES,
-            function (RegisterComponentTypesEvent $event) {
+            function(RegisterComponentTypesEvent $event) {
                 $event->types[] = ColourSwatchesField::class;
             }
         );
@@ -60,5 +59,4 @@ class ColourSwatches extends Plugin
     {
         return new Settings();
     }
-
 }

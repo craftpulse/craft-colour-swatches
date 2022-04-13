@@ -11,20 +11,8 @@
 
 namespace percipioglobal\colourswatches\elements;
 
-use Craft;
 use craft\base\Element;
-use craft\db\Query;
-use craft\db\Table;
-use craft\elements\Entry;
-use craft\elements\actions\Delete;
-use craft\elements\actions\Restore;
 use craft\elements\db\ElementQueryInterface;
-
-use yii\base\Exception;
-use yii\base\InvalidConfigException;
-use yii\validators\Validator;
-use Throwable;
-
 
 /**
  * Class Colorswatches.

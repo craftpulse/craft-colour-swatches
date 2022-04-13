@@ -2,7 +2,6 @@
 
 namespace percipioglobal\colourswatches\migrations;
 
-use Craft;
 use craft\db\Migration;
 
 /**
@@ -20,11 +19,11 @@ class m200911_142127_update_namespace extends Migration
         $this->update(
             '{{%fields}}',
             [
-                'type' => 'percipioglobal\\colourswatches\\fields\\ColourSwatches'
+                'type' => 'percipioglobal\\colourswatches\\fields\\ColourSwatches',
             ],
             'type = :riastype',
             [
-                ':riastype' => 'rias\\colourswatches\\fields\\ColourSwatches'
+                ':riastype' => 'rias\\colourswatches\\fields\\ColourSwatches',
             ]
         );
 
