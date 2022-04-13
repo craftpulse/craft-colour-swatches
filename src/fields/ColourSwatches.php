@@ -63,7 +63,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         $rules = parent::rules();
         $rules = array_merge($rules, [['options', 'each', 'rule' => ['required']], ]);
@@ -74,7 +74,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     /**
      * {@inheritdoc}
      */
-    public function getContentColumnType(): string
+    public function getContentColumnType()
     {
         return Schema::TYPE_TEXT;
     }
@@ -82,7 +82,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     /**
      * {@inheritdoc}
      */
-    public function normalizeValue($value, ElementInterface $element = null)
+    public function normalizeValue($value, ?\craft\base\ElementInterface $element = null)
     {
         if ($value instanceof ColourSwatchesModel) {
             return $value;
@@ -104,7 +104,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     /**
      * {@inheritdoc}
      */
-    public function serializeValue($value, ElementInterface $element = null)
+    public function serializeValue($value, ?\craft\base\ElementInterface $element = null)
     {
         $settingsPalette = $this->options;
         $saveValue = null;
@@ -147,7 +147,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     /**
      * {@inheritdoc}
      */
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
         // Register our asset bundle
         Craft::$app->getView()
@@ -187,7 +187,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     /**
      * {@inheritdoc}
      */
-    public function getInputHtml($value, ElementInterface $element = null): string
+    public function getInputHtml($value, ?\craft\base\ElementInterface $element = null): string
     {
         // Register our asset bundle
         Craft::$app->getView()
