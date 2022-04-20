@@ -11,6 +11,7 @@
 
 namespace percipiolondon\colourswatches;
 
+use Craft;
 use craft\base\Plugin;
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Fields;
@@ -19,11 +20,14 @@ use percipiolondon\colourswatches\models\Settings;
 use yii\base\Event;
 
 /**
- * Class Colorswatches.
+ * Class ColourSwatches.
  *
  * @author    Percipio Global Ltd.
  *
  * @since     1.0.0
+ * @property Settings $settings
+ *
+ * @method Settings getSettings()
  */
 class ColourSwatches extends Plugin
 {
@@ -33,15 +37,23 @@ class ColourSwatches extends Plugin
     /**
      * @var ColourSwatches
      */
-    public static $plugin;
+    public static ColourSwatches $plugin;
+
+    // Public Properties
+    // =========================================================================
+
+    /**
+     * @var string
+     */
+    public string $schemaVersion = '1.4.2';
 
     // Public Methods
     // =========================================================================
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         self::$plugin = $this;
@@ -53,9 +65,18 @@ class ColourSwatches extends Plugin
                 $event->types[] = ColourSwatchesField::class;
             }
         );
+
+        Craft::info(
+            Craft::t(
+                'colour-swatches',
+                '{name} plugin loaded',
+                ['name' => $this->name]
+            ),
+            __METHOD__
+        );
     }
 
-    protected function createSettingsModel(): ?\craft\base\Model
+    protected function createSettingsModel(): Settings
     {
         return new Settings();
     }

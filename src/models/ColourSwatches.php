@@ -3,47 +3,43 @@
 namespace percipiolondon\colourswatches\models;
 
 use craft\base\Model;
+use craft\helpers\Json;
 
 class ColourSwatches extends Model
 {
     /**
      * @var string
      */
+    public string $label = '';
 
-    public $label = '';
-    public $color = '';
+    /**
+     * @var string
+     */
+    public string $color = '';
 
+    /**
+     * @inheritdoc
+     */
     public function __construct($value)
     {
         if ($this->validateJson($value)) {
 
-            // typecast our object to an array
-            $colorData = (array)json_decode($value);
-            $value = null;
-            $color = array_filter($colorData);
-            // if our array has usable data
+            $colorData = Json::decode($value);
             if (!empty($colorData['label'])) {
                 $this->label = $colorData['label'];
                 $this->color = $colorData['color'];
             }
-            // else ensure we return a null value (only really needed for old data stores)
-            else {
-                $value = null;
-            }
-            // else ensure we return a null value
-        } else {
-            $value = null;
         }
     }
 
     // making sure we have json data, returns boolean(true) if this is the case
-    public function validateJson($value)
+    public function validateJson($value): bool
     {
-        $json = json_decode($value);
+        $json = Json::decode($value);
         return $json && $value != $json;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->label;
     }

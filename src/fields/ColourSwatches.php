@@ -15,6 +15,7 @@ use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
+use craft\helpers\Json;
 use percipiolondon\colourswatches\assetbundles\colourswatchesfield\ColourSwatchesFieldAsset;
 use percipiolondon\colourswatches\ColourSwatches as Plugin;
 use percipiolondon\colourswatches\models\ColourSwatches as ColourSwatchesModel;
@@ -24,6 +25,9 @@ use yii\db\Schema;
  * @author    Percipio Global Ltd.
  *
  * @since     1.0.0
+ *
+ * @property-read string|array $contentColumnType
+ * @property-read null|string $settingsHtml
  */
 class ColourSwatches extends Field implements PreviewableFieldInterface
 {
@@ -35,22 +39,22 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
      *
      * @var array
      */
-    public $options = [];
+    public array $options = [];
 
     /** @var bool */
-    public $useConfigFile = false;
+    public bool $useConfigFile = false;
 
-    /** @var string */
-    public $palette = null;
+    /** @var string|null */
+    public ?string $palette = null;
 
-    /** @var int|string */
-    public $default = null;
+    /** @var int|string|null */
+    public string|int|null $default = null;
 
     // Static Methods
     // =========================================================================
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function displayName(): string
     {
@@ -61,7 +65,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     // =========================================================================
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function rules(): array
     {
@@ -72,17 +76,17 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function getContentColumnType()
+    public function getContentColumnType(): array|string
     {
         return Schema::TYPE_TEXT;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function normalizeValue($value, ?\craft\base\ElementInterface $element = null)
+    public function normalizeValue(mixed $value, ?ElementInterface $element = null): mixed
     {
         if ($value instanceof ColourSwatchesModel) {
             return $value;
@@ -90,21 +94,19 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
 
         // Check to see if this is already an array, which happens in some cases (Vizy)
         if (is_array($value)) {
-            $value = json_encode($value);
+            $value = Json::encode($value);
         }
 
         // quick array transform so that we can ensure and `required fields` fire an error
-        $valueData = (array)json_decode($value);
-        // if we have actual data return model
-        if (count($valueData) > 0) {
-            return new ColourSwatchesModel($value);
-        }
+        $valueData = (array)Json::decode($value);
+
+        return new ColourSwatchesModel($value);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function serializeValue($value, ?\craft\base\ElementInterface $element = null)
+    public function serializeValue($value, ?ElementInterface $element = null): mixed
     {
         $settingsPalette = $this->options;
         $saveValue = null;
@@ -145,7 +147,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getSettingsHtml(): ?string
     {
@@ -185,9 +187,9 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function getInputHtml($value, ?\craft\base\ElementInterface $element = null): string
+    public function getInputHtml($value, ?ElementInterface $element = null): string
     {
         // Register our asset bundle
         Craft::$app->getView()
@@ -218,7 +220,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {
@@ -251,6 +253,5 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
             }
         }
         return '<div class="color small static"><div class="color-preview" style="' . $style . '"></div></div>';
-        // return print_r($color);
     }
 }
