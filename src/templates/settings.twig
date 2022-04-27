@@ -17,7 +17,7 @@
 
 {{ forms.lightswitchField({
     label: 'Use config options'|t('colour-swatches'),
-    instructions: 'Whether to use the config options or palettes defined in `colour-swatches.php` or a custom config.'|t('colour-swatches'),
+    instructions: 'Use CMS based config options or your colour palettes defined in `colour-swatches.php`.'|t('colour-swatches'),
     name: 'useConfigFile',
     on: field.useConfigFile,
     toggle: 'preview',
@@ -25,19 +25,18 @@
 }) }}
 
 <div id="settings" class="color-swatches-options {{ field.useConfigFile ? 'hidden' : '' }}">
-    {% if field.useConfigFile == 0 %}
-        {{ forms.editableTable(config) }}
-    {% endif %}
+    {{ forms.editableTable(config) }}
 </div>
 
 <div id="preview" class="{{ field.useConfigFile ? '' : 'hidden' }}">
-    
+
     <div class="field {{ paletteOptions|length > 1 ? '' : 'hidden' }}">
         {{ forms.selectField({
             label: 'Palette'|t('colour-swatches'),
             name: 'palette',
             options: paletteOptions,
             value: field.palette ? field.palette : null,
+            instructions: 'If you want to change the default, please update the `colour-swatches.php` config file.'|t('colour-swatches'),
             toggle: true,
             targetPrefix: 'palette-'
         }) }}
@@ -48,7 +47,7 @@
     {% endif %}
 
     {# Default config options #}
-    <div id="palette-" class="color-swatches {{ field.useConfigFile and not field.palette ? '' : 'hidden' }}">
+    <div id="palette-" class="color-swatches no-pointer {{ field.useConfigFile and not field.palette ? '' : 'hidden' }}">
         {% for option in configOptions %}
             {% include 'colour-swatches/colourOption' with {
                 optionId: '1-option-' ~ loop.index,
@@ -66,7 +65,7 @@
         {% endif %}
 
         {% set defaultValue = null %}
-        <div id="palette-{{ key }}" class="color-swatches {{ condition ? '' : 'hidden' }}">
+        <div id="palette-{{ key }}" class="color-swatches no-pointer {{ condition ? '' : 'hidden' }}">
             {% for option in palette %}
                 {% include 'colour-swatches/colourOption' with {
                     optionId: '1-option-' ~ loop.index,
@@ -75,4 +74,5 @@
             {% endfor %}
         </div>
     {% endfor %}
+
 </div>

@@ -16,34 +16,51 @@
 {% import "_includes/forms" as forms %}
 
 {% set defaultValue = null %}
-{% set options = field.useConfigFile ? field.palette ? palettes[field.palette] : configOptions : field.options %}
+{% set options = field.useConfigFile
+    ? palettes[field.palette] is defined
+    ? palettes[field.palette]
+    : field.palette == ''
+    ? configOptions
+    : []
+    : field.options
+%}
+{#{% set options = field.useConfigFile#}
+{#    ? palettes[field.palette] is defined#}
+{#        ? palettes[field.palette]#}
+{#        : configOptions#}
+{#    : field.options %}#}
 {% apply spaceless %}
-<div id="{{ id }}" class="color-swatches">
+
+    {% if options|length == 0 %}
+        <p>{{ "The selected colour palette for this field isn\'t defined in the `colour-swatches.php` config file"|t('colour-swatches') }}</p>
+    {% endif %}
+
+    <div id="{{ id }}" class="color-swatches">
         {# fetch our color options #}
         {% for option in options %}
-                {% include 'colour-swatches/colourOption' with {
-                    optionId: namespacedId ~ '-option-' ~ loop.index,
-                    option: option,
-                } %}
+            {% include 'colour-swatches/colourOption' with {
+                optionId: namespacedId ~ '-option-' ~ loop.index,
+                option: option,
+            } %}
 
-                {# Set the default value #}
-                {% if option.default %}
-                    {% set value = {
-                        label: option.label,
-                        color: option.color is defined ? option.color : option.colour,
-                    } %}
-                    {% set defaultValue = value|json_encode %}
-                {% endif %}
+            {# Set the default value #}
+            {% if option.default %}
+                {% set value = {
+                    label: option.label,
+                    color: option.color is defined ? option.color : option.colour,
+                } %}
+                {% set defaultValue = value|json_encode %}
+            {% endif %}
         {% endfor %}
 
         {% if fieldValue.color is defined %}
-                {% set fieldValue = fieldValue|json_encode %}
+            {% set fieldValue = fieldValue|json_encode %}
         {%  else %}
-                {% set fieldValue = '' %}
+            {% set fieldValue = '' %}
         {%  endif %}
         {% set fieldValue = fieldValue ? fieldValue : defaultValue %}
 
-</div>
+    </div>
 {% endapply -%}
         {{ forms.hidden({
             id: id ~ namespacedId,
