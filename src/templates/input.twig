@@ -17,7 +17,7 @@
 
 {% set defaultValue = null %}
 {% set options = field.useConfigFile ? field.palette ? palettes[field.palette] : configOptions : field.options %}
-{% spaceless %}
+{% apply spaceless %}
 <div id="{{ id }}" class="color-swatches">
         {# fetch our color options #}
         {% for option in options %}
@@ -44,7 +44,7 @@
         {% set fieldValue = fieldValue ? fieldValue : defaultValue %}
 
 </div>
-{% endspaceless -%}
+{% endapply -%}
         {{ forms.hidden({
             id: id ~ namespacedId,
             name: name,
