@@ -29,7 +29,7 @@
 {#        ? palettes[field.palette]#}
 {#        : configOptions#}
 {#    : field.options %}#}
-{% spaceless %}
+{% apply spaceless %}
 
     {% if options|length == 0 %}
         <p>{{ "The selected colour palette for this field isn\'t defined in the `colour-swatches.php` config file"|t('colour-swatches') }}</p>
@@ -61,7 +61,7 @@
         {% set fieldValue = fieldValue ? fieldValue : defaultValue %}
 
     </div>
-{% endspaceless -%}
+{% endapply %}
         {{ forms.hidden({
             id: id ~ namespacedId,
             name: name,
