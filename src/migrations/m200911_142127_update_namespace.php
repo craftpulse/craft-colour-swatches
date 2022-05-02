@@ -9,7 +9,6 @@ use craft\db\Migration;
  */
 class m200911_142127_update_namespace extends Migration
 {
-
     /**
      * @return bool
      */

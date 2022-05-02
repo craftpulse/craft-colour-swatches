@@ -26,9 +26,9 @@ class ColourSwatches extends Model
     /**
      * ColourSwatches constructor.
      *
-     * @param $value
+     * @param string $value
      */
-    public function __construct($value)
+    public function __construct(string $value)
     {
         if ($this->validateJson($value)) {
             $colorData = Json::decode($value);
@@ -42,10 +42,10 @@ class ColourSwatches extends Model
     // making sure we have json data, returns boolean(true) if this is the case
 
     /**
-     * @param $value
+     * @param string $value
      * @return bool
      */
-    public function validateJson($value): bool
+    public function validateJson(string $value): bool
     {
         $json = Json::decode($value);
         return $json && $value != $json;
