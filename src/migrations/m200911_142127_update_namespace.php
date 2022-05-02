@@ -9,10 +9,11 @@ use craft\db\Migration;
  */
 class m200911_142127_update_namespace extends Migration
 {
+
     /**
-     * @inheritdoc
+     * @return bool
      */
-    public function safeUp()
+    public function safeUp(): bool
     {
         echo "update_namespace updating .\n";
 
@@ -30,10 +31,11 @@ class m200911_142127_update_namespace extends Migration
         return true;
     }
 
+
     /**
-     * @inheritdoc
+     * @return false
      */
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m200911_142127_update_namespace cannot be reverted.\n";
         return false;

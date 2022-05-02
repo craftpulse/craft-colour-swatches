@@ -27,7 +27,7 @@ class ColourSwatchesFieldAsset extends AssetBundle
     /**
      * {@inheritdoc}
      */
-    public function init()
+    public function init(): void
     {
         $this->sourcePath = '@percipiolondon/colourswatches/assetbundles/colourswatchesfield/dist';
 

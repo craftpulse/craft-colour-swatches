@@ -53,8 +53,9 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     // Static Methods
     // =========================================================================
 
+
     /**
-     * @inheritdoc
+     * @return string
      */
     public static function displayName(): string
     {
@@ -64,8 +65,9 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     // Public Methods
     // =========================================================================
 
+
     /**
-     * @inheritdoc
+     * @return array
      */
     public function rules(): array
     {
@@ -75,16 +77,20 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
         return $rules;
     }
 
+
     /**
-     * @inheritdoc
+     * @return array|string
      */
     public function getContentColumnType(): array|string
     {
         return Schema::TYPE_TEXT;
     }
 
+
     /**
-     * @inheritdoc
+     * @param mixed $value
+     * @param ElementInterface|null $element
+     * @return mixed
      */
     public function normalizeValue(mixed $value, ?ElementInterface $element = null): mixed
     {
@@ -103,8 +109,11 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
         return new ColourSwatchesModel($value);
     }
 
+
     /**
-     * @inheritdoc
+     * @param mixed $value
+     * @param ElementInterface|null $element
+     * @return mixed
      */
     public function serializeValue($value, ?ElementInterface $element = null): mixed
     {
@@ -146,8 +155,14 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
         return $saveValue;
     }
 
+
     /**
-     * @inheritdoc
+     * @return string|null
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getSettingsHtml(): ?string
     {
@@ -209,8 +224,16 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
             );
     }
 
+
     /**
-     * @inheritdoc
+     * @param mixed $value
+     * @param ElementInterface|null $element
+     * @return string
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getInputHtml($value, ?ElementInterface $element = null): string
     {
@@ -242,8 +265,11 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
         );
     }
 
+
     /**
-     * @inheritdoc
+     * @param mixed $value
+     * @param ElementInterface $element
+     * @return string
      */
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {
