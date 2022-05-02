@@ -13,9 +13,9 @@ class ColourSwatches extends Model
     public string $label = '';
 
     /**
-     * @var string
+     * @var array|string|null
      */
-    public string $color = '';
+    public array|string|null $color = null;
 
     /**
      * @inheritdoc
@@ -23,7 +23,6 @@ class ColourSwatches extends Model
     public function __construct($value)
     {
         if ($this->validateJson($value)) {
-
             $colorData = Json::decode($value);
             if (!empty($colorData['label'])) {
                 $this->label = $colorData['label'];
