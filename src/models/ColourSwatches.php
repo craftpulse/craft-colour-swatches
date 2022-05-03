@@ -5,6 +5,11 @@ namespace percipiolondon\colourswatches\models;
 use craft\base\Model;
 use craft\helpers\Json;
 
+/**
+ * Class ColourSwatches
+ *
+ * @package percipiolondon\colourswatches\models
+ */
 class ColourSwatches extends Model
 {
     /**
@@ -13,17 +18,19 @@ class ColourSwatches extends Model
     public string $label = '';
 
     /**
-     * @var string
+     * @var array|string|null
      */
-    public string $color = '';
+    public array|string|null $color = null;
+
 
     /**
-     * @inheritdoc
+     * ColourSwatches constructor.
+     *
+     * @param string $value
      */
-    public function __construct($value)
+    public function __construct(string $value)
     {
         if ($this->validateJson($value)) {
-
             $colorData = Json::decode($value);
             if (!empty($colorData['label'])) {
                 $this->label = $colorData['label'];
@@ -33,22 +40,36 @@ class ColourSwatches extends Model
     }
 
     // making sure we have json data, returns boolean(true) if this is the case
-    public function validateJson($value): bool
+
+    /**
+     * @param string $value
+     * @return bool
+     */
+    public function validateJson(string $value): bool
     {
         $json = Json::decode($value);
         return $json && $value != $json;
     }
 
+    /**
+     * @return string
+     */
     public function __toString(): string
     {
         return $this->label;
     }
 
+    /**
+     * @return array|mixed|string|null
+     */
     public function colors()
     {
         return $this->color;
     }
 
+    /**
+     * @return mixed|string
+     */
     public function labels()
     {
         return $this->label;

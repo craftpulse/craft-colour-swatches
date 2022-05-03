@@ -53,8 +53,9 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     // Static Methods
     // =========================================================================
 
+
     /**
-     * @inheritdoc
+     * @return string
      */
     public static function displayName(): string
     {
@@ -64,8 +65,9 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     // Public Methods
     // =========================================================================
 
+
     /**
-     * @inheritdoc
+     * @return array
      */
     public function rules(): array
     {
@@ -75,16 +77,20 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
         return $rules;
     }
 
+
     /**
-     * @inheritdoc
+     * @return array|string
      */
     public function getContentColumnType(): array|string
     {
         return Schema::TYPE_TEXT;
     }
 
+
     /**
-     * @inheritdoc
+     * @param mixed $value
+     * @param ElementInterface|null $element
+     * @return mixed
      */
     public function normalizeValue(mixed $value, ?ElementInterface $element = null): mixed
     {
@@ -103,8 +109,11 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
         return new ColourSwatchesModel($value);
     }
 
+
     /**
-     * @inheritdoc
+     * @param mixed $value
+     * @param ElementInterface|null $element
+     * @return mixed
      */
     public function serializeValue($value, ?ElementInterface $element = null): mixed
     {
@@ -146,8 +155,14 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
         return $saveValue;
     }
 
+
     /**
-     * @inheritdoc
+     * @return string|null
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getSettingsHtml(): ?string
     {
@@ -155,7 +170,30 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
         Craft::$app->getView()
             ->registerAssetBundle(ColourSwatchesFieldAsset::class);
 
-        $config = ['instructions' => Craft::t('colour-swatches', 'Define the available colors.'), 'id' => 'options', 'name' => 'options', 'addRowLabel' => Craft::t('colour-swatches', 'Add a colour'), 'cols' => ['label' => ['heading' => Craft::t('colour-swatches', 'Label'), 'type' => 'singleline', ], 'color' => ['heading' => Craft::t('colour-swatches', 'Hex Colours (comma seperated)'), 'type' => 'singleline', ], 'default' => ['heading' => Craft::t('colour-swatches', 'Default?'), 'type' => 'checkbox', 'class' => 'thin', ], ], 'rows' => $this->options, ];
+        $config = [
+            'instructions' => Craft::t('colour-swatches', 'Define the available colors.'),
+            'id' => 'options',
+            'name' => 'options',
+            'addRowLabel' => Craft::t('colour-swatches', 'Add a colour'),
+            'cols' => [
+                'label' => [
+                    'heading' => Craft::t('colour-swatches', 'Label'),
+                    'type' => 'singleline',
+                ],
+                'color' => [
+                    'heading' => Craft::t('colour-swatches', 'Hex Colours (comma seperated)'),
+                    'type' => 'singleline',
+                ],
+                'default' => [
+                    'heading' => Craft::t('colour-swatches', 'Default?'),
+                    'type' => 'checkbox', 'class' => 'thin',
+                ],
+            ],
+            'rows' => $this->options,
+            'allowAdd' => true,
+            'allowReorder' => true,
+            'allowDelete' => true,
+        ];
 
         $paletteOptions = [];
         $paletteOptions[] = ['label' => 'Colors', 'value' => null, ];
@@ -186,8 +224,16 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
             );
     }
 
+
     /**
-     * @inheritdoc
+     * @param mixed $value
+     * @param ElementInterface|null $element
+     * @return string
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function getInputHtml($value, ?ElementInterface $element = null): string
     {
@@ -219,8 +265,11 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
         );
     }
 
+
     /**
-     * @inheritdoc
+     * @param mixed $value
+     * @param ElementInterface $element
+     * @return string
      */
     public function getTableAttributeHtml($value, ElementInterface $element): string
     {

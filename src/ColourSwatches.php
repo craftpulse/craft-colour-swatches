@@ -51,7 +51,7 @@ class ColourSwatches extends Plugin
     // =========================================================================
 
     /**
-     * @inheritdoc
+     * init
      */
     public function init(): void
     {
@@ -76,6 +76,9 @@ class ColourSwatches extends Plugin
         );
     }
 
+    /**
+     * @return Settings
+     */
     protected function createSettingsModel(): Settings
     {
         return new Settings();

@@ -4,6 +4,11 @@ namespace percipiolondon\colourswatches\models;
 
 use craft\base\Model;
 
+/**
+ * Class Settings
+ *
+ * @package percipiolondon\colourswatches\models
+ */
 class Settings extends Model
 {
     /**
@@ -20,7 +25,7 @@ class Settings extends Model
     public ?array $default = null;
 
     /**
-     * @inheritdoc
+     * @return array[]
      */
     protected function defineRules(): array
     {

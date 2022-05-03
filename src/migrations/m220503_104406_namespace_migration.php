@@ -7,7 +7,7 @@ use craft\db\Migration;
 /**
  * m200911_142127_update_namespace migration.
  */
-class m200911_142127_update_namespace extends Migration
+class m220503_104406_namespace_migration extends Migration
 {
     /**
      * @return bool
@@ -19,11 +19,11 @@ class m200911_142127_update_namespace extends Migration
         $this->update(
             '{{%fields}}',
             [
-                'type' => 'percipioglobal\\colourswatches\\fields\\ColourSwatches',
+                'type' => 'percipiolondon\\colourswatches\\fields\\ColourSwatches',
             ],
-            'type = :riastype',
+            'type = :percipioglobal',
             [
-                ':riastype' => 'rias\\colourswatches\\fields\\ColourSwatches',
+                'percipioglobal' => 'percipioglobal\\colourswatches\\fields\\ColourSwatches',
             ]
         );
 
