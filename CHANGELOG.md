@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 4.0.2 - 2022-05-11
 
 ### Fixed
+- Fixed an issue where the field would save even if it was required
 - Fixed a few missing types
 
 ## 4.0.1 - 2022-05-06
