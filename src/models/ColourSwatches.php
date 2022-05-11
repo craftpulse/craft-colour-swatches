@@ -2,6 +2,7 @@
 
 namespace percipiolondon\colourswatches\models;
 
+use Craft;
 use craft\base\Model;
 use craft\helpers\Json;
 

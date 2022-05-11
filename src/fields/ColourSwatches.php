@@ -15,10 +15,16 @@ use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
+use craft\base\SortableFieldInterface;
 use craft\helpers\Json;
 use percipiolondon\colourswatches\assetbundles\colourswatchesfield\ColourSwatchesFieldAsset;
-use percipiolondon\colourswatches\ColourSwatches as Plugin;
+use percipiolondon\colourswatches\ColourSwatches as ColorSwatches;
 use percipiolondon\colourswatches\models\ColourSwatches as ColourSwatchesModel;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
+use yii\base\Exception;
+use yii\base\InvalidConfigException;
 use yii\db\Schema;
 
 /**
@@ -29,7 +35,7 @@ use yii\db\Schema;
  * @property-read string|array $contentColumnType
  * @property-read null|string $settingsHtml
  */
-class ColourSwatches extends Field implements PreviewableFieldInterface
+class ColourSwatches extends Field implements PreviewableFieldInterface, SortableFieldInterface
 {
     // Public Properties
     // =========================================================================
@@ -62,6 +68,14 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
         return Craft::t('colour-swatches', 'Color Swatches');
     }
 
+    /**
+     * @inheritdoc
+     */
+    public static function isRequirable(): bool
+    {
+        return true;
+    }
+
     // Public Methods
     // =========================================================================
 
@@ -72,9 +86,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     public function rules(): array
     {
         $rules = parent::rules();
-        $rules = array_merge($rules, [['options', 'each', 'rule' => ['required']], ]);
-
-        return $rules;
+        return array_merge($rules, [['options', 'each', 'rule' => ['required']], ]);
     }
 
 
@@ -90,9 +102,9 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     /**
      * @param mixed $value
      * @param ElementInterface|null $element
-     * @return mixed
+     * @return ColourSwatchesModel|null
      */
-    public function normalizeValue(mixed $value, ?ElementInterface $element = null): mixed
+    public function normalizeValue(mixed $value, ?ElementInterface $element = null): ?ColourSwatchesModel
     {
         if ($value instanceof ColourSwatchesModel) {
             return $value;
@@ -103,8 +115,9 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
             $value = Json::encode($value);
         }
 
-        // quick array transform so that we can ensure and `required fields` fire an error
-        $valueData = (array)Json::decode($value);
+        if (is_null($value)) {
+            return null;
+        }
 
         return new ColourSwatchesModel($value);
     }
@@ -115,19 +128,19 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
      * @param ElementInterface|null $element
      * @return mixed
      */
-    public function serializeValue($value, ?ElementInterface $element = null): mixed
+    public function serializeValue(mixed $value, ?ElementInterface $element = null): mixed
     {
         $settingsPalette = $this->options;
         $saveValue = null;
 
-        // if useConfigFile got setted, fetch the objects from that file
+        // if useConfigFile is set, fetch the objects from that file
         if ($this->useConfigFile) {
-            if (Plugin::$plugin->settings->palettes[$this->palette] ?? false) {
-                //if the palette with the value exists, return this as the settings palette
-                $settingsPalette = Plugin::$plugin->settings->palettes[$this->palette];
+            if (ColorSwatches::$plugin->settings->palettes[$this->palette] ?? false) {
+                // if the palette with the value exists, return this as the settings palette
+                $settingsPalette = ColorSwatches::$plugin->settings->palettes[$this->palette];
             } else {
-                //if it doesnt exist, set it to the default colors
-                $settingsPalette = Plugin::$plugin->settings->colors ?: [];
+                // if it doesn't exist, set it to the default colors
+                $settingsPalette = ColorSwatches::$plugin->settings->colors ?: [];
             }
         }
 
@@ -141,7 +154,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
             }
         }
 
-        //if nothing got set, use the default if that exists
+        // if nothing got set, use the default if that exists
         if (!$saveValue) {
             foreach ($settingsPalette as $key => $palette) {
                 $paletteId = is_int($key) ? ($key + 1) : $key;
@@ -158,11 +171,11 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
 
     /**
      * @return string|null
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
-     * @throws \yii\base\Exception
-     * @throws \yii\base\InvalidConfigException
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws Exception
+     * @throws InvalidConfigException
      */
     public function getSettingsHtml(): ?string
     {
@@ -229,11 +242,11 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
      * @param mixed $value
      * @param ElementInterface|null $element
      * @return string
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
-     * @throws \yii\base\Exception
-     * @throws \yii\base\InvalidConfigException
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws Exception
+     * @throws InvalidConfigException
      */
     public function getInputHtml($value, ?ElementInterface $element = null): string
     {
@@ -259,8 +272,8 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
                 'field' => $this,
                 'id' => $id,
                 'namespacedId' => $namespacedId,
-                'configOptions' => Plugin::$plugin->settings->colors,
-                'palettes' => Plugin::$plugin->settings->palettes,
+                'configOptions' => ColorSwatches::$plugin->settings->colors,
+                'palettes' => ColorSwatches::$plugin->settings->palettes,
             ]
         );
     }
@@ -271,7 +284,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
      * @param ElementInterface $element
      * @return string
      */
-    public function getTableAttributeHtml($value, ElementInterface $element): string
+    public function getTableAttributeHtml(mixed $value, ElementInterface $element): string
     {
         // our preview no data value
         $color = '';
