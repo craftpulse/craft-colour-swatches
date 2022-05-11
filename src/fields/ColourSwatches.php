@@ -286,8 +286,6 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
      */
     public function getTableAttributeHtml(mixed $value, ElementInterface $element): string
     {
-        // our preview no data value
-        $color = '';
         $style = "background-color: transparent";
         // if we have data
         if (!empty($value)) {
@@ -298,7 +296,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                 // if we have more than one colour
                 if (is_array($value->color)) {
                     foreach ($value->color as $color) {
-                        $gradients[] = $color->color;
+                        $gradients[] = $color['color'];
                     }
                     // set a fallback if we only have one colour
                     $style = "background-color:$gradients[0]";
