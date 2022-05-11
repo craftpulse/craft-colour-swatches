@@ -60,17 +60,17 @@ class ColourSwatches extends Model
     }
 
     /**
-     * @return array|mixed|string|null
+     * @return mixed
      */
-    public function colors()
+    public function colors(): mixed
     {
         return $this->color;
     }
 
     /**
-     * @return mixed|string
+     * @return mixed
      */
-    public function labels()
+    public function labels(): mixed
     {
         return $this->label;
     }
