@@ -115,7 +115,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
             $value = Json::encode($value);
         }
 
-        if (is_null($value)) {
+        if (is_null($value) || $value === '') {
             return null;
         }
 
