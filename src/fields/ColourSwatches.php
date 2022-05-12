@@ -210,7 +210,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
 
         $paletteOptions = [];
         $paletteOptions[] = ['label' => 'Colors', 'value' => null, ];
-        foreach (array_keys((array)Plugin::$plugin
+        foreach (array_keys((array)ColorSwatches::$plugin
             ->settings
             ->palettes) as $palette) {
             $paletteOptions[] = ['label' => $palette, 'value' => $palette, ];
@@ -218,7 +218,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
 
         $paletteOptions = [];
         $paletteOptions[] = ['label' => 'Colour config', 'value' => null, ];
-        foreach (array_keys((array)Plugin::$plugin
+        foreach (array_keys((array)ColorSwatches::$plugin
             ->settings
             ->palettes) as $palette) {
             $paletteOptions[] = ['label' => $palette, 'value' => $palette, ];
@@ -230,9 +230,9 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                 [
                     'field' => $this,
                     'config' => $config,
-                    'configOptions' => Plugin::$plugin->settings->colors ?: [],
+                    'configOptions' => ColorSwatches::$plugin->settings->colors ?: [],
                     'paletteOptions' => $paletteOptions,
-                    'palettes' => Plugin::$plugin->settings->palettes,
+                    'palettes' => ColorSwatches::$plugin->settings->palettes,
                 ]
             );
     }
