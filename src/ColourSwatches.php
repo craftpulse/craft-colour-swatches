@@ -15,6 +15,8 @@ use Craft;
 use craft\base\Plugin;
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Fields;
+use nystudio107\pluginvite\services\VitePluginService;
+use percipiolondon\colourswatches\assetbundles\colourswatches\ColourSwatchesAsset;
 use percipiolondon\colourswatches\fields\ColourSwatches as ColourSwatchesField;
 use percipiolondon\colourswatches\models\Settings;
 use yii\base\Event;
@@ -49,6 +51,32 @@ class ColourSwatches extends Plugin
 
     // Public Methods
     // =========================================================================
+
+    /**
+     * ColourSwatches constructor.
+     *
+     * @param $id
+     * @param null $parent
+     * @param array $config
+     */
+    public function __construct($id, $parent = null, array $config = [])
+    {
+        $config['components'] = [
+            'colourswatches' => ColourSwatches::class,
+            'vite' => [
+                'class' => VitePluginService::class,
+                'assetClass' => ColourSwatchesAsset::class,
+                'useDevServer' => true,
+                'devServerPublic' => 'http://localhost:3001',
+                'serverPublic' => 'http://localhost:8000',
+                'errorEntry' => '/src/js/swatches.ts',
+                'devServerInternal' => 'http://craft-colour-swatches-buildchain:3001',
+                'checkDevServer' => true,
+            ]
+        ];
+
+        parent::__construct($id, $parent, $config);
+    }
 
     /**
      * init

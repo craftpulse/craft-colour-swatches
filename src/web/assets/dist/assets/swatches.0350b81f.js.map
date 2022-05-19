@@ -1,0 +1,1 @@
+{"version":3,"file":"swatches.0350b81f.js","sources":["../../../../../buildchain/src/js/swatches.ts"],"sourcesContent":["// Import our CSS\nimport '@/css/app.pcss';\n\nconst main = async () => {}\n\nmain().then( (root) => {})"],"names":[],"mappings":"AAGA,KAAM,GAAO,SAAY,GAEzB,IAAO,KAAM,AAAC,GAAS"}

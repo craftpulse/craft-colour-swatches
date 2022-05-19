@@ -23,7 +23,7 @@ class m220503_104406_namespace_migration extends Migration
             ],
             'type = :percipioglobal',
             [
-                'percipioglobal' => 'percipioglobal\\colourswatches\\fields\\ColourSwatches',
+                'percipioglobal' => 'percipiolondon\\colourswatches\\fields\\ColourSwatches',
             ]
         );
 

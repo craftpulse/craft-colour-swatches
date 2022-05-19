@@ -19,7 +19,7 @@ class m200911_142127_update_namespace extends Migration
         $this->update(
             '{{%fields}}',
             [
-                'type' => 'percipioglobal\\colourswatches\\fields\\ColourSwatches',
+                'type' => 'percipiolondon\\colourswatches\\fields\\ColourSwatches',
             ],
             'type = :riastype',
             [

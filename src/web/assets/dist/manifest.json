@@ -1,0 +1,21 @@
+{
+  "src/js/swatches.ts": {
+    "file": "assets/swatches.0350b81f.js",
+    "src": "src/js/swatches.ts",
+    "isEntry": true,
+    "css": [
+      "assets/swatches.a9d87465.css"
+    ]
+  },
+  "src/js/swatches-field.ts": {
+    "file": "assets/swatches-field.ed8bf4b8.js",
+    "src": "src/js/swatches-field.ts",
+    "isEntry": true,
+    "imports": [
+      "_vendor.f9b4991b.js"
+    ]
+  },
+  "_vendor.f9b4991b.js": {
+    "file": "assets/vendor.f9b4991b.js"
+  }
+}

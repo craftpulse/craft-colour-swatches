@@ -17,7 +17,7 @@ use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
 use craft\base\SortableFieldInterface;
 use craft\helpers\Json;
-use percipiolondon\colourswatches\assetbundles\colourswatchesfield\ColourSwatchesFieldAsset;
+use percipiolondon\colourswatches\assetbundles\colourswatches\ColourSwatchesAsset;
 use percipiolondon\colourswatches\ColourSwatches as ColorSwatches;
 use percipiolondon\colourswatches\models\ColourSwatches as ColourSwatchesModel;
 use Twig\Error\LoaderError;
@@ -181,7 +181,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
     {
         // Register our asset bundle
         Craft::$app->getView()
-            ->registerAssetBundle(ColourSwatchesFieldAsset::class);
+            ->registerAssetBundle(ColourSwatchesAsset::class);
 
         $config = [
             'instructions' => Craft::t('colour-swatches', 'Define the available colors.'),
@@ -226,7 +226,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
 
         // Render the settings template
         return Craft::$app->getView()
-            ->renderTemplate('colour-swatches/settings',
+            ->renderTemplate('colour-swatches/swatches-settings',
                 [
                     'field' => $this,
                     'config' => $config,
@@ -265,7 +265,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
 
         // Render the input template
         return Craft::$app->getView()
-            ->renderTemplate('colour-swatches/input',
+            ->renderTemplate('colour-swatches/swatches-input',
             [
                 'name' => $this->handle,
                 'fieldValue' => $value,

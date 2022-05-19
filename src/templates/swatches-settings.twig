@@ -1,0 +1,79 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * color-swatches plugin for Craft CMS
+ *
+ * ColourSwatches Field Settings
+ *
+ * @author    Percipio Global Ltd.
+ * @copyright Copyright (c) 2020 Percipio Global Ltd.
+ * @link      https://percipio.london
+ * @package   Colour Swatches
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{{ forms.lightswitchField({
+    label: 'Use config options'|t('colour-swatches'),
+    instructions: 'Use CMS based config options or your colour palettes defined in `colour-swatches.php`.'|t('colour-swatches'),
+    name: 'useConfigFile',
+    on: field.useConfigFile,
+    toggle: 'preview',
+    reverseToggle: 'settings',
+}) }}
+
+<div id="settings" class="color-swatches-options {{ field.useConfigFile ? 'hidden' : '' }}">
+    {{ forms.editableTable(config) }}
+</div>
+
+<div id="preview" class="{{ field.useConfigFile ? '' : 'hidden' }}">
+
+    <div class="field {{ paletteOptions|length > 1 ? '' : 'hidden' }}">
+        {{ forms.selectField({
+            label: 'Palette'|t('colour-swatches'),
+            name: 'palette',
+            options: paletteOptions,
+            value: field.palette ? field.palette : null,
+            instructions: 'If you want to change the default, please update the `colour-swatches.php` config file.'|t('colour-swatches'),
+            toggle: true,
+            targetPrefix: 'palette-'
+        }) }}
+    </div>
+
+    {% if not paletteOptions|length %}
+        {% set palettes = [configOptions] %}
+    {% endif %}
+
+    {# Default config options #}
+    <div id="palette-" class="color-swatches no-pointer {{ field.useConfigFile and not field.palette ? '' : 'hidden' }}">
+        {% for option in configOptions %}
+            {% include 'colour-swatches/colourOption' with {
+                optionId: '1-option-' ~ loop.index,
+                option: option,
+            } %}
+        {% endfor %}
+    </div>
+
+    {# Palette options #}
+    {% for key, palette in palettes %}
+
+        {% if palettes|length > 1 %}
+            {% set condition = field.palette == key %}
+        {% else %}
+            {% set condition = field.useConfigFile %}
+        {% endif %}
+
+        {% set defaultValue = null %}
+        <div id="palette-{{ key }}" class="color-swatches no-pointer">
+            {% for option in palette %}
+                {% include 'colour-swatches/swatches-options' with {
+                    optionId: '1-option-' ~ loop.index,
+                    option: option,
+                } %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+</div>
