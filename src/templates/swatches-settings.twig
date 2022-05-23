@@ -12,6 +12,7 @@
  * @since     1.0.0
  */
 #}
+{% do view.registerAssetBundle("percipiolondon\\colourswatches\\assetbundles\\colourswatches\\ColourSwatchesAsset") %}
 
 {% import "_includes/forms" as forms %}
 
@@ -58,7 +59,6 @@
 
     {# Palette options #}
     {% for key, palette in palettes %}
-
         {% if palettes|length > 1 %}
             {% set condition = field.palette == key %}
         {% else %}
@@ -66,7 +66,10 @@
         {% endif %}
 
         {% set defaultValue = null %}
-        <div id="palette-{{ key }}" class="color-swatches no-pointer">
+
+        <span class="text-red-500">test</span>
+
+        <div id="palette-{{ key }}" class="color-swatches no-pointer {{ condition ? '' : 'hidden' }}">
             {% for option in palette %}
                 {% include 'colour-swatches/swatches-options' with {
                     optionId: '1-option-' ~ loop.index,
