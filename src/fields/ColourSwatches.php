@@ -151,7 +151,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
             if ($value && ($palette["label"] === $value['label'])) {
                 $saveValue = $value;
                 $saveValue['color'] = $palette['color'];
-                $saveValue['class'] = $palette['class'];
+                $saveValue['class'] = $palette['class'] ?? '';
             }
         }
 
