@@ -12,6 +12,7 @@ class ColourSwatches extends Model
 
     public $label = '';
     public $color = '';
+    public $class = '';
 
     public function __construct($value)
     {
@@ -23,10 +24,11 @@ class ColourSwatches extends Model
             $color = array_filter($colorData);
                 // if our array has usable data
                 if (!empty($colorData['label']))
-                  {
+                {
                     $this->label = $colorData['label'];
                     $this->color = $colorData['color'];
-                  }
+                    $this->class = $colorData['class'] ?? '';
+                }
                 // else ensure we return a null value (only really needed for old data stores)
                 else {
                     $value = null;
@@ -57,6 +59,11 @@ class ColourSwatches extends Model
     public function labels()
     {
         return $this->label;
+    }
+
+    public function class(): mixed
+    {
+        return $this->class;
     }
 
 }
