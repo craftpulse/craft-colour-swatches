@@ -25,12 +25,13 @@
 
 return [
 
-    // Custom  palettes, fixed options [label, default (boolean), colour (array(colour, customOptions)) ]
+    // Custom  palettes, fixed options [label, default (boolean), class (string), colour (array(colour, customOptions)) ]
     'palettes' => [
         'Tailwind' => [  // custom label
             [
                 'label' => 'Red',
                 'default' => false,
+                'class' => null, // provide extra classes to go along with this palette
                 'color' => [
                     [
                         'color' => '#ef4444',               // the colour shown in the fieldtype (required)
@@ -44,6 +45,7 @@ return [
             [
                 'label' => 'Amber',
                 'default' => false,
+                'class' => null, // provide extra classes to go along with this palette
                 'color' => [
                     [
                         'color' => '#f59e0b',               // the colour shown in the fieldtype (required)
@@ -57,6 +59,7 @@ return [
             [
                 'label' => 'Green',
                 'default' => false,
+                'class' => null, // provide extra classes to go along with this palette
                 'color' => [
                     [
                         'color' => '#22c55e',               // the colour shown in the fieldtype (required)
@@ -70,6 +73,7 @@ return [
             [
                 'label' => 'Blue',
                 'default' => false,
+                'class' => null, // provide extra classes to go along with this palette
                 'color' => [
                     [
                         'color' => '#3b82f6',               // the colour shown in the fieldtype (required)
@@ -83,6 +87,7 @@ return [
             [
                 'label' => 'Purple',
                 'default' => false,
+                'class' => null, // provide extra classes to go along with this palette
                 'color' => [
                     [
                         'color' => '#a855f7',               // the colour shown in the fieldtype (required)
@@ -96,6 +101,7 @@ return [
             [
                 'label' => 'Yellow/Emerald',
                 'default' => false,
+                'class' => null, // provide extra classes to go along with this palette
                 'color' => [
                     [
                         'color' => '#eab308',               // the colour shown in the fieldtype (required)
@@ -116,6 +122,7 @@ return [
             [
                 'label' => 'Red/Amber',
                 'default' => false,
+                'class' => null, // provide extra classes to go along with this palette
                 'color' => [
                     [
                         'color' => '#a855f7',               // the colour shown in the fieldtype (required)
@@ -136,6 +143,7 @@ return [
             [
                 'label' => 'Sky/Rose',
                 'default' => false,
+                'class' => null, // provide extra classes to go along with this palette
                 'color' => [
                     [
                         'color' => '#0ea5e9',               // the colour shown in the fieldtype (required)

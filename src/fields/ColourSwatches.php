@@ -151,6 +151,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
             if ($value && ($palette["label"] === $value['label'])) {
                 $saveValue = $value;
                 $saveValue['color'] = $palette['color'];
+                $saveValue['class'] = $palette['class'];
             }
         }
 
@@ -200,6 +201,10 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                 'default' => [
                     'heading' => Craft::t('colour-swatches', 'Default?'),
                     'type' => 'checkbox', 'class' => 'thin',
+                ],
+                'class' => [
+                    'heading' => Craft::t('colour-swatches', 'Css class to go with the palette'),
+                    'type' => 'singleline',
                 ],
             ],
             'rows' => $this->options,
