@@ -1,6 +1,6 @@
 <?php
 /**
- * color-swatches plugin for Craft CMS 3.x.
+ * color-swatches plugin for Craft CMS 4.x.
  *
  * Let clients choose from a predefined set of colours.
  *
