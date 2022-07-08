@@ -23,6 +23,11 @@ class ColourSwatches extends Model
      */
     public array|string|null $color = null;
 
+    /**
+     * @var string
+     */
+    public string|null $class = '';
+
 
     /**
      * ColourSwatches constructor.
@@ -36,6 +41,7 @@ class ColourSwatches extends Model
             if (!empty($colorData['label'])) {
                 $this->label = $colorData['label'];
                 $this->color = $colorData['color'];
+                $this->class = $colorData['class'] ?? '';
             }
         }
     }
@@ -74,5 +80,13 @@ class ColourSwatches extends Model
     public function labels(): mixed
     {
         return $this->label;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function class(): mixed
+    {
+        return $this->class;
     }
 }

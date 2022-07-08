@@ -2,7 +2,7 @@
     "name": "percipiolondon/craft-colour-swatches",
     "description": "Let clients choose from a predefined set of colours and utilise associated colour codes and class names in your templates.",
     "type": "craft-plugin",
-    "version": "4.0.3",
+    "version": "4.1.0",
     "keywords": [
         "craft",
         "cms",
