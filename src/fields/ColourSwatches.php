@@ -15,15 +15,33 @@ use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
+use craft\gql\GqlEntityRegistry;
+use craft\gql\TypeLoader;
+use craft\helpers\Json;
+
+use GraphQL\Type\Definition\ObjectType;
+use GraphQL\Type\Definition\ResolveInfo;
+use GraphQL\Type\Definition\Type;
+
 use percipioglobal\colourswatches\assetbundles\colourswatchesfield\ColourSwatchesFieldAsset;
 use percipioglobal\colourswatches\ColourSwatches as Plugin;
 use percipioglobal\colourswatches\models\ColourSwatches as ColourSwatchesModel;
+
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
+use yii\base\Exception;
+use yii\base\InvalidConfigException;
 use yii\db\Schema;
 
 /**
  * @author    Percipio Global Ltd.
  *
  * @since     1.0.0
+ *
+ * @property-read string|array $contentColumnType
+ * @property-read Type|array $contentGqlType
+ * @property-read null|string $settingsHtml
  */
 class ColourSwatches extends Field implements PreviewableFieldInterface
 {
@@ -63,12 +81,10 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         $rules = parent::rules();
-        $rules = array_merge($rules, [['options', 'each', 'rule' => ['required']], ]);
-
-        return $rules;
+        return array_merge($rules, [['options', 'each', 'rule' => ['required']], ]);
     }
 
     /**
@@ -149,6 +165,12 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
 
     /**
      * {@inheritdoc}
+     * @return string
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws Exception
+     * @throws InvalidConfigException
      */
     public function getSettingsHtml()
     {
@@ -223,6 +245,52 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
     }
 
     /**
+     * @return Type|array
+     */
+    public function getContentGqlType()
+    {
+        $typeName = $this->handle;
+
+        $swatchType = GqlEntityRegistry::getEntity($typeName) ?: GqlEntityRegistry::createEntity($typeName, new ObjectType([
+            'name' => $typeName,
+            'fields' => [
+                'label' => [
+                    'name' => 'label',
+                    'type' => Type::string(),
+                    'description' => 'The colour label'
+                ],
+                'class' => [
+                    'name' => 'class',
+                    'type' => Type::string(),
+                    'description' => 'The parent class'
+                ],
+                'color' => [
+                    'name' => 'color',
+                    'type' => Type::listOf(Type::string()),
+                    'description' => 'Our swatch colors',
+                    'resolve' => function($source, array $arguments, $context, ResolveInfo $resolveInfo) {
+                        $fieldName = $resolveInfo->fieldName;
+                        $data = $source[$fieldName];
+                        $colors = [];
+
+                        foreach ($data as $color) {
+                            $colors[] = Json::encode($color);
+                        }
+
+                        return $colors;
+                    }
+                ]
+            ]
+        ]));
+
+        TypeLoader::registerType($typeName, static function() use ($swatchType) {
+            return $swatchType;
+        });
+
+        return $swatchType;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getTableAttributeHtml($value, ElementInterface $element): string
@@ -263,8 +331,6 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
             }
         }
         return '<div class="color small static"><div class="color-preview" style="' . $style . '"></div></div>';
-        // return print_r($color);
-
     }
 }
 
