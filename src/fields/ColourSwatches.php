@@ -24,7 +24,6 @@ use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 
-use Hoa\Protocol\Bin\Resolve;
 use percipiolondon\colourswatches\assetbundles\colourswatchesfield\ColourSwatchesFieldAsset;
 use percipiolondon\colourswatches\ColourSwatches as ColorSwatches;
 use percipiolondon\colourswatches\models\ColourSwatches as ColourSwatchesModel;
@@ -321,8 +320,12 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                         $data = $source[$fieldName];
                         $colors = [];
 
-                        foreach ($data as $color) {
-                            $colors[] = Json::encode($color);
+                        if(is_iterable($data)) {
+                            foreach ($data as $color) {
+                                $colors[] = Json::encode($color);
+                            }
+                        } else {
+                            $colors[] = $data;
                         }
 
                         return $colors;
