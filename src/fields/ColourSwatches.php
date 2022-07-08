@@ -110,8 +110,12 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
             $value = json_encode($value);
         }
 
+        if (is_null($value) || $value === '') {
+            return null;
+        }
+
         // quick array transform so that we can ensure and `required fields` fire an error
-        $valueData = (array)json_decode($value);
+        $valueData = (array)json_decode($value, true);
         // if we have actual data return model
         if (count($valueData) > 0)
         {
@@ -297,8 +301,12 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
                         $data = $source[$fieldName];
                         $colors = [];
 
-                        foreach ($data as $color) {
-                            $colors[] = Json::encode($color);
+                        if(is_iterable($data)) {
+                            foreach ($data as $color) {
+                                $colors[] = Json::encode($color);
+                            }
+                        } else {
+                            $colors[] = $data;
                         }
 
                         return $colors;
