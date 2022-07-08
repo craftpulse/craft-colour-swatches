@@ -16,7 +16,15 @@ use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
 use craft\base\SortableFieldInterface;
+use craft\gql\GqlEntityRegistry;
+use craft\gql\TypeLoader;
 use craft\helpers\Json;
+
+use GraphQL\Type\Definition\ObjectType;
+use GraphQL\Type\Definition\ResolveInfo;
+use GraphQL\Type\Definition\Type;
+
+use Hoa\Protocol\Bin\Resolve;
 use percipiolondon\colourswatches\assetbundles\colourswatchesfield\ColourSwatchesFieldAsset;
 use percipiolondon\colourswatches\ColourSwatches as ColorSwatches;
 use percipiolondon\colourswatches\models\ColourSwatches as ColourSwatchesModel;
@@ -33,6 +41,7 @@ use yii\db\Schema;
  * @since     1.0.0
  *
  * @property-read string|array $contentColumnType
+ * @property-read Type|array $contentGqlType
  * @property-read null|string $settingsHtml
  */
 class ColourSwatches extends Field implements PreviewableFieldInterface, SortableFieldInterface
@@ -253,7 +262,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
      * @throws Exception
      * @throws InvalidConfigException
      */
-    public function getInputHtml($value, ?ElementInterface $element = null): string
+    public function getInputHtml(mixed $value, ?ElementInterface $element = null): string
     {
         // Register our asset bundle
         Craft::$app->getView()
@@ -281,6 +290,52 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                 'palettes' => ColorSwatches::$plugin->settings->palettes,
             ]
         );
+    }
+
+    /**
+     * @return Type|array
+     */
+    public function getContentGqlType(): Type|array
+    {
+        $typeName = $this->handle;
+
+        $swatchType = GqlEntityRegistry::getEntity($typeName) ?: GqlEntityRegistry::createEntity($typeName, new ObjectType([
+            'name' => $typeName,
+            'fields' => [
+                'label' => [
+                    'name' => 'label',
+                    'type' => Type::string(),
+                    'description' => 'The colour label'
+                ],
+                'class' => [
+                    'name' => 'class',
+                    'type' => Type::string(),
+                    'description' => 'The parent class'
+                ],
+                'color' => [
+                    'name' => 'color',
+                    'type' => Type::listOf(Type::string()),
+                    'description' => 'Our swatch colors',
+                    'resolve' => function($source, array $arguments, $context, ResolveInfo $resolveInfo) {
+                        $fieldName = $resolveInfo->fieldName;
+                        $data = $source[$fieldName];
+                        $colors = [];
+
+                        foreach ($data as $color) {
+                            $colors[] = Json::encode($color);
+                        }
+
+                        return $colors;
+                    }
+                ]
+            ]
+        ]));
+
+        TypeLoader::registerType($typeName, static function() use ($swatchType) {
+            return $swatchType;
+        });
+
+        return $swatchType;
     }
 
 
