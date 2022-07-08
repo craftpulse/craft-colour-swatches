@@ -4,11 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.6.0 - 2022-06-02
+
+### Changed
+- Provided a first level class property to set custom css classes
+
 ## 1.5.2 - 2021-04-27
 
 ### Changed
 - Changed `{% spaceless %}` to `{% apply spaceless %}` for twig 2.9 support
-
 
 ## 1.5.1 - 2021-03-07
 

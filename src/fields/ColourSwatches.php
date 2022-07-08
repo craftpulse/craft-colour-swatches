@@ -100,7 +100,6 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
      */
     public function normalizeValue($value, ElementInterface $element = null)
     {
-
         if ($value instanceof ColourSwatchesModel)
         {
             return $value;
@@ -146,6 +145,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
             if($value && ($palette["label"] === $value['label'])) {
                 $saveValue = $value;
                 $saveValue['color'] = $palette['color'];
+                $saveValue['class'] = $palette['class'] ?? '';
             }
         }
 
@@ -178,7 +178,31 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
         Craft::$app->getView()
             ->registerAssetBundle(ColourSwatchesFieldAsset::class);
 
-        $config = ['instructions' => Craft::t('colour-swatches', 'Define the available colors.') , 'id' => 'options', 'name' => 'options', 'addRowLabel' => Craft::t('colour-swatches', 'Add a colour') , 'cols' => ['label' => ['heading' => Craft::t('colour-swatches', 'Label') , 'type' => 'singleline', ], 'color' => ['heading' => Craft::t('colour-swatches', 'Hex Colours (comma seperated)') , 'type' => 'singleline', ], 'default' => ['heading' => Craft::t('colour-swatches', 'Default?') , 'type' => 'checkbox', 'class' => 'thin', ], ], 'rows' => $this->options, ];
+        $config = [
+            'instructions' => Craft::t('colour-swatches', 'Define the available colors.') ,
+            'id' => 'options',
+            'name' => 'options',
+            'addRowLabel' => Craft::t('colour-swatches', 'Add a colour') ,
+            'cols' => [
+                'label' => [
+                    'heading' => Craft::t('colour-swatches', 'Label') ,
+                    'type' => 'singleline',
+                ],
+                'color' => [
+                    'heading' => Craft::t('colour-swatches', 'Hex Colours (comma seperated)') ,
+                    'type' => 'singleline',
+                ],
+                'default' => [
+                    'heading' => Craft::t('colour-swatches', 'Default?') ,
+                    'type' => 'checkbox', 'class' => 'thin',
+                ],
+                'class' => [
+                    'heading' => Craft::t('colour-swatches', 'Css class to go with the palette'),
+                    'type' => 'singleline',
+                ],
+            ],
+            'rows' => $this->options,
+        ];
 
         $paletteOptions = [];
         $paletteOptions[] = ['label' => 'Colors', 'value' => null, ];
