@@ -115,7 +115,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
             $value = Json::encode($value);
         }
 
-        if (is_null($value)) {
+        if (is_null($value) || $value === '') {
             return null;
         }
 
@@ -151,6 +151,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
             if ($value && ($palette["label"] === $value['label'])) {
                 $saveValue = $value;
                 $saveValue['color'] = $palette['color'];
+                $saveValue['class'] = $palette['class'] ?? '';
             }
         }
 
@@ -201,6 +202,10 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                     'heading' => Craft::t('colour-swatches', 'Default?'),
                     'type' => 'checkbox', 'class' => 'thin',
                 ],
+                'class' => [
+                    'heading' => Craft::t('colour-swatches', 'Css class to go with the palette'),
+                    'type' => 'singleline',
+                ],
             ],
             'rows' => $this->options,
             'allowAdd' => true,
@@ -210,7 +215,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
 
         $paletteOptions = [];
         $paletteOptions[] = ['label' => 'Colors', 'value' => null, ];
-        foreach (array_keys((array)Plugin::$plugin
+        foreach (array_keys((array)ColorSwatches::$plugin
             ->settings
             ->palettes) as $palette) {
             $paletteOptions[] = ['label' => $palette, 'value' => $palette, ];
@@ -218,7 +223,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
 
         $paletteOptions = [];
         $paletteOptions[] = ['label' => 'Colour config', 'value' => null, ];
-        foreach (array_keys((array)Plugin::$plugin
+        foreach (array_keys((array)ColorSwatches::$plugin
             ->settings
             ->palettes) as $palette) {
             $paletteOptions[] = ['label' => $palette, 'value' => $palette, ];
@@ -230,9 +235,9 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                 [
                     'field' => $this,
                     'config' => $config,
-                    'configOptions' => Plugin::$plugin->settings->colors ?: [],
+                    'configOptions' => ColorSwatches::$plugin->settings->colors ?: [],
                     'paletteOptions' => $paletteOptions,
-                    'palettes' => Plugin::$plugin->settings->palettes,
+                    'palettes' => ColorSwatches::$plugin->settings->palettes,
                 ]
             );
     }
@@ -286,8 +291,6 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
      */
     public function getTableAttributeHtml(mixed $value, ElementInterface $element): string
     {
-        // our preview no data value
-        $color = '';
         $style = "background-color: transparent";
         // if we have data
         if (!empty($value)) {
@@ -298,7 +301,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                 // if we have more than one colour
                 if (is_array($value->color)) {
                     foreach ($value->color as $color) {
-                        $gradients[] = $color->color;
+                        $gradients[] = $color['color'];
                     }
                     // set a fallback if we only have one colour
                     $style = "background-color:$gradients[0]";

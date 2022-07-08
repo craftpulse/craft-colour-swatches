@@ -43,6 +43,6 @@
             --color: linear-gradient(to bottom right, {% for colour in colours %}{{ colour|parseRefs|raw }} {{ percentage * loop.index0 }}%, {{ colour|parseRefs|raw }} {{ percentage * loop.index }}%{% if not loop.last %},{% endif %}{% endfor %});
         {% endswitch %}
         ">
-        <span>{{ option.label }}</span>
+{#        <span>{{ option.label }}</span>#}
     </button>
 {% endif %}
