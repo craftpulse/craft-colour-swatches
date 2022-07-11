@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.2.0 - 2022-07-08
+
+### Added
+- Added GraphQL support
+
+### Fixed
+- Fixed missing type for `getInputHtml $value`
+
+### Changed
+- Provided a first level class property to set custom css classes
+
+## 4.1.0 - 2022-06-02
+
+### Changed
+- Provided a first level class property to set custom css classes
+
+## 4.0.5 - 2022-05-23
+
+### Fixed
+- Fixed the migration to update the namespace
+
 ## 4.0.4 - 2022-05-12
 
 ### Fixed

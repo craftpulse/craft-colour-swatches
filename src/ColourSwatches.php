@@ -47,7 +47,7 @@ class ColourSwatches extends Plugin
     /**
      * @var string
      */
-    public string $schemaVersion = '1.4.2';
+    public string $schemaVersion = '1.4.3';
 
     // Public Methods
     // =========================================================================
