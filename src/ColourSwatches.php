@@ -71,10 +71,10 @@ class ColourSwatches extends Plugin
                 'class' => VitePluginService::class,
                 'assetClass' => ColourSwatchesAsset::class,
                 'useDevServer' => true,
-                'devServerPublic' => 'http://localhost:6000',
+                'devServerPublic' => 'http://localhost:7000',
                 'serverPublic' => 'http://localhost:3700',
                 'errorEntry' => '/src/js/swatches.ts',
-                'devServerInternal' => 'http://craft-colour-swatches-buildchain:6000',
+                'devServerInternal' => 'http://craft-colour-swatches-buildchain:7000',
                 'checkDevServer' => true,
             ]
         ];

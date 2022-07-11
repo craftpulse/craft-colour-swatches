@@ -47,8 +47,8 @@ export default ({ command }) => ({
             strict: false
         },
         host: '0.0.0.0',
-        origin: 'http://localhost:6000',
-        port: 6000,
+        origin: 'http://localhost:7000',
+        port: 7000,
         strictPort: true,
     }
 })
