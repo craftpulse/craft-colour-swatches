@@ -37,6 +37,7 @@ export default ({ command }) => ({
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src'),
+            '~': path.resolve(__dirname, './src'),
             vue: 'vue/dist/vue.esm-bundler.js',
         },
         preserveSymlinks: true,
@@ -46,8 +47,8 @@ export default ({ command }) => ({
             strict: false
         },
         host: '0.0.0.0',
-        origin: 'http://localhost:3001/',
-        port: 3001,
+        origin: 'http://localhost:6000',
+        port: 6000,
         strictPort: true,
     }
 })
