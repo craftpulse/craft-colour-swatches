@@ -20,7 +20,7 @@ const swatchesField = async () => {
 
     })
 
-    const root = Object.entries(swatchesFieldsToMount).map(entry => {
+    const swatches = Object.entries(swatchesFieldsToMount).map(entry => {
         let field = entry[1]
         return field.swatch.mount(field.id)
     })

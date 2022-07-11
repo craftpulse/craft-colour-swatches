@@ -5,7 +5,7 @@ DOCKERRUN=docker container run \
 	    --rm \
 	    -t \
         --network craft-plugin-playground_default \
-        -p 7000:7000 \
+        -p 9000:9000 \
 		-e CPPFLAGS="-DPNG_ARM_NEON_OPT=0" \
         -v `pwd`/../:/app \
         ${CONTAINER}:${TAG}
