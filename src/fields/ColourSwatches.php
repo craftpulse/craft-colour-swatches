@@ -25,7 +25,7 @@ use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 
 use Hoa\Protocol\Bin\Resolve;
-use percipiolondon\colourswatches\assetbundles\colourswatchesfield\ColourSwatchesFieldAsset;
+use percipiolondon\colourswatches\assetbundles\colourswatches\ColourSwatchesAsset;
 use percipiolondon\colourswatches\ColourSwatches as ColorSwatches;
 use percipiolondon\colourswatches\models\ColourSwatches as ColourSwatchesModel;
 use Twig\Error\LoaderError;
@@ -265,21 +265,15 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
     public function getInputHtml(mixed $value, ?ElementInterface $element = null): string
     {
         // Register our asset bundle
-        Craft::$app->getView()
-            ->registerAssetBundle(ColourSwatchesFieldAsset::class);
+        Craft::$app->getView()->registerAssetBundle(ColourSwatchesAsset::class);
 
         // Get our id and namespace
-        $id = Craft::$app->getView()
-            ->formatInputId($this->handle);
-        $namespacedId = Craft::$app->getView()
-            ->namespaceInputId($id);
-
-        Craft::$app->getView()
-            ->registerJs("new ColourSelectInput('{$namespacedId}');");
+        $id = Craft::$app->getView()->formatInputId($this->handle);
+        $namespacedId = Craft::$app->getView()->namespaceInputId($id);
 
         // Render the input template
-        return Craft::$app->getView()
-            ->renderTemplate('colour-swatches/swatches-input',
+        return Craft::$app->getView()->renderTemplate(
+            'colour-swatches/swatches-input',
             [
                 'name' => $this->handle,
                 'fieldValue' => $value,

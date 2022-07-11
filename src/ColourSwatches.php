@@ -15,10 +15,12 @@ use Craft;
 use craft\base\Plugin;
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Fields;
+use craft\web\twig\variables\CraftVariable;
 use nystudio107\pluginvite\services\VitePluginService;
 use percipiolondon\colourswatches\assetbundles\colourswatches\ColourSwatchesAsset;
 use percipiolondon\colourswatches\fields\ColourSwatches as ColourSwatchesField;
 use percipiolondon\colourswatches\models\Settings;
+use percipiolondon\colourswatches\variables\ColourSwatchVariable;
 use yii\base\Event;
 
 /**
@@ -27,6 +29,8 @@ use yii\base\Event;
  * @author    Percipio Global Ltd.
  *
  * @since     1.0.0
+ *
+ * @property VitePluginService  $vite
  * @property Settings $settings
  *
  * @method Settings getSettings()
@@ -62,7 +66,7 @@ class ColourSwatches extends Plugin
     public function __construct($id, $parent = null, array $config = [])
     {
         $config['components'] = [
-            'colourswatches' => ColourSwatches::class,
+            'colourswatches' => __CLASS__,
             'vite' => [
                 'class' => VitePluginService::class,
                 'assetClass' => ColourSwatchesAsset::class,
@@ -86,11 +90,26 @@ class ColourSwatches extends Plugin
         parent::init();
         self::$plugin = $this;
 
+        // Register our fields
         Event::on(
             Fields::class,
             Fields::EVENT_REGISTER_FIELD_TYPES,
             function(RegisterComponentTypesEvent $event) {
                 $event->types[] = ColourSwatchesField::class;
+            }
+        );
+
+        // Register variable
+        Event::on(
+            CraftVariable::class,
+            CraftVariable::EVENT_INIT,
+            function(Event $event): void {
+                /** @var CraftVariable $variable */
+                $variable = $event->sender;
+                $variable->set('colourswatches', [
+                    'class' => ColourSwatchVariable::class,
+                    'viteService' => $this->vite,
+                ]);
             }
         );
 
@@ -111,4 +130,5 @@ class ColourSwatches extends Plugin
     {
         return new Settings();
     }
+
 }
