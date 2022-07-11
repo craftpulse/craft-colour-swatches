@@ -1,6 +1,6 @@
 <?php
 /**
- * color-swatches plugin for Craft CMS 3.x.
+ * color-swatches plugin for Craft CMS 4.x.
  *
  * Let clients choose from a predefined set of colours.
  *
@@ -9,28 +9,18 @@
  * @copyright Copyright (c) 2020 Percipio Global Ltd.
  */
 
-namespace percipioglobal\colourswatches;
+namespace percipiolondon\colourswatches;
 
 use Craft;
 use craft\base\Plugin;
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Fields;
-use craft\web\twig\variables\CraftVariable;
-
-use nystudio107\pluginvite\services\VitePluginService;
-
-use percipioglobal\colourswatches\assetbundles\colourswatches\ColourSwatchesAsset;
-use percipioglobal\colourswatches\fields\ColourSwatches as ColourSwatchesField;
-use percipioglobal\colourswatches\models\SettingsModel;
-use percipioglobal\colourswatches\variables\ColourSwatchesVariable;
-
+use percipiolondon\colourswatches\fields\ColourSwatches as ColourSwatchesField;
+use percipiolondon\colourswatches\models\Settings;
 use yii\base\Event;
 
-
 /**
- * Craft plugins are very much like little applications in and of themselves. We’ve made
- * it as simple as we can, but the training wheels are off. A little prior knowledge is
- * going to be required to write a plugin.
+ * Class ColourSwatches.
  *
  * For the purposes of the plugin docs, we’re going to assume that you know PHP and SQL,
  * as well as some semi-advanced concepts like object-oriented programming and PHP namespaces.
@@ -40,9 +30,9 @@ use yii\base\Event;
  * @author    percipiolondon
  * @package   Colour Swatches
  * @since     1.0.0
+ * @property Settings $settings
  *
- * @property  Settings $settings
- * @method    Settings getSettings()
+ * @method Settings getSettings()
  */
 class ColourSwatches extends Plugin
 {
@@ -52,7 +42,15 @@ class ColourSwatches extends Plugin
     /**
      * @var ColourSwatches
      */
-    public static $plugin;
+    public static ColourSwatches $plugin;
+
+    // Public Properties
+    // =========================================================================
+
+    /**
+     * @var string
+     */
+    public string $schemaVersion = '1.4.3';
 
     // Public Properties
     // =========================================================================
@@ -107,17 +105,9 @@ class ColourSwatches extends Plugin
     // =========================================================================
 
     /**
-     * Set our $plugin static property to this class so that it can be accessed via
-     * ColourSwatches::$plugin
-     *
-     * Called after the plugin class is instantiated; do any one-time initialization
-     * here such as hooks and events.
-     *
-     * If you have a '/vendor/autoload.php' file, it will be loaded for you automatically;
-     * you do not need to load it in your init() method.
-     *
+     * init
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         self::$plugin = $this;
@@ -125,20 +115,10 @@ class ColourSwatches extends Plugin
         Event::on(
             Fields::class,
             Fields::EVENT_REGISTER_FIELD_TYPES,
-            function (RegisterComponentTypesEvent $event) {
+            function(RegisterComponentTypesEvent $event) {
                 $event->types[] = ColourSwatchesField::class;
             }
         );
-
-        // Register variable
-        Event::on(CraftVariable::class, CraftVariable::EVENT_INIT, function (Event $event) {
-            /** @var CraftVariable $variable */
-            $variable = $event->sender;
-            $variable->set('colourswatches', [
-                'class' => ColourSwatchesVariable::class,
-                'viteService' => $this->vite,
-            ]);
-        });
 
         Craft::info(
             Craft::t(
@@ -150,17 +130,11 @@ class ColourSwatches extends Plugin
         );
     }
 
-    // Protected Methods
-    // =========================================================================
-
     /**
-     * Creates and returns the model used to store the plugin’s settings.
-     *
-     * @return \craft\base\Model|null
+     * @return Settings
      */
-    protected function createSettingsModel()
+    protected function createSettingsModel(): Settings
     {
         return new SettingsModel();
     }
-
 }

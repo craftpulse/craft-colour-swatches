@@ -1,6 +1,6 @@
 <?php
 /**
- * color-swatches plugin for Craft CMS 3.x.
+ * color-swatches plugin for Craft CMS 4.x.
  *
  * Let clients choose from a predefined set of colours.
  *
@@ -25,135 +25,143 @@
 
 return [
 
-    // Custom  palettes, fixed options [label, default (boolean), colour (array(colour, customOptions)) ]
+    // Custom  palettes, fixed options [label, default (boolean), class (string), colour (array(colour, customOptions)) ]
     'palettes' => [
         'Tailwind' => [  // custom label
             [
-                'label'   => 'Red',
+                'label' => 'Red',
                 'default' => false,
-                'color'   =>  [
+                'class' => null, // provide extra classes to go along with this palette
+                'color' => [
                     [
-                        'color'             => '#ef4444',               // the colour shown in the fieldtype (required)
-                        'background'        => 'bg-red-500',
-                        'backgroundHover'   => 'hover:bg-red-700',
-                        'text'              => 'text-white',
-                        'textHover'         => 'hover:text-zinc-200'
-                    ]
-                ]
+                        'color' => '#ef4444',               // the colour shown in the fieldtype (required)
+                        'background' => 'bg-red-500',
+                        'backgroundHover' => 'hover:bg-red-700',
+                        'text' => 'text-white',
+                        'textHover' => 'hover:text-zinc-200',
+                    ],
+                ],
             ],
             [
-                'label'   => 'Amber',
+                'label' => 'Amber',
                 'default' => false,
-                'color'   =>  [
+                'class' => null, // provide extra classes to go along with this palette
+                'color' => [
                     [
-                        'color'             => '#f59e0b',               // the colour shown in the fieldtype (required)
-                        'background'        => 'bg-amber-500',
-                        'backgroundHover'   => 'hover:bg-amber-700',
-                        'text'              => 'text-white',
-                        'textHover'         => 'hover:text-zinc-200'
-                    ]
-                ]
+                        'color' => '#f59e0b',               // the colour shown in the fieldtype (required)
+                        'background' => 'bg-amber-500',
+                        'backgroundHover' => 'hover:bg-amber-700',
+                        'text' => 'text-white',
+                        'textHover' => 'hover:text-zinc-200',
+                    ],
+                ],
             ],
             [
-                'label'   => 'Green',
+                'label' => 'Green',
                 'default' => false,
-                'color'   =>  [
+                'class' => null, // provide extra classes to go along with this palette
+                'color' => [
                     [
-                        'color'             => '#22c55e',               // the colour shown in the fieldtype (required)
-                        'background'        => 'bg-green-500',
-                        'backgroundHover'   => 'hover:bg-green-700',
-                        'text'              => 'text-white',
-                        'textHover'         => 'hover:text-zinc-200'
-                    ]
-                ]
+                        'color' => '#22c55e',               // the colour shown in the fieldtype (required)
+                        'background' => 'bg-green-500',
+                        'backgroundHover' => 'hover:bg-green-700',
+                        'text' => 'text-white',
+                        'textHover' => 'hover:text-zinc-200',
+                    ],
+                ],
             ],
             [
-                'label'   => 'Blue',
+                'label' => 'Blue',
                 'default' => false,
-                'color'   =>  [
+                'class' => null, // provide extra classes to go along with this palette
+                'color' => [
                     [
-                        'color'             => '#3b82f6',               // the colour shown in the fieldtype (required)
-                        'background'        => 'bg-blue-500',
-                        'backgroundHover'   => 'hover:bg-blue-700',
-                        'text'              => 'text-white',
-                        'textHover'         => 'hover:text-zinc-200'
-                    ]
-                ]
+                        'color' => '#3b82f6',               // the colour shown in the fieldtype (required)
+                        'background' => 'bg-blue-500',
+                        'backgroundHover' => 'hover:bg-blue-700',
+                        'text' => 'text-white',
+                        'textHover' => 'hover:text-zinc-200',
+                    ],
+                ],
             ],
             [
-                'label'   => 'Purple',
+                'label' => 'Purple',
                 'default' => false,
-                'color'   =>  [
+                'class' => null, // provide extra classes to go along with this palette
+                'color' => [
                     [
-                        'color'             => '#a855f7',               // the colour shown in the fieldtype (required)
-                        'background'        => 'bg-purple-500',
-                        'backgroundHover'   => 'hover:bg-purple-700',
-                        'text'              => 'text-white',
-                        'textHover'         => 'hover:text-zinc-200'
-                    ]
-                ]
+                        'color' => '#a855f7',               // the colour shown in the fieldtype (required)
+                        'background' => 'bg-purple-500',
+                        'backgroundHover' => 'hover:bg-purple-700',
+                        'text' => 'text-white',
+                        'textHover' => 'hover:text-zinc-200',
+                    ],
+                ],
             ],
             [
-                'label'   => 'Yellow/Emerald',
+                'label' => 'Yellow/Emerald',
                 'default' => false,
-                'color'   =>  [
+                'class' => null, // provide extra classes to go along with this palette
+                'color' => [
                     [
-                        'color'             => '#eab308',               // the colour shown in the fieldtype (required)
-                        'background'        => 'bg-yellow-500',
-                        'backgroundHover'   => 'hover:bg-yellow-700',
-                        'text'              => 'text-white',
-                        'textHover'         => 'hover:text-zinc-200'
+                        'color' => '#eab308',               // the colour shown in the fieldtype (required)
+                        'background' => 'bg-yellow-500',
+                        'backgroundHover' => 'hover:bg-yellow-700',
+                        'text' => 'text-white',
+                        'textHover' => 'hover:text-zinc-200',
                     ],
                     [
-                        'color'             => '#059669',               // the colour shown in the fieldtype (required)
-                        'background'        => 'bg-emerald-600',
-                        'backgroundHover'   => 'hover:bg-emerald-800',
-                        'text'              => 'text-white',
-                        'textHover'         => 'hover:text-zinc-200'
-                    ]
-                ]
+                        'color' => '#059669',               // the colour shown in the fieldtype (required)
+                        'background' => 'bg-emerald-600',
+                        'backgroundHover' => 'hover:bg-emerald-800',
+                        'text' => 'text-white',
+                        'textHover' => 'hover:text-zinc-200',
+                    ],
+                ],
             ],
             [
-                'label'   => 'Red/Amber',
+                'label' => 'Red/Amber',
                 'default' => false,
-                'color'   =>  [
+                'class' => null, // provide extra classes to go along with this palette
+                'color' => [
                     [
-                        'color'             => '#a855f7',               // the colour shown in the fieldtype (required)
-                        'background'        => 'bg-red-500',
-                        'backgroundHover'   => 'hover:bg-red-700',
-                        'text'              => 'text-white',
-                        'textHover'         => 'hover:text-zinc-200'
+                        'color' => '#a855f7',               // the colour shown in the fieldtype (required)
+                        'background' => 'bg-red-500',
+                        'backgroundHover' => 'hover:bg-red-700',
+                        'text' => 'text-white',
+                        'textHover' => 'hover:text-zinc-200',
                     ],
                     [
-                        'color'             => '#f59e0b',               // the colour shown in the fieldtype (required)
-                        'background'        => 'bg-amber-500',
-                        'backgroundHover'   => 'hover:bg-amber-700',
-                        'text'              => 'text-white',
-                        'textHover'         => 'hover:text-zinc-200'
-                    ]
-                ]
+                        'color' => '#f59e0b',               // the colour shown in the fieldtype (required)
+                        'background' => 'bg-amber-500',
+                        'backgroundHover' => 'hover:bg-amber-700',
+                        'text' => 'text-white',
+                        'textHover' => 'hover:text-zinc-200',
+                    ],
+                ],
             ],
             [
-                'label'   => 'Sky/Rose',
+                'label' => 'Sky/Rose',
                 'default' => false,
-                'color'   =>  [
+                'class' => null, // provide extra classes to go along with this palette
+                'color' => [
                     [
-                        'color'             => '#0ea5e9',               // the colour shown in the fieldtype (required)
-                        'background'        => 'bg-sky-500',
-                        'backgroundHover'   => 'hover:bg-sky-700',
-                        'text'              => 'text-white',
-                        'textHover'         => 'hover:text-zinc-200'
+                        'color' => '#0ea5e9',               // the colour shown in the fieldtype (required)
+                        'background' => 'bg-sky-500',
+                        'backgroundHover' => 'hover:bg-sky-700',
+                        'text' => 'text-white',
+                        'textHover' => 'hover:text-zinc-200',
                     ],
                     [
-                        'color'             => '#e11d48',               // the colour shown in the fieldtype (required)
-                        'background'        => 'bg-rose-600',
-                        'backgroundHover'   => 'hover:bg-rose-800',
-                        'text'              => 'text-white',
-                        'textHover'         => 'hover:text-zinc-200'
-                    ]
-                ]
+                        'color' => '#e11d48',               // the colour shown in the fieldtype (required)
+                        'background' => 'bg-rose-600',
+                        'backgroundHover' => 'hover:bg-rose-800',
+                        'text' => 'text-white',
+                        'textHover' => 'hover:text-zinc-200',
+                    ],
+                ],
             ],
-        ]
-    ]
+        ],
+    ],
 
 ];

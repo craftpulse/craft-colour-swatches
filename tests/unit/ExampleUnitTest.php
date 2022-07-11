@@ -1,6 +1,6 @@
 <?php
 /**
- * Colour Swatches plugin for Craft CMS 3.x
+ * Colour Swatches plugin for Craft CMS 4.x
  *
  * This is a plugin to make repeating dates
  *

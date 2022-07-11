@@ -1,6 +1,6 @@
 <?php
 /**
- * color-swatches plugin for Craft CMS 3.x.
+ * color-swatches plugin for Craft CMS 4.x.
  *
  * Let clients choose from a predefined set of colours.
  *
@@ -9,7 +9,7 @@
  * @copyright Copyright (c) 2020 Percipio Global Ltd.
  */
 
-namespace percipioglobal\colourswatches\assetbundles\colourswatches;
+namespace percipiolondon\colourswatches\assetbundles\colourswatchesfield;
 
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
@@ -28,10 +28,9 @@ class ColourSwatchesAsset extends AssetBundle
     /**
      * Initializes the bundle.
      */
-    public function init()
+    public function init(): void
     {
-        // define the path that your publishable resources live
-        $this->sourcePath = "@percipioglobal/colourswatches/web/assets/dist";
+        $this->sourcePath = '@percipiolondon/colourswatches/assetbundles/colourswatchesfield/dist';
 
         // define the dependencies
         $this->depends = [
