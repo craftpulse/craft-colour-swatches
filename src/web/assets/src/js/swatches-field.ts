@@ -1,30 +1,39 @@
-import Swatches from '@/vue/swatches.vue'
+import Swatches from '~/vue/Swatches.vue'
 import { createApp } from 'vue'
 
 // App main
-const main = async () => {
+const swatchesField = async () => {
 
-    const swatchFields = document.querySelectorAll('[id$=_swatches]')
-    const swatchFieldsToMount = new Object()
+    const swatchesFields = document.querySelectorAll('[id$=_swatches]')
+    const swatchesFieldsToMount = new Object()
 
-    swatchFields.forEach( (swatchField) => {
+    swatchesFields.forEach( (swatchesField) => {
 
-        let field = swatchField.id.replace('-', '')
+        let field = swatchesField.id.replace('-', '')
 
-        swatchFieldsToMount[field] = {
-            'id': '#' + swatchField.id,
-            'app': createApp({ ...Swatches })
+        swatchesFieldsToMount[field] = {
+            'id': '#' + swatchesField.id,
+            'swatch': createApp({ ...Swatches })
         }
 
     })
 
-    const root = Object.entries(swatchFieldsToMount).map(entry => {
+    const root = Object.entries(swatchesFieldsToMount).map(entry => {
         let field = entry[1]
-        return field.app.mount(field.id)
+        return field.swatch.mount(field.id)
     })
 
-    return root
+    return swatches
 
 }
 
-main().then( (root) => {})
+swatchesField().then( () => {
+    console.log()
+})
+
+// Accept HMR as per: https://vitejs.dev/guide/api-hmr.html
+if (import.meta.hot) {
+    import.meta.hot.accept(() => {
+        console.log('HMR')
+    })
+}
