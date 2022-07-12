@@ -226,5 +226,43 @@ If you're using multiple colours you will need to loop through your color array
 ```
 
 
+### GraphQL
+
+Colour Swatches comes with GraphQL support you can build a query as follows:
+
+```
+fieldName {
+        label
+        class
+        color
+      }
+```
+
+which will give you the following result if you use the config file:
+
+```
+"fieldName": {
+          "label": "Black/White",
+          "class": "",
+          "color": [
+            "{\"color\":\"#000000\",\"background\":\"bg-black\"}",
+            "{\"color\":\"#ffffff\",\"text\":\"text-white\"}"
+          ]
+        },
+```
+
+or in case of a single value added through the settings you will see:
+
+```
+"fieldName": {
+          "label": "Black",
+          "class": "",
+          "color": [
+            "#000000"
+          ]
+        },
+```
+
+
 
 Brought to you by [Percipio](https://percipio.london)
