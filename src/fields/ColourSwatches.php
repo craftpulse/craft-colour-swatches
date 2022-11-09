@@ -371,7 +371,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                     // if we're using the CP values
                 } else {
                     $color = $value->color;
-                    $style = "background-color:$color";
+                    $style = strpos($color, ',') ? "background: linear-gradient(to bottom right, $color);" : "background-color:$color";
                 }
             }
         }
