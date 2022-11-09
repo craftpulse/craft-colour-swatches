@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.2.1 - 2022-07-08
+
+### Fixed
+- Fixed Element list in control panel - color preview is not displaying corretly if selected option has more than one color [#101](https://github.com/percipioglobal/craft-colour-swatches/issues/101)
+
 ## 4.2.0.1 - 2022-07-08
 
 ### Fixed
