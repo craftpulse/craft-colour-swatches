@@ -61,6 +61,9 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
     /** @var string|null */
     public ?string $palette = null;
 
+    /** @var bool */
+    public bool $setRandom = false;
+
     /** @var int|string|null */
     public string|int|null $default = null;
 
@@ -172,6 +175,12 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                     $saveValue = $palette;
                 }
             }
+        }
+
+        // if no default is defined and random is set, pick a random colour
+        if (!$saveValue && $this->setRandom) {
+            $random = array_rand($settingsPalette, 1);
+            $saveValue = $settingsPalette[$random];
         }
 
         return $saveValue;
