@@ -1,62 +1,92 @@
 <?php
 
-namespace percipioglobal\colourswatches\models;
+namespace percipiolondon\colourswatches\models;
 
+use Craft;
 use craft\base\Model;
+use craft\helpers\Json;
 
+/**
+ * Class ColourSwatches
+ *
+ * @package percipiolondon\colourswatches\models
+ */
 class ColourSwatches extends Model
 {
     /**
      * @var string
      */
+    public string $label = '';
 
-    public $label = '';
-    public $color = '';
+    /**
+     * @var array|string|null
+     */
+    public array|string|null $color = null;
 
-    public function __construct($value)
+    /**
+     * @var string
+     */
+    public string|null $class = '';
+
+
+    /**
+     * ColourSwatches constructor.
+     *
+     * @param string|null $value
+     */
+    public function __construct(?string $value)
     {
-        if($this->validateJson($value)){
-
-            // typecast our object to an array
-            $colorData = (array)json_decode($value);
-            $value = null;
-            $color = array_filter($colorData);
-                // if our array has usable data
-                if (!empty($colorData['label']))
-                  {
-                    $this->label = $colorData['label'];
-                    $this->color = $colorData['color'];
-                  }
-                // else ensure we return a null value (only really needed for old data stores)
-                else {
-                    $value = null;
-                }
-         // else ensure we return a null value
-        } else {
-            $value = null;
+        if ($this->validateJson($value)) {
+            $colorData = Json::decode($value);
+            if (!empty($colorData['label'])) {
+                $this->label = $colorData['label'];
+                $this->color = $colorData['color'];
+                $this->class = $colorData['class'] ?? '';
+            }
         }
     }
 
     // making sure we have json data, returns boolean(true) if this is the case
-    public function validateJson($value)
+
+    /**
+     * @param string|null $value
+     * @return bool
+     */
+    public function validateJson(?string $value): bool
     {
-        $json = json_decode($value);
+        $json = Json::decode($value);
         return $json && $value != $json;
     }
 
-    public function __toString()
+    /**
+     * @return string
+     */
+    public function __toString(): string
     {
         return $this->label;
     }
 
-    public function colors()
+    /**
+     * @return mixed
+     */
+    public function colors(): mixed
     {
         return $this->color;
     }
 
-    public function labels()
+    /**
+     * @return mixed
+     */
+    public function labels(): mixed
     {
         return $this->label;
     }
 
+    /**
+     * @return mixed
+     */
+    public function class(): mixed
+    {
+        return $this->class;
+    }
 }

@@ -5,9 +5,9 @@ namespace percipiolondon\colourswatches\migrations;
 use craft\db\Migration;
 
 /**
- * m200911_142127_update_namespace migration.
+ * m220523_152700_namespace_migration_fix migration.
  */
-class m200911_142127_update_namespace extends Migration
+class m220523_152700_namespace_migration_fix extends Migration
 {
     /**
      * @return bool
@@ -19,11 +19,11 @@ class m200911_142127_update_namespace extends Migration
         $this->update(
             '{{%fields}}',
             [
-                'type' => 'percipioglobal\\colourswatches\\fields\\ColourSwatches',
+                'type' => 'percipiolondon\\colourswatches\\fields\\ColourSwatches',
             ],
-            'type = :riastype',
+            'type = :percipioglobal',
             [
-                ':riastype' => 'rias\\colourswatches\\fields\\ColourSwatches',
+                ':percipioglobal' => 'percipioglobal\\colourswatches\\fields\\ColourSwatches',
             ]
         );
 
@@ -36,7 +36,7 @@ class m200911_142127_update_namespace extends Migration
      */
     public function safeDown(): bool
     {
-        echo "m200911_142127_update_namespace cannot be reverted.\n";
+        echo "m220523_152700_namespace_migration_fix cannot be reverted.\n";
         return false;
     }
 }

@@ -1,21 +1,23 @@
 {
-    "name": "percipioglobal/craft-colour-swatches",
+    "name": "percipiolondon/craft-colour-swatches",
     "description": "Let clients choose from a predefined set of colours and utilise associated colour codes and class names in your templates.",
     "type": "craft-plugin",
-    "version": "1.5.1",
+    "version": "4.3.0",
     "keywords": [
         "craft",
         "cms",
         "craftcms",
         "craft-plugin",
         "colour-swatches",
-        "color-swatches"
+        "color-swatches",
+        "colors",
+        "colours",
+        "swatches"
     ],
     "support": {
         "email": "support@percipio.london",
-        "docs": "https://github.com/percipioglobal/craft-colour-swatches/blob/master/README.md",
-        "issues": "https://github.com/percipioglobal/craft-colour-swatches/issues",
-        "source": "https://github.com/percipioglobal/craft-colour-swatches"
+        "docs": "https://github.com/percipioglobal/craft-colour-swatches/blob/v4/README.md",
+        "issues": "https://github.com/percipioglobal/craft-colour-swatches/issues"
     },
     "license": "MIT",
     "authors": [
@@ -24,20 +26,37 @@
             "homepage": "https://percipio.london"
         }
     ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
-        "craftcms/cms": "^3.3.0"
+        "php": "^8.0.2",
+        "craftcms/cms": "^4.0.0"
+    },
+    "require-dev": {
+        "craftcms/phpstan": "dev-main"
     },
     "autoload": {
         "psr-4": {
-            "percipioglobal\\colourswatches\\": "src/"
+            "percipiolondon\\colourswatches\\": "src/"
         }
     },
     "extra": {
         "name": "Colour Swatches",
         "handle": "colour-swatches",
         "description": "Adding custom selectable colour palettes, gradients, classes and more to your field types.",
-        "schemaVersion": "1.4.2",
-        "changelogUrl": "https://raw.githubusercontent.com/percipioglobal/craft-colour-swatches/master/CHANGELOG.md",
-        "class": "percipioglobal\\colourswatches\\ColourSwatches"
+        "developer": "percipiolondon",
+        "developerUrl": "https://percipio.london",
+        "documentationUrl": "https://github.com/percipioglobal/craft-colour-swatches/blob/v4/README.md",
+        "changelogUrl": "https://raw.githubusercontent.com/percipioglobal/craft-colour-swatches/v4/CHANGELOG.md",
+        "class": "percipiolondon\\colourswatches\\ColourSwatches"
+    },
+    "scripts": {
+        "phpstan": "phpstan --memory-limit=1G"
+    },
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true,
+            "craftcms/plugin-installer": true
+        }
     }
 }

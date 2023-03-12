@@ -9,23 +9,41 @@
  * @copyright Copyright (c) 2020 Percipio Global Ltd.
  */
 
-namespace percipioglobal\colourswatches\fields;
+namespace percipiolondon\colourswatches\fields;
 
 use Craft;
 use craft\base\ElementInterface;
 use craft\base\Field;
 use craft\base\PreviewableFieldInterface;
-use percipioglobal\colourswatches\assetbundles\colourswatchesfield\ColourSwatchesFieldAsset;
-use percipioglobal\colourswatches\ColourSwatches as Plugin;
-use percipioglobal\colourswatches\models\ColourSwatches as ColourSwatchesModel;
+use craft\base\SortableFieldInterface;
+use craft\gql\GqlEntityRegistry;
+use craft\gql\TypeLoader;
+use craft\helpers\Json;
+
+use GraphQL\Type\Definition\ObjectType;
+use GraphQL\Type\Definition\ResolveInfo;
+use GraphQL\Type\Definition\Type;
+
+use percipiolondon\colourswatches\assetbundles\colourswatchesfield\ColourSwatchesFieldAsset;
+use percipiolondon\colourswatches\ColourSwatches as ColorSwatches;
+use percipiolondon\colourswatches\models\ColourSwatches as ColourSwatchesModel;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
+use yii\base\Exception;
+use yii\base\InvalidConfigException;
 use yii\db\Schema;
 
 /**
  * @author    Percipio Global Ltd.
  *
  * @since     1.0.0
+ *
+ * @property-read string|array $contentColumnType
+ * @property-read Type|array $contentGqlType
+ * @property-read null|string $settingsHtml
  */
-class ColourSwatches extends Field implements PreviewableFieldInterface
+class ColourSwatches extends Field implements PreviewableFieldInterface, SortableFieldInterface
 {
     // Public Properties
     // =========================================================================
@@ -35,144 +53,196 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
      *
      * @var array
      */
-    public $options = [];
+    public array $options = [];
 
     /** @var bool */
-    public $useConfigFile = false;
+    public bool $useConfigFile = false;
 
-    /** @var string */
-    public $palette = null;
+    /** @var string|null */
+    public ?string $palette = null;
 
-    /** @var int|string */
-    public $default = null;
+    /** @var bool */
+    public bool $setRandom = false;
+
+    /** @var int|string|null */
+    public string|int|null $default = null;
 
     // Static Methods
     // =========================================================================
 
+
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public static function displayName(): string
     {
         return Craft::t('colour-swatches', 'Color Swatches');
     }
 
+    /**
+     * @inheritdoc
+     */
+    public static function isRequirable(): bool
+    {
+        return true;
+    }
+
     // Public Methods
     // =========================================================================
 
+
     /**
-     * {@inheritdoc}
+     * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         $rules = parent::rules();
-        $rules = array_merge($rules, [['options', 'each', 'rule' => ['required']], ]);
-
-        return $rules;
+        return array_merge($rules, [['options', 'each', 'rule' => ['required']], ]);
     }
 
+
     /**
-     * {@inheritdoc}
+     * @return array|string
      */
-    public function getContentColumnType(): string
+    public function getContentColumnType(): array|string
     {
         return Schema::TYPE_TEXT;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function normalizeValue($value, ElementInterface $element = null)
-    {
 
-        if ($value instanceof ColourSwatchesModel)
-        {
+    /**
+     * @param mixed $value
+     * @param ElementInterface|null $element
+     * @return ColourSwatchesModel|null
+     */
+    public function normalizeValue(mixed $value, ?ElementInterface $element = null): ?ColourSwatchesModel
+    {
+        if ($value instanceof ColourSwatchesModel) {
             return $value;
         }
 
         // Check to see if this is already an array, which happens in some cases (Vizy)
         if (is_array($value)) {
-            $value = json_encode($value);
+            $value = Json::encode($value);
         }
 
-        // quick array transform so that we can ensure and `required fields` fire an error
-        $valueData = (array)json_decode($value);
-        // if we have actual data return model
-        if (count($valueData) > 0)
-        {
-            return new ColourSwatchesModel($value);
+        if (is_null($value) || $value === '') {
+            return null;
         }
+
+        return new ColourSwatchesModel($value);
     }
 
+
     /**
-     * {@inheritdoc}
+     * @param mixed $value
+     * @param ElementInterface|null $element
+     * @return mixed
      */
-    public function serializeValue($value, ElementInterface $element = null)
+    public function serializeValue(mixed $value, ?ElementInterface $element = null): mixed
     {
         $settingsPalette = $this->options;
         $saveValue = null;
 
-        // if useConfigFile got setted, fetch the objects from that file
-        if($this->useConfigFile){
-            if(Plugin::$plugin->settings->palettes[$this->palette] ?? false){
-                //if the palette with the value exists, return this as the settings palette
-                $settingsPalette = Plugin::$plugin->settings->palettes[$this->palette];
-            }else{
-                //if it doesnt exist, set it to the default colors
-                $settingsPalette = Plugin::$plugin->settings->colors ?: [];
+        // if useConfigFile is set, fetch the objects from that file
+        if ($this->useConfigFile) {
+            if (ColorSwatches::$plugin->settings->palettes[$this->palette] ?? false) {
+                // if the palette with the value exists, return this as the settings palette
+                $settingsPalette = ColorSwatches::$plugin->settings->palettes[$this->palette];
+            } else {
+                // if it doesn't exist, set it to the default colors
+                $settingsPalette = ColorSwatches::$plugin->settings->colors ?: [];
             }
         }
 
         // loop through the colour arrays
-        foreach($settingsPalette as $palette){
+        foreach ($settingsPalette as $palette) {
 
             //set the correct colour based on the label inside of the value
-            if($value && ($palette["label"] === $value['label'])) {
+            if ($value && ($palette["label"] === $value['label'])) {
                 $saveValue = $value;
                 $saveValue['color'] = $palette['color'];
+                $saveValue['class'] = $palette['class'] ?? '';
             }
         }
 
-        //if nothing got set, use the default if that exists
-        if(!$saveValue){
-            foreach($settingsPalette as $key => $palette){
+        // if nothing got set, use the default if that exists
+        if (!$saveValue) {
+            foreach ($settingsPalette as $key => $palette) {
                 $paletteId = is_int($key) ? ($key + 1) : $key;
 
-                if(is_array($palette) && $paletteId == $this->default){
+                if (is_array($palette) && $paletteId == $this->default) {
                     $saveValue = $palette;
                 }
             }
         }
 
+        // if no default is defined and random is set, pick a random colour
+        if (!$saveValue && $this->setRandom) {
+            $random = array_rand($settingsPalette, 1);
+            $saveValue = $settingsPalette[$random];
+        }
+
         return $saveValue;
     }
 
+
     /**
-     * {@inheritdoc}
+     * @return string|null
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws Exception
+     * @throws InvalidConfigException
      */
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
         // Register our asset bundle
         Craft::$app->getView()
             ->registerAssetBundle(ColourSwatchesFieldAsset::class);
 
-        $config = ['instructions' => Craft::t('colour-swatches', 'Define the available colors.') , 'id' => 'options', 'name' => 'options', 'addRowLabel' => Craft::t('colour-swatches', 'Add a colour') , 'cols' => ['label' => ['heading' => Craft::t('colour-swatches', 'Label') , 'type' => 'singleline', ], 'color' => ['heading' => Craft::t('colour-swatches', 'Hex Colours (comma seperated)') , 'type' => 'singleline', ], 'default' => ['heading' => Craft::t('colour-swatches', 'Default?') , 'type' => 'checkbox', 'class' => 'thin', ], ], 'rows' => $this->options, ];
+        $config = [
+            'instructions' => Craft::t('colour-swatches', 'Define the available colors.'),
+            'id' => 'options',
+            'name' => 'options',
+            'addRowLabel' => Craft::t('colour-swatches', 'Add a colour'),
+            'cols' => [
+                'label' => [
+                    'heading' => Craft::t('colour-swatches', 'Label'),
+                    'type' => 'singleline',
+                ],
+                'color' => [
+                    'heading' => Craft::t('colour-swatches', 'Hex Colours (comma seperated)'),
+                    'type' => 'singleline',
+                ],
+                'default' => [
+                    'heading' => Craft::t('colour-swatches', 'Default?'),
+                    'type' => 'checkbox', 'class' => 'thin',
+                ],
+                'class' => [
+                    'heading' => Craft::t('colour-swatches', 'Css class to go with the palette'),
+                    'type' => 'singleline',
+                ],
+            ],
+            'rows' => $this->options,
+            'allowAdd' => true,
+            'allowReorder' => true,
+            'allowDelete' => true,
+        ];
 
         $paletteOptions = [];
         $paletteOptions[] = ['label' => 'Colors', 'value' => null, ];
-        foreach (array_keys((array)Plugin::$plugin
+        foreach (array_keys((array)ColorSwatches::$plugin
             ->settings
-            ->palettes) as $palette)
-        {
+            ->palettes) as $palette) {
             $paletteOptions[] = ['label' => $palette, 'value' => $palette, ];
         }
 
         $paletteOptions = [];
         $paletteOptions[] = ['label' => 'Colour config', 'value' => null, ];
-        foreach (array_keys((array)Plugin::$plugin
+        foreach (array_keys((array)ColorSwatches::$plugin
             ->settings
-            ->palettes) as $palette)
-        {
+            ->palettes) as $palette) {
             $paletteOptions[] = ['label' => $palette, 'value' => $palette, ];
         }
 
@@ -182,17 +252,25 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
                 [
                     'field' => $this,
                     'config' => $config,
-                    'configOptions' => Plugin::$plugin->settings->colors ?: [],
+                    'configOptions' => ColorSwatches::$plugin->settings->colors ?: [],
                     'paletteOptions' => $paletteOptions,
-                    'palettes' => Plugin::$plugin->settings->palettes
+                    'palettes' => ColorSwatches::$plugin->settings->palettes,
                 ]
             );
     }
 
+
     /**
-     * {@inheritdoc}
+     * @param mixed $value
+     * @param ElementInterface|null $element
+     * @return string
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws Exception
+     * @throws InvalidConfigException
      */
-    public function getInputHtml($value, ElementInterface $element = null): string
+    public function getInputHtml(mixed $value, ?ElementInterface $element = null): string
     {
         // Register our asset bundle
         Craft::$app->getView()
@@ -216,55 +294,96 @@ class ColourSwatches extends Field implements PreviewableFieldInterface
                 'field' => $this,
                 'id' => $id,
                 'namespacedId' => $namespacedId,
-                'configOptions' => Plugin::$plugin->settings->colors,
-                'palettes' => Plugin::$plugin->settings->palettes,
+                'configOptions' => ColorSwatches::$plugin->settings->colors,
+                'palettes' => ColorSwatches::$plugin->settings->palettes,
             ]
         );
     }
 
     /**
-     * {@inheritdoc}
+     * @return Type|array
      */
-    public function getTableAttributeHtml($value, ElementInterface $element): string
+    public function getContentGqlType(): Type|array
     {
-        // our preview no data value
-        $color = '';
+        $typeName = $this->handle;
+
+        $swatchType = GqlEntityRegistry::getEntity($typeName) ?: GqlEntityRegistry::createEntity($typeName, new ObjectType([
+            'name' => $typeName,
+            'fields' => [
+                'label' => [
+                    'name' => 'label',
+                    'type' => Type::string(),
+                    'description' => 'The colour label'
+                ],
+                'class' => [
+                    'name' => 'class',
+                    'type' => Type::string(),
+                    'description' => 'The parent class'
+                ],
+                'color' => [
+                    'name' => 'color',
+                    'type' => Type::listOf(Type::string()),
+                    'description' => 'Our swatch colors',
+                    'resolve' => function($source, array $arguments, $context, ResolveInfo $resolveInfo) {
+                        $fieldName = $resolveInfo->fieldName;
+                        $data = $source[$fieldName];
+                        $colors = [];
+
+                        if(is_iterable($data)) {
+                            foreach ($data as $color) {
+                                $colors[] = Json::encode($color);
+                            }
+                        } else {
+                            $colors[] = $data;
+                        }
+
+                        return $colors;
+                    }
+                ]
+            ]
+        ]));
+
+        TypeLoader::registerType($typeName, static function() use ($swatchType) {
+            return $swatchType;
+        });
+
+        return $swatchType;
+    }
+
+
+    /**
+     * @param mixed $value
+     * @param ElementInterface $element
+     * @return string
+     */
+    public function getTableAttributeHtml(mixed $value, ElementInterface $element): string
+    {
         $style = "background-color: transparent";
         // if we have data
-        if (!empty($value))
-        {
+        if (!empty($value)) {
             $fieldValue = get_object_vars($value);
             $gradients = array();
             // if we have a custom color config
-            if (count($fieldValue) > 0)
-            {
+            if (count($fieldValue) > 0) {
                 // if we have more than one colour
-                if (is_array($value->color))
-                {
-                    foreach ($value->color as $color)
-                    {
-                        $gradients[] = $color->color;
+                if (is_array($value->color)) {
+                    foreach ($value->color as $color) {
+                        $gradients[] = $color['color'];
                     }
                     // set a fallback if we only have one colour
                     $style = "background-color:$gradients[0]";
                     // else build the gradient
-                    if (count($gradients) > 1)
-                    {
+                    if (count($gradients) > 1) {
                         $gradients = implode(",", $gradients);
                         $style = "background: linear-gradient(to bottom right, $gradients);";
                     }
                     // if we're using the CP values
-                }
-                else
-                {
+                } else {
                     $color = $value->color;
-                    $style = "background-color:$color";
+                    $style = strpos($color, ',') ? "background: linear-gradient(to bottom right, $color);" : "background-color:$color";
                 }
             }
         }
         return '<div class="color small static"><div class="color-preview" style="' . $style . '"></div></div>';
-        // return print_r($color);
-
     }
 }
-

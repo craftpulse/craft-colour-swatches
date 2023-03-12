@@ -9,7 +9,7 @@
  * @copyright Copyright (c) 2020 Percipio Global Ltd.
  */
 
-namespace percipioglobal\colourswatches\assetbundles\colourswatchesfield;
+namespace percipiolondon\colourswatches\assetbundles\colourswatchesfield;
 
 use craft\web\AssetBundle;
 use craft\web\assets\cp\CpAsset;
@@ -27,9 +27,9 @@ class ColourSwatchesFieldAsset extends AssetBundle
     /**
      * {@inheritdoc}
      */
-    public function init()
+    public function init(): void
     {
-        $this->sourcePath = '@percipioglobal/colourswatches/assetbundles/colourswatchesfield/dist';
+        $this->sourcePath = '@percipiolondon/colourswatches/assetbundles/colourswatchesfield/dist';
 
         $this->depends = [
             CpAsset::class,

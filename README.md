@@ -2,7 +2,7 @@
 
 Create custom colour palettes with flexibility & control.
 
-# Colour Swatches plugin for Craft CMS 3.5+
+# Colour Swatches plugin for Craft CMS 4+
 
 Instead of providing a user a full color picker, Colour Swatches is a configurable a fieldtype that gives an admin the ability to provide a selection of colours for a user to choose from. This allows you to create branded colour palettes with a bank of classnames ready to use in your templates. 
 
@@ -10,7 +10,7 @@ Instead of providing a user a full color picker, Colour Swatches is a configurab
 
 ## Requirements
 
-This plugin requires Craft CMS 3.5.0 or later.
+This plugin requires Craft CMS 4.0.0 or later.
 
 ## Installation
 
@@ -18,11 +18,11 @@ To install the plugin, follow these instructions.
 
 1. Open your terminal and go to your Craft project:
 
-        `cd /path/to/project`
+        cd /path/to/project
 
 2. Then tell Composer to load the plugin:
 
-        `composer require percipioglobal/craft-colour-swatches`
+        composer require percipiolondon/craft-colour-swatches
 
 3. In the Control Panel, go to Settings → Plugins and click the "Install" button for Colour Swatches.
 
@@ -223,6 +223,44 @@ If you're using multiple colours you will need to loop through your color array
         {{ field.color }}
         {{ field.customAttribute }}
     {% endfor %}
+```
+
+
+### GraphQL
+
+Colour Swatches comes with GraphQL support you can build a query as follows:
+
+```
+fieldName {
+        label
+        class
+        color
+      }
+```
+
+which will give you the following result if you use the config file:
+
+```
+"fieldName": {
+          "label": "Black/White",
+          "class": "",
+          "color": [
+            "{\"color\":\"#000000\",\"background\":\"bg-black\"}",
+            "{\"color\":\"#ffffff\",\"text\":\"text-white\"}"
+          ]
+        },
+```
+
+or in case of a single value added through the settings you will see:
+
+```
+"fieldName": {
+          "label": "Black",
+          "class": "",
+          "color": [
+            "#000000"
+          ]
+        },
 ```
 
 

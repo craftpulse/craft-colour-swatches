@@ -9,22 +9,25 @@
  * @copyright Copyright (c) 2020 Percipio Global Ltd.
  */
 
-namespace percipioglobal\colourswatches;
+namespace percipiolondon\colourswatches;
 
+use Craft;
 use craft\base\Plugin;
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Fields;
-use percipioglobal\colourswatches\fields\ColourSwatches as ColourSwatchesField;
-use percipioglobal\colourswatches\models\Settings;
+use percipiolondon\colourswatches\fields\ColourSwatches as ColourSwatchesField;
+use percipiolondon\colourswatches\models\Settings;
 use yii\base\Event;
 
-
 /**
- * Class Colorswatches.
+ * Class ColourSwatches.
  *
  * @author    Percipio Global Ltd.
  *
  * @since     1.0.0
+ * @property Settings $settings
+ *
+ * @method Settings getSettings()
  */
 class ColourSwatches extends Plugin
 {
@@ -34,15 +37,23 @@ class ColourSwatches extends Plugin
     /**
      * @var ColourSwatches
      */
-    public static $plugin;
+    public static ColourSwatches $plugin;
+
+    // Public Properties
+    // =========================================================================
+
+    /**
+     * @var string
+     */
+    public string $schemaVersion = '1.4.3';
 
     // Public Methods
     // =========================================================================
 
     /**
-     * {@inheritdoc}
+     * init
      */
-    public function init()
+    public function init(): void
     {
         parent::init();
         self::$plugin = $this;
@@ -50,15 +61,26 @@ class ColourSwatches extends Plugin
         Event::on(
             Fields::class,
             Fields::EVENT_REGISTER_FIELD_TYPES,
-            function (RegisterComponentTypesEvent $event) {
+            function(RegisterComponentTypesEvent $event) {
                 $event->types[] = ColourSwatchesField::class;
             }
         );
+
+        Craft::info(
+            Craft::t(
+                'colour-swatches',
+                '{name} plugin loaded',
+                ['name' => $this->name]
+            ),
+            __METHOD__
+        );
     }
 
-    protected function createSettingsModel()
+    /**
+     * @return Settings
+     */
+    protected function createSettingsModel(): Settings
     {
         return new Settings();
     }
-
 }
