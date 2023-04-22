@@ -47,6 +47,11 @@ class ColourSwatches extends Plugin
      */
     public string $schemaVersion = '1.4.3';
 
+    /**
+     * @var bool
+     */
+    public bool $hasCpSettings = true;
+
     // Public Methods
     // =========================================================================
 
@@ -82,5 +87,16 @@ class ColourSwatches extends Plugin
     protected function createSettingsModel(): Settings
     {
         return new Settings();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function settingsHtml(): ?string
+    {
+        return Craft::$app->view->renderTemplate(
+            'colour-swatches/_settings',
+            ['settings' => $this->getSettings()]
+        );
     }
 }
