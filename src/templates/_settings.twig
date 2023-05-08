@@ -1,0 +1,84 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * color-swatches plugin for Craft CMS
+ *
+ * ColourSwatches Settings
+ *
+ * @author    Percipio Global Ltd.
+ * @copyright Copyright (c) 2023 Percipio Global Ltd.
+ * @link      https://percipio.london
+ * @package   Colour Swatches
+ * @since     4.3.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+<div id="settings" class="color-swatches-options">
+    {{ craft.cp.field(forms.editableTable({
+            instructions: 'Define the available colors.'|t('colour-swatches'),
+            id: 'colors',
+            name: 'colors',
+            addRowLabel: 'Add a colour'|t('colour-swatches'),
+            cols: {
+                label: {
+                    heading: 'Label'|t('colour-swatches'),
+                    type: 'singleline',
+                },
+                color: {
+                    heading: 'Hex Colours (comma seperated)'|t('colour-swatches'),
+                    type: 'singleline',
+                },
+                default: {
+                    heading: 'Default?'|t('colour-swatches'),
+                    type: 'checkbox', class: 'thin',
+                },
+                class: {
+                    heading: 'Css class to go with the palette'|t('colour-swatches'),
+                    type: 'singleline',
+                },
+            },
+            rows: settings.colors,
+            allowAdd: true,
+            allowReorder: true,
+            allowDelete: true,
+        }), {
+            label: 'Colors'|t('colour-swatches'),
+            id: 'colors',
+            name: 'colors'
+    })|raw }}
+
+    {% for name, palette in settings['palettes'] %}
+        <div class="palette">
+            {{ craft.cp.field(forms.editableTable({
+                instructions: 'Define the available colors.'|t('colour-swatches'),
+                id: 'palettes-' ~ name,
+                name: 'palettes[' ~ name ~ ']',
+                addRowLabel: 'Add a colour'|t('colour-swatches'),
+                cols: {
+                    label: {
+                        heading: 'Label'|t('colour-swatches'),
+                        type: 'singleline',
+                    },
+                    color: {
+                        heading: 'Hex Colours (comma seperated)'|t('colour-swatches'),
+                        type: 'text',
+                    },
+                    default: {
+                        heading: 'Default?'|t('colour-swatches'),
+                        type: 'checkbox', class: 'thin',
+                    }
+                },
+                rows: palette|map(p => p|merge({ color: p.color|json_encode})),
+                allowAdd: true,
+                allowReorder: true,
+                allowDelete: true,
+                class: 'palette-table'
+            }), {
+                label: 'Palette {name}'|t('colour-swatches', { name: name }),
+                id: 'palettes[' ~ name ~ ']'
+            })|raw }}
+        </div>
+    {% endfor %}
+</div>
