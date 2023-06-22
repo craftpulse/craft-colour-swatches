@@ -127,6 +127,14 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
         }
 
         if (is_null($value) || $value === '') {
+            // if default is set --> return default
+            $default = array_filter($this->options, function($option) {return $option['default'] == 1;});
+
+            if ($default[0]) {
+                return new ColourSwatchesModel(Json::encode($default[0]));
+            }
+
+            // if no default is set --> return null
             return null;
         }
 
@@ -157,7 +165,6 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
 
         // loop through the colour arrays
         foreach ($settingsPalette as $palette) {
-
             //set the correct colour based on the label inside of the value
             if ($value && ($palette["label"] === $value['label'])) {
                 $saveValue = $value;
