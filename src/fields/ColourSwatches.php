@@ -385,7 +385,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
      * @param ElementInterface $element
      * @return string
      */
-    public function getTableAttributeHtml(mixed $value, ElementInterface $element): string
+    public function getPreviewHtml(mixed $value, ElementInterface $element): string
     {
         $style = "background-color: transparent";
         // if we have data
