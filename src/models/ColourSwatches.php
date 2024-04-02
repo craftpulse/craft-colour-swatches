@@ -61,8 +61,12 @@ class ColourSwatches extends Model
      */
     public function validateJson(?string $value): bool
     {
-        $json = Json::decode($value);
-        return $json && $value != $json;
+        if (Json::isJsonObject($value)) {
+            $json = Json::decode($value);
+            return $json && $value != $json;
+        }
+
+        return false;
     }
 
     /**
