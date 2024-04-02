@@ -117,6 +117,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
      */
     public function normalizeValue(mixed $value, ?ElementInterface $element = null): ?ColourSwatchesModel
     {
+        
         if ($value instanceof ColourSwatchesModel) {
             return $value;
         }
@@ -127,6 +128,26 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
         }
 
         if (is_null($value) || $value === '') {
+
+            // if useConfigFile is set, fetch the objects from that file
+            if ($this->useConfigFile) {
+                if (ColorSwatches::$plugin->settings->palettes[$this->palette] ?? false) {
+                    // if the palette with the value exists, return this as the settings palette
+                    $this->options = ColorSwatches::$plugin->settings->palettes[$this->palette];
+                } else {
+                    // if it doesn't exist, set it to the default colors
+                    $this->options = ColorSwatches::$plugin->settings->colors ?: [];
+                }
+            }
+
+            // if default is set --> return default
+            $default = array_filter($this->options, function($option) {return $option['default'] == 1;});
+
+            if (!is_null($default) && count($default) > 0) {
+                return new ColourSwatchesModel(Json::encode($default[0]));
+            }
+
+            // if no default is set --> return null
             return null;
         }
 
@@ -155,23 +176,31 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
             }
         }
 
-        // loop through the colour arrays
-        foreach ($settingsPalette as $palette) {
+        $this->options = $settingsPalette;
 
+        foreach ($settingsPalette as $palette) {
             //set the correct colour based on the label inside of the value
             if ($value && ($palette["label"] === $value['label'])) {
                 $saveValue = $value;
                 $saveValue['color'] = $palette['color'];
                 $saveValue['class'] = $palette['class'] ?? '';
+                $saveValue['default'] = $palette['default'] ?? false;
             }
         }
 
         // if nothing got set, use the default if that exists
         if (!$saveValue) {
-            foreach ($settingsPalette as $key => $palette) {
-                $paletteId = is_int($key) ? ($key + 1) : $key;
 
-                if (is_array($palette) && $paletteId == $this->default) {
+            if (is_null($this->default)) {
+                $default = array_filter($settingsPalette, function($option) {return $option['default'] == true;});
+
+                if (!is_null($default) && count($default) > 0) {
+                    $this->default = $default[0]['label'];
+                }
+            }
+
+            foreach ($settingsPalette as $palette) {
+                if (is_array($palette) && $palette['label'] === $this->default) {
                     $saveValue = $palette;
                 }
             }

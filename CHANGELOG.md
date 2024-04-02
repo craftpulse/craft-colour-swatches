@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+### 4.4.0 - 2024-03-02
+### Fixed
+- [Docs] Incorrect plugin name used in installation step #115
+- Default swatch value returns as null #109
+- Class Not found exception: percipioglobal\colourswatches\fields\ColourSwatches while creating new field. #112
+- Syntax error when switching from Dropdown field type #111
+
 ## 4.3.0 - 2023-03-09
 ### Added
 - Randomly pick a set of colors from the color-swatches.php setup #84
