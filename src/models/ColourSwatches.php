@@ -24,6 +24,11 @@ class ColourSwatches extends Model
     public array|string|null $color = null;
 
     /**
+     * @var bool|null
+     */
+    public bool|null $default = false;
+
+    /**
      * @var string
      */
     public string|null $class = '';
@@ -38,9 +43,11 @@ class ColourSwatches extends Model
     {
         if ($this->validateJson($value)) {
             $colorData = Json::decode($value);
+
             if (!empty($colorData['label'])) {
                 $this->label = $colorData['label'];
                 $this->color = $colorData['color'];
+                $this->default = filter_var($colorData['default'] ?? false, FILTER_VALIDATE_BOOLEAN);
                 $this->class = $colorData['class'] ?? '';
             }
         }
@@ -80,6 +87,14 @@ class ColourSwatches extends Model
     public function labels(): mixed
     {
         return $this->label;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function default(): mixed
+    {
+        return $this->default;
     }
 
     /**
