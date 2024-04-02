@@ -117,6 +117,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
      */
     public function normalizeValue(mixed $value, ?ElementInterface $element = null): ?ColourSwatchesModel
     {
+        
         if ($value instanceof ColourSwatchesModel) {
             return $value;
         }
@@ -165,7 +166,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
         $saveValue = null;
 
         // if useConfigFile is set, fetch the objects from that file
-        if (is_null($settingsPalette) && $this->useConfigFile) {
+        if ($this->useConfigFile) {
             if (ColorSwatches::$plugin->settings->palettes[$this->palette] ?? false) {
                 // if the palette with the value exists, return this as the settings palette
                 $settingsPalette = ColorSwatches::$plugin->settings->palettes[$this->palette];
@@ -174,6 +175,8 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                 $settingsPalette = ColorSwatches::$plugin->settings->colors ?: [];
             }
         }
+
+        $this->options = $settingsPalette;
 
         foreach ($settingsPalette as $palette) {
             //set the correct colour based on the label inside of the value
