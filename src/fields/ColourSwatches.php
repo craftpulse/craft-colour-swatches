@@ -82,6 +82,14 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
     /**
      * @inheritdoc
      */
+    public static function icon(): string
+    {
+        return Craft::getAlias('@percipiolondon/colourswatches/icon-field.svg');
+    }
+
+    /**
+     * @inheritdoc
+     */
     public static function isRequirable(): bool
     {
         return true;
