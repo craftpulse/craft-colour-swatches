@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.5.0 - 2024-03-02
+### Changed
+- Changed code according to PHPStan advise (prep for Craft 5)
+
 ## 4.4.0 - 2024-03-02
 ### Fixed
 - [Docs] Incorrect plugin name used in installation step #115
