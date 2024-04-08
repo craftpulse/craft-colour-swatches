@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.5.1 - 2024-03-08
+### Fixed
+- Fixed the default fetch if the default isn't the first one in the config list
+
 ## 4.5.0 - 2024-03-02
 ### Changed
 - Changed code according to PHPStan advise (prep for Craft 5)
