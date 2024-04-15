@@ -151,12 +151,8 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
             // if default is set --> return default
             $default = array_filter($this->options, function($option) {return $option['default'] == 1;});
 
-            if (!is_null($default) && count($default) > 0) {
-                try {
-                    return new ColourSwatchesModel(Json::encode(current($default)));
-                } catch(\ErrorException) {
-                    Craft::error("There's no default colour defined");
-                }
+            if (is_array($default) && count($default) > 0) {
+                return new ColourSwatchesModel(Json::encode(array_values($default)[0]));
             }
 
             // if no default is set --> return null
