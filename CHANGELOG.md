@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.5.1 - 2024-04-15
+### Fixed
+- Fixed the bug when default color isn't the first in array #124
+
 ## 4.5.0 - 2024-03-02
 ### Changed
 - Changed code according to PHPStan advise (prep for Craft 5)
