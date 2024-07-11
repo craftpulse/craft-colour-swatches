@@ -192,9 +192,15 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
         if (!$saveValue) {
 
             if (is_null($this->default)) {
-                $default = array_filter($settingsPalette, function($option) {return $option['default'] == true;});
+                $array_filter = [];
+                foreach ($settingsPalette as $key => $option) {
+                    if ($option['default']) {
+                        $array_filter[$key] = $option;
+                    }
+                }
+                $default = $array_filter;
 
-                if (!is_null($default) && count($default) > 0) {
+                if (count($default) > 0) {
                     $this->default = $default[0]['label'];
                 }
             }
