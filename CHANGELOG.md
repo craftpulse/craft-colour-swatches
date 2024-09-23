@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 5.0.3 - 2024-09-23
+### Fixed
+- Undefined Array Key 0 Error in Craft 5.36 Colour Swatches 5.0.2 #133
+- Error occurs when entering colors directly in the CMS field #127
+
 ## 5.0.2 - 2024-03-08
 ### Fixed
 - Fixed the default fetch if the default isn't the first one in the config list
