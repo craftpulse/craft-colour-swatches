@@ -31,7 +31,7 @@ class Settings extends Model
     protected function defineRules(): array
     {
         return [
-            [['colors', 'palettes'], 'required'],
+//            [['colors', 'palettes'], 'required'],
             [['colors', 'palettes'], function ($attribute, $params) {
                 if (!is_array($this->colors)) {
                     $this->addError('colors', Craft::t('colour-swatches', 'colors is not array!'));
@@ -43,13 +43,16 @@ class Settings extends Model
             }],
             [['palettes'], 'filter', 'filter' => function ($palettes) {
                 foreach ($palettes as &$palette) {
-                    foreach ($palette as &$color) {
-                        if (is_string($color['color'])) {
-                            $color['color'] = json_decode($color['color'], true);
+                    if (!is_string($palette)) {
+                        foreach ($palette as &$color) {
+                            if (is_string($color['color'])) {
+                                $color['color'] = json_decode($color['color'], true);
+                            }
                         }
+                    } else {
+                        $palette = [];
                     }
                 }
-                
                 return $palettes;
             }]
         ];
