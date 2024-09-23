@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Fixed
 - Undefined Array Key 0 Error in Craft 5.36 Colour Swatches 5.0.2 #133
 - Error occurs when entering colors directly in the CMS field #127
-- 
+
 ## 4.5.2 - 2024-04-15
 ### Fixed
 - Fixed the bug when default color isn't the first in array #124
