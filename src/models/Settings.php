@@ -31,7 +31,7 @@ class Settings extends Model
     protected function defineRules(): array
     {
         return [
-            [['colors', 'palettes'], 'required'],
+//            [['colors', 'palettes'], 'required'],
             [['colors', 'palettes'], function ($attribute, $params) {
                 if (!is_array($this->colors)) {
                     $this->addError('colors', Craft::t('colour-swatches', 'colors is not array!'));
@@ -49,7 +49,7 @@ class Settings extends Model
                         }
                     }
                 }
-                
+
                 return $palettes;
             }]
         ];

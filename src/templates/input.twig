@@ -31,7 +31,7 @@
 {#    : field.options %}#}
 
 {% if options|length == 0 %}
-    <p>{{ "The selected colour palette for this field isn\'t defined in the `colour-swatches.php` config file"|t('colour-swatches') }}</p>
+    <p>{{ "The selected colour palette for this field isn\'t defined in the `colour-swatches.php` config file or settings."|t('colour-swatches') }}</p>
 {% endif %}
 
 <div id="{{ id }}" class="color-swatches">
