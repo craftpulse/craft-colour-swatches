@@ -331,16 +331,16 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
         // Render the input template
         return Craft::$app->getView()
             ->renderTemplate('colour-swatches/input',
-            [
-                'name' => $this->handle,
-                'fieldValue' => $value,
-                'field' => $this,
-                'id' => $id,
-                'namespacedId' => $namespacedId,
-                'configOptions' => ColorSwatches::$plugin->settings->colors,
-                'palettes' => ColorSwatches::$plugin->settings->palettes,
-            ]
-        );
+                [
+                    'name' => $this->handle,
+                    'fieldValue' => $value,
+                    'field' => $this,
+                    'id' => $id,
+                    'namespacedId' => $namespacedId,
+                    'configOptions' => ColorSwatches::$plugin->settings->colors,
+                    'palettes' => ColorSwatches::$plugin->settings->palettes,
+                ]
+            );
     }
 
     /**

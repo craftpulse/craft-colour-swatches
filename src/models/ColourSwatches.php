@@ -5,6 +5,7 @@ namespace percipiolondon\colourswatches\models;
 use Craft;
 use craft\base\Model;
 use craft\helpers\Json;
+use Illuminate\Support\Collection;
 
 /**
  * Class ColourSwatches
@@ -51,6 +52,16 @@ class ColourSwatches extends Model
                 $this->class = $colorData['class'] ?? '';
             }
         }
+
+        Collection::macro('recursive', function () {
+            return $this->map(function ($value) {
+                if (is_array($value) || is_object($value)) {
+                    return collect($value)->recursive();
+                }
+
+                return $value;
+            });
+        });
     }
 
     // making sure we have json data, returns boolean(true) if this is the case
@@ -67,6 +78,18 @@ class ColourSwatches extends Model
         }
 
         return false;
+    }
+
+    /**
+     * @return Collection|null
+     */
+    public function collection(): ?Collection
+    {
+        if ($this) {
+            return collect($this['color'])->recursive();
+        }
+
+        return null;
     }
 
     /**
