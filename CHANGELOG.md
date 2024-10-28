@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 5.1.0 - 2024-10-28
+### Added
+- Added a `collection` function to the field that will return a recursive laravel collection for easier use in twig templates and to do manipulations.
+
 ## 5.0.2 - 2024-03-08
 ### Fixed
 - Fixed the default fetch if the default isn't the first one in the config list
