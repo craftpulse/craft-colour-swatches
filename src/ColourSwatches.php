@@ -1,12 +1,12 @@
 <?php
 /**
- * color-swatches plugin for Craft CMS 3.x.
+ * color-swatches plugin for Craft CMS 5.x.
  *
  * Let clients choose from a predefined set of colours.
  *
- * @link      https://percipio.london
+ * @link      https://craftpulse.com
  *
- * @copyright Copyright (c) 2020 Percipio Global Ltd.
+ * @copyright Copyright (c) 2024 CraftPulse.
  */
 
 namespace percipiolondon\colourswatches;

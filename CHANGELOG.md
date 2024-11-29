@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## 5.1.0 - 2024-10-28
+### Added
+- Added a `collection` function to the field that will return a recursive laravel collection for easier use in twig templates and to do manipulations.
+
 ## 5.0.3 - 2024-09-23
 ### Fixed
 - Undefined Array Key 0 Error in Craft 5.36 Colour Swatches 5.0.2 #133
