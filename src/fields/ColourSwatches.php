@@ -61,6 +61,9 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
     /** @var string|null */
     public ?string $palette = null;
 
+    /** @var bool */
+    public bool $setRandom = false;
+
     /** @var int|string|null */
     public string|int|null $default = null;
 
@@ -114,6 +117,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
      */
     public function normalizeValue(mixed $value, ?ElementInterface $element = null): ?ColourSwatchesModel
     {
+        
         if ($value instanceof ColourSwatchesModel) {
             return $value;
         }
@@ -124,6 +128,26 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
         }
 
         if (is_null($value) || $value === '') {
+
+            // if useConfigFile is set, fetch the objects from that file
+            if ($this->useConfigFile) {
+                if (ColorSwatches::$plugin->settings->palettes[$this->palette] ?? false) {
+                    // if the palette with the value exists, return this as the settings palette
+                    $this->options = ColorSwatches::$plugin->settings->palettes[$this->palette];
+                } else {
+                    // if it doesn't exist, set it to the default colors
+                    $this->options = ColorSwatches::$plugin->settings->colors ?: [];
+                }
+            }
+
+            // if default is set --> return default
+            $default = array_filter($this->options, function($option) {return $option['default'] == 1;});
+
+            if (is_array($default) && count($default) > 0) {
+                return new ColourSwatchesModel(Json::encode(array_values($default)[0]));
+            }
+
+            // if no default is set --> return null
             return null;
         }
 
@@ -152,26 +176,46 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
             }
         }
 
-        // loop through the colour arrays
-        foreach ($settingsPalette as $palette) {
+        $this->options = $settingsPalette;
 
+        foreach ($settingsPalette as $palette) {
             //set the correct colour based on the label inside of the value
             if ($value && ($palette["label"] === $value['label'])) {
                 $saveValue = $value;
                 $saveValue['color'] = $palette['color'];
                 $saveValue['class'] = $palette['class'] ?? '';
+                $saveValue['default'] = $palette['default'] ?? false;
             }
         }
 
         // if nothing got set, use the default if that exists
         if (!$saveValue) {
-            foreach ($settingsPalette as $key => $palette) {
-                $paletteId = is_int($key) ? ($key + 1) : $key;
 
-                if (is_array($palette) && $paletteId == $this->default) {
+            if (is_null($this->default)) {
+                $array_filter = [];
+                foreach ($settingsPalette as $key => $option) {
+                    if ($option['default']) {
+                        $array_filter[$key] = $option;
+                    }
+                }
+                $default = $array_filter;
+
+                if (!is_null($default) && count($default) > 0) {
+                    $this->default = array_values($default)[0]['label'];
+                }
+            }
+
+            foreach ($settingsPalette as $palette) {
+                if (is_array($palette) && $palette['label'] === $this->default) {
                     $saveValue = $palette;
                 }
             }
+        }
+
+        // if no default is defined and random is set, pick a random colour
+        if (!$saveValue && $this->setRandom) {
+            $random = array_rand($settingsPalette, 1);
+            $saveValue = $settingsPalette[$random];
         }
 
         return $saveValue;
@@ -371,7 +415,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                     // if we're using the CP values
                 } else {
                     $color = $value->color;
-                    $style = "background-color:$color";
+                    $style = strpos($color, ',') ? "background: linear-gradient(to bottom right, $color);" : "background-color:$color";
                 }
             }
         }

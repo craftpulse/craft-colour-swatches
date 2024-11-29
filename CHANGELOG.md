@@ -4,6 +4,39 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.5.3 - 2024-09-23
+### Fixed
+- Undefined Array Key 0 Error in Craft 5.36 Colour Swatches 5.0.2 #133
+- Error occurs when entering colors directly in the CMS field #127
+
+## 4.5.2 - 2024-04-15
+### Fixed
+- Fixed the bug when default color isn't the first in array #124
+
+## 4.5.1 - 2024-03-08
+### Fixed
+- Fixed the default fetch if the default isn't the first one in the config list
+
+## 4.5.0 - 2024-03-02
+### Changed
+- Changed code according to PHPStan advise (prep for Craft 5)
+
+## 4.4.0 - 2024-03-02
+### Fixed
+- [Docs] Incorrect plugin name used in installation step #115
+- Default swatch value returns as null #109
+- Class Not found exception: percipioglobal\colourswatches\fields\ColourSwatches while creating new field. #112
+- Syntax error when switching from Dropdown field type #111
+
+## 4.3.0 - 2023-03-09
+### Added
+- Randomly pick a set of colors from the color-swatches.php setup #84
+
+## 4.2.1 - 2022-07-08
+
+### Fixed
+- Fixed Element list in control panel - color preview is not displaying corretly if selected option has more than one color [#101](https://github.com/percipioglobal/craft-colour-swatches/issues/101)
+
 ## 4.2.0.1 - 2022-07-08
 
 ### Fixed

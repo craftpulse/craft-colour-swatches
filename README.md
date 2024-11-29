@@ -22,7 +22,7 @@ To install the plugin, follow these instructions.
 
 2. Then tell Composer to load the plugin:
 
-        composer require percipiolondon/craft-colour-swatches
+        composer require craftpulse/craft-colour-swatches
 
 3. In the Control Panel, go to Settings → Plugins and click the "Install" button for Colour Swatches.
 
@@ -55,7 +55,7 @@ If you want more granular control with your colour palettes, use the configurati
 
 You can use a `config/colour-swatches.php` config file file to predefine the possible colours, define different palettes and add lables, classnames or other attributes to your colours.
 
-Take a look at the [config file](https://github.com/percipioglobal/craft-colour-swatches/blob/master/src/config.php) in this repo for an example.
+Take a look at the [config file](https://github.com/craftpulse/craft-colour-swatches/blob/v4/src/config.php) in this repo for an example.
 
 ```php
 return [
@@ -265,4 +265,4 @@ or in case of a single value added through the settings you will see:
 
 
 
-Brought to you by [Percipio](https://percipio.london)
+Brought to you by [Craft Pulse](https://github.com/craftpulse)

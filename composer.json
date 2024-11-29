@@ -1,8 +1,8 @@
 {
-    "name": "percipiolondon/craft-colour-swatches",
+    "name": "craftpulse/craft-colour-swatches",
     "description": "Let clients choose from a predefined set of colours and utilise associated colour codes and class names in your templates.",
     "type": "craft-plugin",
-    "version": "4.2.0.1",
+    "version": "4.5.3",
     "keywords": [
         "craft",
         "cms",
@@ -22,8 +22,8 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Percipio Global",
-            "homepage": "https://percipio.london"
+            "name": "Craft Pulse",
+            "homepage": "https://github.com/craftpulse"
         }
     ],
     "minimum-stability": "dev",
@@ -33,6 +33,7 @@
         "craftcms/cms": "^4.0.0"
     },
     "require-dev": {
+        "craftcms/cms": "^4.0.0",
         "craftcms/phpstan": "dev-main"
     },
     "autoload": {
@@ -44,10 +45,10 @@
         "name": "Colour Swatches",
         "handle": "colour-swatches",
         "description": "Adding custom selectable colour palettes, gradients, classes and more to your field types.",
-        "developer": "percipiolondon",
-        "developerUrl": "https://percipio.london",
-        "documentationUrl": "https://github.com/percipioglobal/craft-colour-swatches/blob/v4/README.md",
-        "changelogUrl": "https://raw.githubusercontent.com/percipioglobal/craft-colour-swatches/v4/CHANGELOG.md",
+        "developer": "craftpulse",
+        "developerUrl": "https://github.com/craftpulse",
+        "documentationUrl": "https://github.com/craftpulse/craft-colour-swatches/blob/v4/README.md",
+        "changelogUrl": "https://github.com/craftpulse/craft-colour-swatches/blob/v4/CHANGELOG.md",
         "class": "percipiolondon\\colourswatches\\ColourSwatches"
     },
     "scripts": {

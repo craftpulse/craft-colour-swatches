@@ -24,6 +24,13 @@
     reverseToggle: 'settings',
 }) }}
 
+{{ forms.lightswitchField({
+    label: 'Set random on save'|t('colour-swatches'),
+    instructions: 'When no color is selected by the user and no default defined in the config, the system will pick a random color from the list.'|t('colour-swatches'),
+    name: 'setRandom',
+    on: field.setRandom,
+}) }}
+
 <div id="settings" class="color-swatches-options {{ field.useConfigFile ? 'hidden' : '' }}">
     {{ forms.editableTable(config) }}
 </div>
