@@ -55,7 +55,7 @@ If you want more granular control with your colour palettes, use the configurati
 
 You can use a `config/colour-swatches.php` config file file to predefine the possible colours, define different palettes and add lables, classnames or other attributes to your colours.
 
-Take a look at the [config file](https://github.com/craftpulse/craft-colour-swatches/blob/v4/src/config.php) in this repo for an example.
+Take a look at the [config file](https://github.com/craftpulse/craft-colour-swatches/blob/v5/src/config.php) in this repo for an example.
 
 ```php
 return [
