@@ -18,6 +18,7 @@ use craft\base\PreviewableFieldInterface;
 use craft\base\SortableFieldInterface;
 use craft\gql\GqlEntityRegistry;
 use craft\gql\TypeLoader;
+use craft\helpers\Html;
 use craft\helpers\Json;
 
 use craft\helpers\StringHelper;
@@ -297,14 +298,14 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
             'instructions' => Craft::t('colour-swatches', 'Define the available colors.'),
             'id' => 'options',
             'name' => 'options',
-            'addRowLabel' => Craft::t('colour-swatches', 'Add a colour'),
+            'addRowLabel' => Craft::t('colour-swatches', 'Add a color'),
             'cols' => [
                 'label' => [
                     'heading' => Craft::t('colour-swatches', 'Label'),
                     'type' => 'singleline',
                 ],
                 'color' => [
-                    'heading' => Craft::t('colour-swatches', 'Hex Colours (comma seperated)'),
+                    'heading' => Craft::t('colour-swatches', 'Hex Colors (comma seperated)'),
                     'type' => 'singleline',
                 ],
                 'default' => [
@@ -312,7 +313,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                     'type' => 'checkbox', 'class' => 'thin',
                 ],
                 'class' => [
-                    'heading' => Craft::t('colour-swatches', 'Css class to go with the palette'),
+                    'heading' => Craft::t('colour-swatches', 'CSS class to go with the palette'),
                     'type' => 'singleline',
                 ],
             ],
@@ -368,8 +369,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
             ->registerAssetBundle(ColourSwatchesFieldAsset::class);
 
         // Get our id and namespace
-        $id = Craft::$app->getView()
-            ->formatInputId($this->handle);
+        $id = Html::id($this->handle);
         $namespacedId = Craft::$app->getView()
             ->namespaceInputId($id);
 
