@@ -1,9 +1,31 @@
 {% set colours = option.color is defined ? option.color : option.colour %}
 {% set isDefault = option.default %}
 {% set active = null %}
+{% set activeHandle = null %}
 {% set fieldValue = fieldValue ?? null %}
+
 {% if fieldValue|length %}
-    {% set active = fieldValue.label ?? null %}
+    {% if fieldValue.handle is defined and fieldValue.handle %}
+        {% set activeHandle = fieldValue.handle %}
+    {% else %}
+        {% set active = fieldValue.label ?? null %}
+    {% endif %}
+{% endif %}
+
+{# Generate handle for this option (same logic as PHP) #}
+{% set optionHandle = option.handle ?? (option.label|camel) %}
+
+{# Determine if this option should be marked as active #}
+{% set isActive = false %}
+{% if activeHandle %}
+    {# Match by handle (preferred) #}
+    {% set isActive = (optionHandle == activeHandle) %}
+{% elseif active is not empty %}
+    {# Fallback to label matching for backward compatibility #}
+    {% set isActive = (option.label == active) %}
+{% elseif isDefault and active is null and activeHandle is null %}
+    {# No selection yet, use default #}
+    {% set isActive = true %}
 {% endif %}
 
 {% if colours is iterable %}
@@ -11,15 +33,16 @@
     {% set value = {
         label: option.label,
         color: colours,
+        handle: optionHandle,
     } %}
-    <button type="button" title="{{ option.label }}" data-value="{{ value | json_encode }}" class="option {% if (isDefault and active is null) or (active is not empty and (value.label == active)) %} button-active{% endif %}" style="
-        {% switch colours | length %}
-            {% case 1 %}
-                --color: {{ value.color[0].color is defined ? value.color[0].color : value.color[0].colour |parseRefs|raw }};
-            {% default %}
-                {% set percentage = 100 / colours | length %}
-                --color: linear-gradient(to bottom right, {% for color in colours %}{{ color.color is defined ? color.color : color.colour |parseRefs|raw }} {{ percentage * loop.index0 }}%, {{ color.color is defined ? color.color : color.colour |parseRefs|raw }} {{ percentage * loop.index }}%{% if not loop.last %},{% endif %}{% endfor %});
-        {% endswitch %}
+    <button type="button" title="{{ option.label }}" data-value="{{ value | json_encode }}" class="option {% if isActive %} button-active{% endif %}" style="
+    {%- switch colours|length %}
+        {% case 1 %}
+            --color: {{ value.color[0].color is defined ? value.color[0].color : value.color[0].colour |parseRefs|raw }};
+        {% default %}
+            {% set percentage = 100 / colours|length %}
+            --color: linear-gradient(to bottom right, {% for color in colours %}{{ color.color is defined ? color.color : color.colour |parseRefs|raw }} {{ percentage * loop.index0 }}%, {{ color.color is defined ? color.color : color.colour |parseRefs|raw }} {{ percentage * loop.index }}%{% if not loop.last %},{% endif %}{% endfor %});
+    {% endswitch -%}
         ">
         {# <span>&hellip;</span> #}
     </button>
@@ -34,15 +57,15 @@
     {% else %}
         {% set colours = value.color | split(',') %}
     {% endif %}
-    <button type="button" title="{{ option.label }}" data-value="{{ value | json_encode }}" class="option {% if (isDefault and active is null) or (active is not empty and (value.label == active)) %} button-active{% endif %}" style="
-        {% switch colours | length %}
-        {% case 1 %}
-            --color: {{ value.color|parseRefs|raw }};
-        {% default %}
-        {% set percentage = 100 / colours | length %}
-            --color: linear-gradient(to bottom right, {% for colour in colours %}{{ colour|parseRefs|raw }} {{ percentage * loop.index0 }}%, {{ colour|parseRefs|raw }} {{ percentage * loop.index }}%{% if not loop.last %},{% endif %}{% endfor %});
-        {% endswitch %}
+    <button type="button" title="{{ option.label }}" data-value="{{ value | json_encode }}" class="option {% if isActive %} button-active{% endif %}" style="
+    {% switch colours | length %}
+    {% case 1 %}
+        --color: {{ value.color|parseRefs|raw }};
+    {% default %}
+    {% set percentage = 100 / colours | length %}
+        --color: linear-gradient(to bottom right, {% for colour in colours %}{{ colour|parseRefs|raw }} {{ percentage * loop.index0 }}%, {{ colour|parseRefs|raw }} {{ percentage * loop.index }}%{% if not loop.last %},{% endif %}{% endfor %});
+    {% endswitch %}
         ">
-{#        <span>{{ option.label }}</span>#}
+        {#        <span>{{ option.label }}</span>#}
     </button>
 {% endif %}

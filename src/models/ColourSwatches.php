@@ -15,6 +15,12 @@ use Illuminate\Support\Collection;
 class ColourSwatches extends Model
 {
     /**
+     * @var string|null Silent stable identifier
+     * @since 5.2.0
+     */
+    public ?string $handle = null;
+
+    /**
      * @var string
      */
     public string $label = '';
@@ -40,12 +46,15 @@ class ColourSwatches extends Model
      *
      * @param string|null $value
      */
-    public function __construct(?string $value)
+    public function __construct(?string $value = null)
     {
+        parent::__construct();
+
         if ($this->validateJson($value)) {
             $colorData = Json::decode($value);
 
             if (!empty($colorData['label'])) {
+                $this->handle = $colorData['handle'] ?? null;
                 $this->label = $colorData['label'];
                 $this->color = $colorData['color'];
                 $this->default = filter_var($colorData['default'] ?? false, FILTER_VALIDATE_BOOLEAN);
@@ -53,18 +62,18 @@ class ColourSwatches extends Model
             }
         }
 
-        Collection::macro('recursive', function () {
-            return $this->map(function ($value) {
-                if (is_array($value) || is_object($value)) {
-                    return collect($value)->recursive();
-                }
+        if (!Collection::hasMacro('recursive')) {
+            Collection::macro('recursive', function () {
+                return $this->map(function ($value) {
+                    if (is_array($value) || is_object($value)) {
+                        return collect($value)->recursive();
+                    }
 
-                return $value;
+                    return $value;
+                });
             });
-        });
+        }
     }
-
-    // making sure we have json data, returns boolean(true) if this is the case
 
     /**
      * @param string|null $value

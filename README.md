@@ -4,7 +4,7 @@ Create custom colour palettes with flexibility & control.
 
 # Colour Swatches plugin for Craft CMS 4+
 
-Instead of providing a user a full color picker, Colour Swatches is a configurable a fieldtype that gives an admin the ability to provide a selection of colours for a user to choose from. This allows you to create branded colour palettes with a bank of classnames ready to use in your templates. 
+Instead of providing a user a full color picker, Colour Swatches is a configurable a fieldtype that gives an admin the ability to provide a selection of colours for a user to choose from. This allows you to create branded colour palettes with a bank of classnames ready to use in your templates.
 
 ![Screenshot](./resources/img/colour-swatches-1.png)
 
@@ -200,9 +200,11 @@ In your field settings you can then have the possibility to have it use the pred
 
 #### Making changes to your config file
 
-If have entries using Colour Swatches and you make changes to your config file, you will need to resave your entries for new information from your config file to be pulled into your entry data. 
+If have entries using Colour Swatches and you make changes to your config file, you will need to resave your entries for new information from your config file to be pulled into your entry data.
 
-From the command line you can run Crafts `./craft resave/entries` and your entries will be populated with any changes to from your `colour-swatches.php` config file. Colour swatches uses the `label` value to map changes to the entries, so make sure your labels values are unique / not null.  
+From the command line you can run Crafts `./craft resave/entries` and your entries will be populated with any changes to from your `colour-swatches.php` config file.
+
+**Note:** As of version 5.2.0, Colour Swatches uses a silent handle system for stability. When you first save entries, a handle is automatically generated from the label (e.g., "Red" becomes "red"). This handle is used to match colours even if you change the label later.
 
 
 #### Using Colour Swatches
@@ -224,6 +226,92 @@ If you're using multiple colours you will need to loop through your color array
         {{ field.customAttribute }}
     {% endfor %}
 ```
+
+#### Using Collections
+
+The `collection()` method (added in v5.1.0) returns a recursive Laravel collection for easier manipulation:
+
+```twig
+{# Get all hex values as an array #}
+{% set hexValues = fieldName.collection().pluck('color').all() %}
+
+{# Filter colors by a custom attribute #}
+{% set darkColors = fieldName.collection()
+    .filter(c => c.background is defined and 'dark' in c.background) %}
+
+{# Map to custom format #}
+{% set cssVars = fieldName.collection()
+    .map(c => '--color: ' ~ c.color ~ ';')
+    .implode(' ') %}
+
+{# Chain multiple operations #}
+{% set backgrounds = fieldName.collection()
+    .pluck('background')
+    .filter()
+    .unique()
+    .all() 
+%}
+
+{# Get count of colors #}
+{% set colorCount = fieldName.collection().count() %}
+
+{# Create CSS gradient from colors #}
+{% set gradient = 'linear-gradient(' ~ fieldName.collection().pluck('color').implode(', ') ~ ')' %}
+<div style="background: {{ gradient }}">Gradient background</div>
+```
+
+## Changing Labels
+
+By default, colour options are identified by their labels. The plugin now uses a silent handle system to maintain stability.
+
+### How Handles Work
+
+When an entry is saved, a handle is automatically generated from the label and stored in the database:
+- "Red" → handle: "red"
+- "Primary Red" → handle: "primary-red"
+- "Sky Blue" → handle: "sky-blue"
+
+**This handle is stored silently and never exposed in your templates.**
+
+### Safe Label Changes
+
+**Option 1: Add explicit handles (Recommended)**
+
+Add a `handle` field to your config before changing labels:
+
+```php
+'palettes' => [
+    'Tailwind' => [
+        [
+            'handle' => 'red',        // Add this once - keeps it stable
+            'label' => 'Red',         // Can be changed freely after handle is set
+            'color' => [['color' => '#ef4444']]
+        ]
+    ]
+]
+```
+
+**Workflow:**
+1. Add `handle` to your config entries
+2. Run `./craft resave/entries` once to store handles
+3. Now you can change `label` values without breaking existing entries
+
+**Option 2: Without explicit handles**
+
+If you don't add explicit handles, the system auto-generates them from labels. To change a label:
+
+1. Change the label in your config
+2. Run `./craft resave/entries` to update all entries
+
+### Handle Priority
+
+The system uses this priority for handles:
+
+1. **Explicit handle in config** → Always used if present (allows intentional handle changes)
+2. **Existing handle in database** → Preserved for stability
+3. **Auto-generated from label** → Created on first save
+
+This means you have full control: use auto-generation for simplicity, or add explicit handles when you need guaranteed stability.
 
 
 ### GraphQL
