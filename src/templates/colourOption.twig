@@ -44,7 +44,7 @@
                 --color: linear-gradient(to bottom right, {% for color in colours %}{{ color.color is defined ? color.color : color.colour }} {{ percentage * loop.index0 }}%, {{ color.color is defined ? color.color : color.colour }} {{ percentage * loop.index }}%{% if not loop.last %},{% endif %}{% endfor %});
         {% endswitch -%}
     {% endset %}
-    <button type="button" title="{{ option.label }}" data-value="{{ value | json_encode }}" class="option {% if isActive %} button-active{% endif %}" style="{{ colourStyle|e('html_attr') }}">
+    <button type="button" title="{{ option.label }}" aria-label="{{ option.label }}" data-value="{{ value | json_encode }}" class="option {% if isActive %} button-active{% endif %}" style="{{ colourStyle|e('html_attr') }}">
         {# <span>&hellip;</span> #}
     </button>
 {% else %}
@@ -67,7 +67,7 @@
             --color: linear-gradient(to bottom right, {% for colour in colours %}{{ colour }} {{ percentage * loop.index0 }}%, {{ colour }} {{ percentage * loop.index }}%{% if not loop.last %},{% endif %}{% endfor %});
         {% endswitch %}
     {% endset %}
-    <button type="button" title="{{ option.label }}" data-value="{{ value | json_encode }}" class="option {% if isActive %} button-active{% endif %}" style="{{ colourStyle|e('html_attr') }}">
+    <button type="button" title="{{ option.label }}" aria-label="{{ option.label }}" data-value="{{ value | json_encode }}" class="option {% if isActive %} button-active{% endif %}" style="{{ colourStyle|e('html_attr') }}">
         {#        <span>{{ option.label }}</span>#}
     </button>
 {% endif %}

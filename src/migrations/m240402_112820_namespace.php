@@ -2,7 +2,6 @@
 
 namespace percipiolondon\colourswatches\migrations;
 
-use Craft;
 use craft\db\Migration;
 
 /**

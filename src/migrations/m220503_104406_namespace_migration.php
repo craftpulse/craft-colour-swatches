@@ -5,7 +5,11 @@ namespace percipiolondon\colourswatches\migrations;
 use craft\db\Migration;
 
 /**
- * m200911_142127_update_namespace migration.
+ * m220503_104406_namespace_migration migration.
+ *
+ * @deprecated Has a parameter binding bug (missing colon prefix on params key).
+ *             Fixed by m220523_152700_namespace_migration_fix. Must not be modified
+ *             as it has already been applied to existing installations.
  */
 class m220503_104406_namespace_migration extends Migration
 {
