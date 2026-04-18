@@ -15,6 +15,7 @@ use Craft;
 use craft\base\Plugin;
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Fields;
+use Illuminate\Support\Collection;
 use percipiolondon\colourswatches\fields\ColourSwatches as ColourSwatchesField;
 use percipiolondon\colourswatches\models\Settings;
 use yii\base\Event;
@@ -63,6 +64,8 @@ class ColourSwatches extends Plugin
         parent::init();
         self::$plugin = $this;
 
+        $this->_registerCollectionMacros();
+
         Event::on(
             Fields::class,
             Fields::EVENT_REGISTER_FIELD_TYPES,
@@ -81,6 +84,9 @@ class ColourSwatches extends Plugin
         );
     }
 
+    // Protected Methods
+    // =========================================================================
+
     /**
      * @return Settings
      */
@@ -98,5 +104,28 @@ class ColourSwatches extends Plugin
             'colour-swatches/_settings',
             ['settings' => $this->getSettings()]
         );
+    }
+
+    // Private Methods
+    // =========================================================================
+
+    /**
+     * Register Collection macros used by the ColourSwatches model.
+     *
+     * @return void
+     */
+    private function _registerCollectionMacros(): void
+    {
+        if (!Collection::hasMacro('recursive')) {
+            Collection::macro('recursive', function () {
+                return $this->map(function ($value) {
+                    if (is_array($value) || is_object($value)) {
+                        return collect($value)->recursive();
+                    }
+
+                    return $value;
+                });
+            });
+        }
     }
 }

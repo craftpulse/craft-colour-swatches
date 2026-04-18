@@ -2,7 +2,6 @@
 
 namespace percipiolondon\colourswatches\models;
 
-use Craft;
 use craft\base\Model;
 use craft\helpers\Json;
 use Illuminate\Support\Collection;
@@ -50,7 +49,7 @@ class ColourSwatches extends Model
     {
         parent::__construct();
 
-        if ($this->validateJson($value)) {
+        if ($value !== null && Json::isJsonObject($value)) {
             $colorData = Json::decode($value);
 
             if (!empty($colorData['label'])) {
@@ -61,44 +60,14 @@ class ColourSwatches extends Model
                 $this->class = $colorData['class'] ?? '';
             }
         }
-
-        if (!Collection::hasMacro('recursive')) {
-            Collection::macro('recursive', function () {
-                return $this->map(function ($value) {
-                    if (is_array($value) || is_object($value)) {
-                        return collect($value)->recursive();
-                    }
-
-                    return $value;
-                });
-            });
-        }
     }
 
     /**
-     * @param string|null $value
-     * @return bool
+     * @return Collection
      */
-    public function validateJson(?string $value): bool
+    public function collection(): Collection
     {
-        if (Json::isJsonObject($value)) {
-            $json = Json::decode($value);
-            return $json && $value != $json;
-        }
-
-        return false;
-    }
-
-    /**
-     * @return Collection|null
-     */
-    public function collection(): ?Collection
-    {
-        if ($this) {
-            return collect($this['color'])->recursive();
-        }
-
-        return null;
+        return collect($this->color ?? [])->recursive();
     }
 
     /**
