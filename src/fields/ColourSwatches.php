@@ -374,7 +374,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
             ->namespaceInputId($id);
 
         Craft::$app->getView()
-            ->registerJs("new ColourSelectInput('{$namespacedId}');");
+            ->registerJs("new ColourSelectInput(" . Json::encode($namespacedId) . ");");
 
         // Render the input template
         return Craft::$app->getView()
@@ -475,6 +475,6 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                 }
             }
         }
-        return '<div class="color small static"><div class="color-preview" style="' . $style . '"></div></div>';
+        return '<div class="color small static"><div class="color-preview" style="' . Html::encode($style) . '"></div></div>';
     }
 }
