@@ -18,6 +18,7 @@ use craft\base\PreviewableFieldInterface;
 use craft\base\SortableFieldInterface;
 use craft\gql\GqlEntityRegistry;
 use craft\gql\TypeLoader;
+use craft\helpers\Cp;
 use craft\helpers\Html;
 use craft\helpers\Json;
 
@@ -68,6 +69,32 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
 
     /** @var int|string|null */
     public string|int|null $default = null;
+
+    /**
+     * Whether the GraphQL type should return full swatch data (label, color, class, handle)
+     * or just the label string.
+     *
+     * @var bool
+     * @since 5.3.0
+     */
+    public bool $fullGraphqlData = true;
+
+    // Public Methods
+    // =========================================================================
+
+    /**
+     * @inheritdoc
+     */
+    public function __construct($config = [])
+    {
+        // Convert graphqlMode select value to boolean property
+        if (isset($config['graphqlMode'])) {
+            $config['fullGraphqlData'] = $config['graphqlMode'] === 'full';
+            unset($config['graphqlMode']);
+        }
+
+        parent::__construct($config);
+    }
 
     // Static Methods
     // =========================================================================
@@ -332,7 +359,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
         }
 
         // Render the settings template
-        return Craft::$app->getView()
+        $html = Craft::$app->getView()
             ->renderTemplate('colour-swatches/settings',
                 [
                     'field' => $this,
@@ -342,6 +369,23 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                     'palettes' => ColorSwatches::$plugin->settings->palettes,
                 ]
             );
+
+        if (Craft::$app->getConfig()->getGeneral()->enableGql) {
+            $html .= Html::tag('hr') .
+                Cp::selectFieldHtml([
+                    'label' => Craft::t('colour-swatches', 'GraphQL Mode'),
+                    'id' => 'graphql-mode',
+                    'name' => 'graphqlMode',
+                    'instructions' => Craft::t('colour-swatches', 'Controls whether GraphQL returns just the label string or the full swatch data object.'),
+                    'options' => [
+                        ['label' => Craft::t('colour-swatches', 'Full data'), 'value' => 'full'],
+                        ['label' => Craft::t('colour-swatches', 'Label only'), 'value' => 'label'],
+                    ],
+                    'value' => $this->fullGraphqlData ? 'full' : 'label',
+                ]);
+        }
+
+        return $html;
     }
 
     /**
@@ -384,11 +428,15 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
     }
 
     /**
-     * @return Type|array
+     * @inheritdoc
      */
     public function getContentGqlType(): Type|array
     {
-        $typeName = $this->handle;
+        if (!$this->fullGraphqlData) {
+            return parent::getContentGqlType();
+        }
+
+        $typeName = 'ColourSwatches_SwatchData';
 
         $swatchType = GqlEntityRegistry::getEntity($typeName) ?: GqlEntityRegistry::createEntity($typeName, new ObjectType([
             'name' => $typeName,
@@ -396,34 +444,40 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                 'label' => [
                     'name' => 'label',
                     'type' => Type::string(),
-                    'description' => 'The colour label'
+                    'description' => 'The colour label',
+                ],
+                'handle' => [
+                    'name' => 'handle',
+                    'type' => Type::string(),
+                    'description' => 'The stable colour handle',
                 ],
                 'class' => [
                     'name' => 'class',
                     'type' => Type::string(),
-                    'description' => 'The parent class'
+                    'description' => 'The CSS class',
                 ],
                 'color' => [
                     'name' => 'color',
                     'type' => Type::listOf(Type::string()),
-                    'description' => 'Our swatch colors',
+                    'description' => 'The swatch colour values',
                     'resolve' => function($source, array $arguments, $context, ResolveInfo $resolveInfo) {
                         $fieldName = $resolveInfo->fieldName;
                         $data = $source[$fieldName];
-                        $colors = [];
 
-                        if(is_iterable($data)) {
+                        if (is_iterable($data)) {
+                            $colors = [];
                             foreach ($data as $color) {
-                                $colors[] = Json::encode($color);
+                                // Config-file colours are objects with a 'color' key
+                                $colors[] = is_array($color) ? ($color['color'] ?? '') : (string)$color;
                             }
-                        } else {
-                            $colors[] = $data;
+                            return $colors;
                         }
 
-                        return $colors;
-                    }
-                ]
-            ]
+                        // Single colour string — may be comma-separated
+                        return is_string($data) ? explode(',', $data) : [$data];
+                    },
+                ],
+            ],
         ]));
 
         TypeLoader::registerType($typeName, static function() use ($swatchType) {
