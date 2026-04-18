@@ -110,12 +110,6 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
         return array_merge($rules, [['options', 'each', 'rule' => ['required']], ]);
     }
 
-    public function beforeSave(bool $isNew): bool
-    {
-        $this->options = $this->settings['options'] ?? [];
-        return parent::beforeSave($isNew);
-    }
-
     /**
      * @return array|string
      */
@@ -142,22 +136,14 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
         }
 
         if (is_null($value) || $value === '') {
-
-            // if useConfigFile is set, fetch the objects from that file
-            if ($this->useConfigFile) {
-                if (ColorSwatches::$plugin->settings->palettes[$this->palette] ?? false) {
-                    // if the palette with the value exists, return this as the settings palette
-                    $this->options = ColorSwatches::$plugin->settings->palettes[$this->palette];
-                } else {
-                    // if it doesn't exist, set it to the default colors
-                    $this->options = ColorSwatches::$plugin->settings->colors ?: [];
-                }
-            }
+            $resolvedOptions = $this->_resolveOptions();
 
             // if default is set --> return default
-            $default = array_filter($this->options, function($option) {return $option['default'] == 1;});
+            $default = array_filter($resolvedOptions, function($option) {
+                return !empty($option['default']);
+            });
 
-            if (is_array($default) && count($default) > 0) {
+            if (count($default) > 0) {
                 return new ColourSwatchesModel(Json::encode(array_values($default)[0]));
             }
 
@@ -186,23 +172,10 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
             ];
         }
 
-        $settingsPalette = $this->options;
+        $resolvedOptions = $this->_resolveOptions();
         $saveValue = null;
 
-        // if useConfigFile is set, fetch the objects from that file
-        if ($this->useConfigFile) {
-            if (ColorSwatches::$plugin->settings->palettes[$this->palette] ?? false) {
-                // if the palette with the value exists, return this as the settings palette
-                $settingsPalette = ColorSwatches::$plugin->settings->palettes[$this->palette];
-            } else {
-                // if it doesn't exist, set it to the default colors
-                $settingsPalette = ColorSwatches::$plugin->settings->colors ?: [];
-            }
-        }
-
-        $this->options = $settingsPalette;
-
-        foreach ($settingsPalette as $palette) {
+        foreach ($resolvedOptions as $palette) {
             $matched = false;
 
             // get or generate handle
@@ -210,7 +183,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
 
             // if handle is already saved, match by handle
             if ($value && !empty($value['handle'])) {
-                if($paletteHandle == $value['handle']) {
+                if ($paletteHandle === $value['handle']) {
                     $matched = true;
                 }
             } elseif ($value && ($palette['label'] === $value['label'])) {
@@ -241,17 +214,20 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
 
         // if nothing got set, use the default if that exists
         if (!$saveValue) {
+            $defaultLabel = $this->default;
 
-            if (is_null($this->default)) {
-                $default = array_filter($settingsPalette, function($option) {return $option['default'] == true;});
+            if (is_null($defaultLabel)) {
+                $default = array_filter($resolvedOptions, function($option) {
+                    return !empty($option['default']);
+                });
 
-                if (!is_null($default) && count($default) > 0) {
-                    $this->default = array_values($default)[0]['label'];
+                if (count($default) > 0) {
+                    $defaultLabel = array_values($default)[0]['label'];
                 }
             }
 
-            foreach ($settingsPalette as $palette) {
-                if (is_array($palette) && $palette['label'] === $this->default) {
+            foreach ($resolvedOptions as $palette) {
+                if (is_array($palette) && $palette['label'] === $defaultLabel) {
                     $saveValue = $palette;
                     $saveValue['handle'] = $palette['handle'] ?? $this->_generateHandle($palette['label']);
                 }
@@ -260,17 +236,41 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
 
         // if no default is defined and random is set, pick a random colour
         if (!$saveValue && $this->setRandom) {
-            $random = array_rand($settingsPalette, 1);
-            $saveValue = $settingsPalette[$random];
-            $saveValue['handle'] = $settingsPalette[$random]['handle'] ?? $this->_generateHandle($saveValue['label']);
+            $random = array_rand($resolvedOptions, 1);
+            $saveValue = $resolvedOptions[$random];
+            $saveValue['handle'] = $resolvedOptions[$random]['handle'] ?? $this->_generateHandle($saveValue['label']);
         }
 
         return $saveValue;
     }
 
+    // Private Methods
+    // =========================================================================
+
     /**
-     * Generate a stable handle from a label
-     * Handles are never exposed to users but allow for label changes
+     * Resolve the effective options for this field, using config file palettes
+     * when configured or falling back to inline options.
+     *
+     * @return array
+     */
+    private function _resolveOptions(): array
+    {
+        if ($this->useConfigFile) {
+            $settings = ColorSwatches::$plugin->settings;
+
+            if ($settings->palettes[$this->palette] ?? false) {
+                return $settings->palettes[$this->palette];
+            }
+
+            return $settings->colors ?: [];
+        }
+
+        return $this->options;
+    }
+
+    /**
+     * Generate a stable handle from a label.
+     * Handles are never exposed to users but allow for label changes.
      *
      * @param string $label
      * @return string
@@ -322,14 +322,6 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
             'allowReorder' => true,
             'allowDelete' => true,
         ];
-
-        $paletteOptions = [];
-        $paletteOptions[] = ['label' => 'Colors', 'value' => null, ];
-        foreach (array_keys(ColorSwatches::$plugin
-            ->settings
-            ->palettes) as $palette) {
-            $paletteOptions[] = ['label' => $palette, 'value' => $palette, ];
-        }
 
         $paletteOptions = [];
         $paletteOptions[] = ['label' => 'Colour config', 'value' => null, ];
