@@ -22,22 +22,26 @@ it('generates camelCase handle from multi-word label', function () {
     expect(StringHelper::toCamelCase('Light Blue'))->toBe('lightBlue');
 });
 
-it('generates camelCase handle from label with slash', function () {
-    expect(StringHelper::toCamelCase('Yellow/Emerald'))->toBe('yellowEmerald');
+it('preserves special characters in handle (slash, ampersand)', function () {
+    // toCamelCase only splits on whitespace/hyphens/underscores, NOT on
+    // slashes or ampersands. Labels with special characters should use
+    // explicit handle keys in config to get clean handles.
+    expect(StringHelper::toCamelCase('Yellow/Emerald'))->toBe('yellow/Emerald')
+        ->and(StringHelper::toCamelCase('Red & Blue'))->toBe('red&Blue');
 });
 
-it('generates camelCase handle from label with special characters', function () {
-    expect(StringHelper::toCamelCase('Red & Blue'))->toBe('redBlue');
-});
-
-it('generates consistent handle for config-file example labels', function () {
-    // These match the example config.php handles
+it('generates consistent handle for simple config-file labels', function () {
     expect(StringHelper::toCamelCase('Red'))->toBe('red')
         ->and(StringHelper::toCamelCase('Amber'))->toBe('amber')
         ->and(StringHelper::toCamelCase('Green'))->toBe('green')
         ->and(StringHelper::toCamelCase('Blue'))->toBe('blue')
-        ->and(StringHelper::toCamelCase('Purple'))->toBe('purple')
-        ->and(StringHelper::toCamelCase('Yellow/Emerald'))->toBe('yellowEmerald')
-        ->and(StringHelper::toCamelCase('Red/Amber'))->toBe('redAmber')
-        ->and(StringHelper::toCamelCase('Sky/Rose'))->toBe('skyRose');
+        ->and(StringHelper::toCamelCase('Purple'))->toBe('purple');
+});
+
+it('requires explicit handles for labels with special characters', function () {
+    // The config.php example uses explicit handles for these:
+    // 'Yellow/Emerald' => 'yellowEmerald', 'Red/Amber' => 'redAmber'
+    // Auto-generation would produce 'yellow/Emerald', 'red/Amber' instead
+    expect(StringHelper::toCamelCase('Yellow/Emerald'))->not->toBe('yellowEmerald')
+        ->and(StringHelper::toCamelCase('Red/Amber'))->not->toBe('redAmber');
 });
