@@ -17,6 +17,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Added
 - **GraphQL Mode setting** — new "GraphQL Mode" select in field settings (when GQL is enabled) to toggle between "Full data" (returns `ColourSwatches_SwatchData` object with label, handle, color, class) and "Label only" (returns plain string). Defaults to full data for all fields.
 - `handle` field exposed in the GraphQL `ColourSwatches_SwatchData` type
+- Search keyword support — entries can now be found via Craft search by swatch label, handle, CSS class, or colour value ([#113](https://github.com/craftpulse/craft-colour-swatches/issues/113))
+- Validation rules on the colour swatch value model ([#148](https://github.com/craftpulse/craft-colour-swatches/issues/148))
+
+### Deprecated
+- Deprecated the `colors()`, `labels()`, `default()`, and `class()` accessor methods on the value model — access the `color`, `label`, `default`, and `class` properties directly. These methods will be removed in 6.0.0.
 
 ### Fixed
 - Fixed `serializeValue()` mutating field state (`$this->options`, `$this->default`) as a side effect, causing inconsistent behaviour on multi-site saves
@@ -28,6 +33,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Fixed translation file named `color-swatches.php` not matching plugin handle `colour-swatches` (translations were silently ignored)
 - Fixed dead `if ($this)` guard in `collection()` method
 - Fixed `validateJson()` decoding JSON twice redundantly
+- Fixed string-colour swatch options not including the stable `handle` in their saved value, unlike array-colour options
+- Fixed the Red/Amber example palette in `config.php` starting with a purple colour value instead of red
+- Fixed `m220503_104406_namespace_migration::safeDown()` echoing the wrong migration name, and completed migration docblocks ([#154](https://github.com/craftpulse/craft-colour-swatches/issues/154))
 
 ### Changed
 - **Breaking (GraphQL):** GraphQL type name changed from per-field-handle names to a single shared `ColourSwatches_SwatchData` type. Queries using inline fragments on the old type names will need updating.

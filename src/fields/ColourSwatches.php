@@ -271,6 +271,43 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
         return $saveValue;
     }
 
+    // Protected Methods
+    // =========================================================================
+
+    /**
+     * Returns the search keywords for this field's value, so entries can be
+     * found by swatch label, handle, CSS class, or colour value.
+     *
+     * @param mixed $value
+     * @param ElementInterface $element
+     * @return string
+     *
+     * @author CraftPulse
+     * @since 5.3.0
+     */
+    protected function searchKeywords(mixed $value, ElementInterface $element): string
+    {
+        if (!$value instanceof ColourSwatchesModel) {
+            return '';
+        }
+
+        $keywords = [$value->label, $value->handle, $value->class];
+
+        if (is_string($value->color)) {
+            $keywords[] = $value->color;
+        } elseif (is_array($value->color)) {
+            foreach ($value->color as $color) {
+                if (is_array($color)) {
+                    $keywords[] = $color['color'] ?? null;
+                } elseif (is_string($color)) {
+                    $keywords[] = $color;
+                }
+            }
+        }
+
+        return implode(' ', array_filter($keywords));
+    }
+
     // Private Methods
     // =========================================================================
 
@@ -517,7 +554,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                     // if we're using the CP values
                 } else {
                     $color = $value->color;
-                    $style = strpos($color, ',') ? "background: linear-gradient(to bottom right, $color);" : "background-color:$color";
+                    $style = str_contains($color, ',') ? "background: linear-gradient(to bottom right, $color);" : "background-color:$color";
                 }
             }
         }
