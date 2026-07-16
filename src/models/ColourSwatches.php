@@ -1,19 +1,31 @@
 <?php
+/**
+ * colour-swatches plugin for Craft CMS 5.x.
+ *
+ * Let clients choose from a predefined set of colours.
+ *
+ * @link      https://craftpulse.com
+ *
+ * @copyright Copyright (c) 2024 CraftPulse.
+ */
 
 namespace percipiolondon\colourswatches\models;
 
-use Craft;
 use craft\base\Model;
 use craft\helpers\Json;
 use Illuminate\Support\Collection;
 
 /**
- * Class ColourSwatches
+ * Colour swatch field value model.
  *
- * @package percipiolondon\colourswatches\models
+ * @author CraftPulse
+ * @since 1.0.0
  */
 class ColourSwatches extends Model
 {
+    // Public Properties
+    // =========================================================================
+
     /**
      * @var string|null Silent stable identifier
      * @since 5.2.0
@@ -21,25 +33,27 @@ class ColourSwatches extends Model
     public ?string $handle = null;
 
     /**
-     * @var string
+     * @var string The human-readable swatch label
      */
     public string $label = '';
 
     /**
-     * @var array|string|null
+     * @var array|string|null The colour value(s), either a single CSS colour string or an array of colour definitions
      */
     public array|string|null $color = null;
 
     /**
-     * @var bool|null
+     * @var bool|null Whether this swatch is the field default
      */
-    public bool|null $default = false;
+    public ?bool $default = false;
 
     /**
-     * @var string
+     * @var string|null Extra CSS class(es) associated with this swatch
      */
-    public string|null $class = '';
+    public ?string $class = '';
 
+    // Public Methods
+    // =========================================================================
 
     /**
      * ColourSwatches constructor.
@@ -50,7 +64,7 @@ class ColourSwatches extends Model
     {
         parent::__construct();
 
-        if ($this->validateJson($value)) {
+        if ($value !== null && Json::isJsonObject($value)) {
             $colorData = Json::decode($value);
 
             if (!empty($colorData['label'])) {
@@ -61,44 +75,19 @@ class ColourSwatches extends Model
                 $this->class = $colorData['class'] ?? '';
             }
         }
-
-        if (!Collection::hasMacro('recursive')) {
-            Collection::macro('recursive', function () {
-                return $this->map(function ($value) {
-                    if (is_array($value) || is_object($value)) {
-                        return collect($value)->recursive();
-                    }
-
-                    return $value;
-                });
-            });
-        }
     }
 
     /**
-     * @param string|null $value
-     * @return bool
+     * Returns the colour value(s) as a recursive Collection.
+     *
+     * @return Collection
+     *
+     * @author CraftPulse
+     * @since 5.1.0
      */
-    public function validateJson(?string $value): bool
+    public function collection(): Collection
     {
-        if (Json::isJsonObject($value)) {
-            $json = Json::decode($value);
-            return $json && $value != $json;
-        }
-
-        return false;
-    }
-
-    /**
-     * @return Collection|null
-     */
-    public function collection(): ?Collection
-    {
-        if ($this) {
-            return collect($this['color'])->recursive();
-        }
-
-        return null;
+        return collect($this->color ?? [])->recursive();
     }
 
     /**
@@ -110,7 +99,10 @@ class ColourSwatches extends Model
     }
 
     /**
-     * @return mixed
+     * Returns the colour value(s).
+     *
+     * @return array|string|null
+     * @deprecated in 5.3.0. Access the `$color` property directly instead. Will be removed in 6.0.0.
      */
     public function colors(): mixed
     {
@@ -118,7 +110,10 @@ class ColourSwatches extends Model
     }
 
     /**
-     * @return mixed
+     * Returns the swatch label.
+     *
+     * @return string
+     * @deprecated in 5.3.0. Access the `$label` property directly instead. Will be removed in 6.0.0.
      */
     public function labels(): mixed
     {
@@ -126,7 +121,10 @@ class ColourSwatches extends Model
     }
 
     /**
-     * @return mixed
+     * Returns whether this swatch is the field default.
+     *
+     * @return bool|null
+     * @deprecated in 5.3.0. Access the `$default` property directly instead. Will be removed in 6.0.0.
      */
     public function default(): mixed
     {
@@ -134,10 +132,28 @@ class ColourSwatches extends Model
     }
 
     /**
-     * @return mixed
+     * Returns the CSS class(es) associated with this swatch.
+     *
+     * @return string|null
+     * @deprecated in 5.3.0. Access the `$class` property directly instead. Will be removed in 6.0.0.
      */
     public function class(): mixed
     {
         return $this->class;
+    }
+
+    // Protected Methods
+    // =========================================================================
+
+    /**
+     * @inheritdoc
+     */
+    protected function defineRules(): array
+    {
+        return array_merge(parent::defineRules(), [
+            [['label', 'handle', 'class'], 'string'],
+            [['default'], 'boolean'],
+            [['color'], 'safe'],
+        ]);
     }
 }

@@ -5,3 +5,6 @@ parameters:
     level: 5
     paths:
         - src
+    ignoreErrors:
+        # The `recursive` Collection macro is registered at runtime in plugin init()
+        - '#Call to an undefined method Illuminate\\Support\\Collection.*::recursive\(\)#'

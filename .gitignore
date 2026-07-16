@@ -12,6 +12,9 @@
 /build/*
 /yarn-error.log
 
+# TEST CACHE
+.phpunit.cache
+
 # MISC FILES
 .cache
 .DS_Store

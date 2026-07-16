@@ -5,7 +5,15 @@ namespace percipiolondon\colourswatches\migrations;
 use craft\db\Migration;
 
 /**
- * m200911_142127_update_namespace migration.
+ * Updates field type class references from the `percipioglobal` namespace
+ * to `percipiolondon\colourswatches`.
+ *
+ * @deprecated Has a parameter binding bug (missing colon prefix on params key).
+ *             Fixed by m220523_152700_namespace_migration_fix. Must not be modified
+ *             as it has already been applied to existing installations.
+ *
+ * @author CraftPulse
+ * @since 3.0.0
  */
 class m220503_104406_namespace_migration extends Migration
 {
@@ -36,7 +44,7 @@ class m220503_104406_namespace_migration extends Migration
      */
     public function safeDown(): bool
     {
-        echo "m200911_142127_update_namespace cannot be reverted.\n";
+        echo "m220503_104406_namespace_migration cannot be reverted.\n";
         return false;
     }
 }

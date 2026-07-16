@@ -1,12 +1,12 @@
 <?php
 /**
- * color-swatches plugin for Craft CMS 4.x.
+ * colour-swatches plugin for Craft CMS 5.x.
  *
  * Let clients choose from a predefined set of colours.
  *
- * @link      https://percipio.london
+ * @link      https://craftpulse.com
  *
- * @copyright Copyright (c) 2020 Percipio.London
+ * @copyright Copyright (c) 2024 CraftPulse.
  */
 
 /**
@@ -31,6 +31,7 @@ return [
             [
                 'label' => 'Red',
                 'default' => false,
+                'handle' => 'red',
                 'class' => null, // provide extra classes to go along with this palette
                 'color' => [
                     [
@@ -45,6 +46,7 @@ return [
             [
                 'label' => 'Amber',
                 'default' => false,
+                'handle' => 'amber',
                 'class' => null, // provide extra classes to go along with this palette
                 'color' => [
                     [
@@ -59,6 +61,7 @@ return [
             [
                 'label' => 'Green',
                 'default' => false,
+                'handle' => 'green',
                 'class' => null, // provide extra classes to go along with this palette
                 'color' => [
                     [
@@ -73,6 +76,7 @@ return [
             [
                 'label' => 'Blue',
                 'default' => false,
+                'handle' => 'blue',
                 'class' => null, // provide extra classes to go along with this palette
                 'color' => [
                     [
@@ -87,6 +91,7 @@ return [
             [
                 'label' => 'Purple',
                 'default' => false,
+                'handle' => 'purple',
                 'class' => null, // provide extra classes to go along with this palette
                 'color' => [
                     [
@@ -101,6 +106,7 @@ return [
             [
                 'label' => 'Yellow/Emerald',
                 'default' => false,
+                'handle' => 'yellowEmerald',
                 'class' => null, // provide extra classes to go along with this palette
                 'color' => [
                     [
@@ -122,10 +128,11 @@ return [
             [
                 'label' => 'Red/Amber',
                 'default' => false,
+                'handle' => 'redAmber',
                 'class' => null, // provide extra classes to go along with this palette
                 'color' => [
                     [
-                        'color' => '#a855f7',               // the colour shown in the fieldtype (required)
+                        'color' => '#ef4444',               // the colour shown in the fieldtype (required)
                         'background' => 'bg-red-500',
                         'backgroundHover' => 'hover:bg-red-700',
                         'text' => 'text-white',
@@ -143,6 +150,7 @@ return [
             [
                 'label' => 'Sky/Rose',
                 'default' => false,
+                'handle' => 'skyRose',
                 'class' => null, // provide extra classes to go along with this palette
                 'color' => [
                     [

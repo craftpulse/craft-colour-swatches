@@ -15,6 +15,7 @@ use Craft;
 use craft\base\Plugin;
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Fields;
+use Illuminate\Support\Collection;
 use percipiolondon\colourswatches\fields\ColourSwatches as ColourSwatchesField;
 use percipiolondon\colourswatches\models\Settings;
 use yii\base\Event;
@@ -22,12 +23,12 @@ use yii\base\Event;
 /**
  * Class ColourSwatches.
  *
- * @author    Percipio Global Ltd.
- *
- * @since     1.0.0
  * @property Settings $settings
  *
  * @method Settings getSettings()
+ *
+ * @author CraftPulse
+ * @since 1.0.0
  */
 class ColourSwatches extends Plugin
 {
@@ -56,17 +57,19 @@ class ColourSwatches extends Plugin
     // =========================================================================
 
     /**
-     * init
+     * @inheritdoc
      */
     public function init(): void
     {
         parent::init();
         self::$plugin = $this;
 
+        $this->_registerCollectionMacros();
+
         Event::on(
             Fields::class,
             Fields::EVENT_REGISTER_FIELD_TYPES,
-            function(RegisterComponentTypesEvent $event) {
+            static function(RegisterComponentTypesEvent $event) {
                 $event->types[] = ColourSwatchesField::class;
             }
         );
@@ -81,8 +84,11 @@ class ColourSwatches extends Plugin
         );
     }
 
+    // Protected Methods
+    // =========================================================================
+
     /**
-     * @return Settings
+     * @inheritdoc
      */
     protected function createSettingsModel(): Settings
     {
@@ -98,5 +104,29 @@ class ColourSwatches extends Plugin
             'colour-swatches/_settings',
             ['settings' => $this->getSettings()]
         );
+    }
+
+    // Private Methods
+    // =========================================================================
+
+    /**
+     * Register Collection macros used by the ColourSwatches model.
+     *
+     * @return void
+     */
+    private function _registerCollectionMacros(): void
+    {
+        if (!Collection::hasMacro('recursive')) {
+            Collection::macro('recursive', function () {
+                /** @var Collection $this */
+                return $this->map(function ($value) {
+                    if (is_array($value) || is_object($value)) {
+                        return collect($value)->recursive();
+                    }
+
+                    return $value;
+                });
+            });
+        }
     }
 }

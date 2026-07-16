@@ -24,7 +24,7 @@
 
         {# Set the default value with handle #}
         {% if option.default %}
-            {% set optionHandle = option.handle ?? (option.label|kebab) %}
+            {% set optionHandle = option.handle ?? (option.label|camel) %}
             {% set value = {
                 label: option.label,
                 color: option.color is defined ? option.color : option.colour,
@@ -56,7 +56,7 @@
 </div>
 
 {{ forms.hidden({
-    id: id ~ namespacedId,
+    id: id,
     name: name,
     value: fieldValue,
     class: 'color-swatches-input'})
