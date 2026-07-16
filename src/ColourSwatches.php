@@ -23,12 +23,12 @@ use yii\base\Event;
 /**
  * Class ColourSwatches.
  *
- * @author    Percipio Global Ltd.
- *
- * @since     1.0.0
  * @property Settings $settings
  *
  * @method Settings getSettings()
+ *
+ * @author CraftPulse
+ * @since 1.0.0
  */
 class ColourSwatches extends Plugin
 {
@@ -57,7 +57,7 @@ class ColourSwatches extends Plugin
     // =========================================================================
 
     /**
-     * init
+     * @inheritdoc
      */
     public function init(): void
     {
@@ -69,7 +69,7 @@ class ColourSwatches extends Plugin
         Event::on(
             Fields::class,
             Fields::EVENT_REGISTER_FIELD_TYPES,
-            function(RegisterComponentTypesEvent $event) {
+            static function(RegisterComponentTypesEvent $event) {
                 $event->types[] = ColourSwatchesField::class;
             }
         );
@@ -88,7 +88,7 @@ class ColourSwatches extends Plugin
     // =========================================================================
 
     /**
-     * @return Settings
+     * @inheritdoc
      */
     protected function createSettingsModel(): Settings
     {
@@ -118,6 +118,7 @@ class ColourSwatches extends Plugin
     {
         if (!Collection::hasMacro('recursive')) {
             Collection::macro('recursive', function () {
+                /** @var Collection $this */
                 return $this->map(function ($value) {
                     if (is_array($value) || is_object($value)) {
                         return collect($value)->recursive();

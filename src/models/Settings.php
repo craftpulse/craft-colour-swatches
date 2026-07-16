@@ -1,4 +1,13 @@
 <?php
+/**
+ * colour-swatches plugin for Craft CMS 5.x.
+ *
+ * Let clients choose from a predefined set of colours.
+ *
+ * @link      https://craftpulse.com
+ *
+ * @copyright Copyright (c) 2024 CraftPulse.
+ */
 
 namespace percipiolondon\colourswatches\models;
 
@@ -6,32 +15,40 @@ use Craft;
 use craft\base\Model;
 
 /**
- * Class Settings
+ * Plugin settings model.
  *
- * @package percipiolondon\colourswatches\models
+ * @author CraftPulse
+ * @since 1.0.0
  */
 class Settings extends Model
 {
+    // Public Properties
+    // =========================================================================
+
     /**
-     * @var array
+     * @var array The default colour definitions available to fields
      */
     public array $colors = [];
+
     /**
-     * @var array
+     * @var array Named colour palettes available to fields
      */
     public array $palettes = [];
+
     /**
-     * @var array|null
+     * @var array|null The default swatch definition
      */
     public ?array $default = null;
 
+    // Protected Methods
+    // =========================================================================
+
     /**
-     * @return array[]
+     * @inheritdoc
      */
     protected function defineRules(): array
     {
         return [
-//            [['colors', 'palettes'], 'required'],
             [['colors', 'palettes'], function ($attribute, $params) {
                 if (!is_array($this->colors)) {
                     $this->addError('colors', Craft::t('colour-swatches', 'colors is not array!'));
@@ -54,7 +71,7 @@ class Settings extends Model
                     }
                 }
                 return $palettes;
-            }]
+            }],
         ];
     }
 }
