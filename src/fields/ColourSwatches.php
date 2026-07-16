@@ -75,7 +75,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
      * or just the label string.
      *
      * @var bool
-     * @since 5.3.0
+     * @since 5.2.0
      */
     public bool $fullGraphqlData = true;
 
@@ -296,7 +296,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
      * @return string
      *
      * @author CraftPulse
-     * @since 5.3.0
+     * @since 5.2.0
      */
     protected function searchKeywords(mixed $value, ElementInterface $element): string
     {

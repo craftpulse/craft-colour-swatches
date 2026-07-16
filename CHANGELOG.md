@@ -5,11 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## 5.3.0 - 2026-07-16
+## 5.2.0 - 2026-07-16
 
 > **Critical:** This release includes security fixes, GraphQL breaking changes, and fixes for long-standing data loss issues. All users should update immediately.
-
-> Note: version 5.2.0 was never published, so this release contains every change since 5.1.0.
 
 ### Security
 - Fixed XSS vulnerability in colour option templates where user-controlled colour values were output with `|parseRefs|raw` in style attributes
@@ -22,9 +20,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Search keyword support — entries can now be found via Craft search by swatch label, handle, CSS class, or colour value ([#113](https://github.com/craftpulse/craft-colour-swatches/issues/113))
 - Validation rules on the colour swatch value model ([#148](https://github.com/craftpulse/craft-colour-swatches/issues/148))
 - Swatch values now store a stable `handle`, so palette labels can be renamed in the config file or field settings without existing selections losing their value ([#141](https://github.com/craftpulse/craft-colour-swatches/issues/141))
+- Existing swatch values are upgraded automatically on update: a migration queues batched resave jobs that write the stable handle and search keywords for every element type using a Colour Swatches field
 
 ### Deprecated
-- Deprecated the `colors()`, `labels()`, `default()`, and `class()` accessor methods on the value model — access the `color`, `label`, `default`, and `class` properties directly. These methods will be removed in 6.0.0.
+- Deprecated the `colors()`, `labels()`, `default()`, and `class()` accessor methods on the value model, access the `color`, `label`, `default`, and `class` properties directly. These methods will be removed in 6.0.0.
 
 ### Fixed
 - Fixed `serializeValue()` mutating field state (`$this->options`, `$this->default`) as a side effect, causing inconsistent behaviour on multi-site saves

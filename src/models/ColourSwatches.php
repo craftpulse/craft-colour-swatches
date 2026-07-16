@@ -28,7 +28,7 @@ class ColourSwatches extends Model
 
     /**
      * @var string|null Silent stable identifier
-     * @since 5.3.0
+     * @since 5.2.0
      */
     public ?string $handle = null;
 
@@ -102,7 +102,7 @@ class ColourSwatches extends Model
      * Returns the colour value(s).
      *
      * @return array|string|null
-     * @deprecated in 5.3.0. Access the `$color` property directly instead. Will be removed in 6.0.0.
+     * @deprecated in 5.2.0. Access the `$color` property directly instead. Will be removed in 6.0.0.
      */
     public function colors(): mixed
     {
@@ -113,7 +113,7 @@ class ColourSwatches extends Model
      * Returns the swatch label.
      *
      * @return string
-     * @deprecated in 5.3.0. Access the `$label` property directly instead. Will be removed in 6.0.0.
+     * @deprecated in 5.2.0. Access the `$label` property directly instead. Will be removed in 6.0.0.
      */
     public function labels(): mixed
     {
@@ -124,7 +124,7 @@ class ColourSwatches extends Model
      * Returns whether this swatch is the field default.
      *
      * @return bool|null
-     * @deprecated in 5.3.0. Access the `$default` property directly instead. Will be removed in 6.0.0.
+     * @deprecated in 5.2.0. Access the `$default` property directly instead. Will be removed in 6.0.0.
      */
     public function default(): mixed
     {
@@ -135,7 +135,7 @@ class ColourSwatches extends Model
      * Returns the CSS class(es) associated with this swatch.
      *
      * @return string|null
-     * @deprecated in 5.3.0. Access the `$class` property directly instead. Will be removed in 6.0.0.
+     * @deprecated in 5.2.0. Access the `$class` property directly instead. Will be removed in 6.0.0.
      */
     public function class(): mixed
     {
