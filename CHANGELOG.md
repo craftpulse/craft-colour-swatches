@@ -5,9 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## 5.3.0 - 2026-04-20
+## 5.3.0 - 2026-07-16
 
-> **Critical:** This release includes security fixes from 5.2.1, GraphQL breaking changes, and fixes for long-standing data loss issues. All users should update immediately.
+> **Critical:** This release includes security fixes, GraphQL breaking changes, and fixes for long-standing data loss issues. All users should update immediately.
+
+> Note: version 5.2.0 was never published, so this release contains every change since 5.1.0.
 
 ### Security
 - Fixed XSS vulnerability in colour option templates where user-controlled colour values were output with `|parseRefs|raw` in style attributes
@@ -19,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - `handle` field exposed in the GraphQL `ColourSwatches_SwatchData` type
 - Search keyword support — entries can now be found via Craft search by swatch label, handle, CSS class, or colour value ([#113](https://github.com/craftpulse/craft-colour-swatches/issues/113))
 - Validation rules on the colour swatch value model ([#148](https://github.com/craftpulse/craft-colour-swatches/issues/148))
+- Swatch values now store a stable `handle`, so palette labels can be renamed in the config file or field settings without existing selections losing their value ([#141](https://github.com/craftpulse/craft-colour-swatches/issues/141))
 
 ### Deprecated
 - Deprecated the `colors()`, `labels()`, `default()`, and `class()` accessor methods on the value model — access the `color`, `label`, `default`, and `class` properties directly. These methods will be removed in 6.0.0.
@@ -37,6 +40,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Fixed string-colour swatch options not including the stable `handle` in their saved value, unlike array-colour options
 - Fixed the Red/Amber example palette in `config.php` starting with a purple colour value instead of red
 - Fixed `m220503_104406_namespace_migration::safeDown()` echoing the wrong migration name, and completed migration docblocks ([#154](https://github.com/craftpulse/craft-colour-swatches/issues/154))
+- Fixed deprecated DOM ID generation in the field input
 
 ### Changed
 - **Breaking (GraphQL):** GraphQL type name changed from per-field-handle names to a single shared `ColourSwatches_SwatchData` type. Queries using inline fragments on the old type names will need updating.
@@ -49,6 +53,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Updated support and documentation URLs from `percipio.london`/`v4` to `craftpulse.com`/`v5`
 - Added `aria-label` to colour swatch buttons for screen reader accessibility
 - Annotated broken migration `m220503` with `@deprecated` pointing to its fix migration
+- Rebranded plugin icons and updated the example config
 
 ## 5.1.0 - 2024-10-28
 ### Added

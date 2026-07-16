@@ -28,7 +28,7 @@ class ColourSwatches extends Model
 
     /**
      * @var string|null Silent stable identifier
-     * @since 5.2.0
+     * @since 5.3.0
      */
     public ?string $handle = null;
 
