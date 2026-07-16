@@ -33,6 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 - Fixed translation file named `color-swatches.php` not matching plugin handle `colour-swatches` (translations were silently ignored)
 - Fixed dead `if ($this)` guard in `collection()` method
 - Fixed `validateJson()` decoding JSON twice redundantly
+- Fixed swatch CSS class and default flag being dropped on save: the CP input only posts label, colour, and handle, so saved values are now enriched from the field's option definitions again
 - Fixed string-colour swatch options not including the stable `handle` in their saved value, unlike array-colour options
 - Fixed the Red/Amber example palette in `config.php` starting with a purple colour value instead of red
 - Fixed `m220503_104406_namespace_migration::safeDown()` echoing the wrong migration name, and completed migration docblocks ([#154](https://github.com/craftpulse/craft-colour-swatches/issues/154))

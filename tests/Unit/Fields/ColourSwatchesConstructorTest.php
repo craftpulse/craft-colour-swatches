@@ -56,6 +56,56 @@ it('serializes a ColourSwatchesModel to array', function () {
         ->and($result['default'])->toBeTrue();
 });
 
+it('enriches a model with class and default from the matching option', function () {
+    // The CP input only posts label, color, and handle, so the stored value
+    // must be enriched from the field's option definitions on save
+    $model = new \percipiolondon\colourswatches\models\ColourSwatches(
+        \craft\helpers\Json::encode([
+            'handle' => 'red',
+            'label' => 'Red',
+            'color' => '#ef4444',
+        ])
+    );
+
+    $field = new ColourSwatches([
+        'options' => [
+            ['label' => 'Red', 'handle' => 'red', 'color' => '#ef4444', 'class' => 'text-red', 'default' => true],
+            ['label' => 'Blue', 'handle' => 'blue', 'color' => '#3b82f6', 'class' => 'text-blue', 'default' => false],
+        ],
+    ]);
+
+    $result = $field->serializeValue($model);
+
+    expect($result)->toBeArray()
+        ->and($result['handle'])->toBe('red')
+        ->and($result['class'])->toBe('text-red')
+        ->and($result['default'])->toBeTrue();
+});
+
+it('preserves a model value that matches no option instead of swapping to default', function () {
+    $model = new \percipiolondon\colourswatches\models\ColourSwatches(
+        \craft\helpers\Json::encode([
+            'handle' => 'legacy',
+            'label' => 'Legacy',
+            'color' => '#123456',
+            'class' => 'text-legacy',
+        ])
+    );
+
+    $field = new ColourSwatches([
+        'options' => [
+            ['label' => 'Blue', 'handle' => 'blue', 'color' => '#3b82f6', 'class' => 'text-blue', 'default' => true],
+        ],
+    ]);
+
+    $result = $field->serializeValue($model);
+
+    expect($result)->toBeArray()
+        ->and($result['handle'])->toBe('legacy')
+        ->and($result['label'])->toBe('Legacy')
+        ->and($result['class'])->toBe('text-legacy');
+});
+
 // =========================================================================
 // serializeValue does NOT mutate field state (H-1 fix)
 // =========================================================================

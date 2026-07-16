@@ -189,14 +189,21 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
      */
     public function serializeValue(mixed $value, ?ElementInterface $element = null): mixed
     {
+        // Craft normalizes before serializing, so the value is usually a model.
+        // Convert it to an array and run it through the option matching below,
+        // so settings-defined class/color/default enrich the stored value (the
+        // CP input only posts label, color, and handle).
+        $fromModel = false;
+
         if ($value instanceof ColourSwatchesModel) {
-            return [
+            $value = [
                 'handle' => $value->handle,
                 'label' => $value->label,
                 'color' => $value->color,
                 'class' => $value->class,
                 'default' => $value->default,
             ];
+            $fromModel = true;
         }
 
         $resolvedOptions = $this->_resolveOptions();
@@ -237,6 +244,12 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                 $saveValue['class'] = $palette['class'];
                 $saveValue['default'] = $palette['default'] ?? false;
             }
+        }
+
+        // preserve model values that no longer match any option (e.g. the
+        // option was removed from the config) instead of swapping to default
+        if (!$saveValue && $fromModel && !empty($value['label'])) {
+            return $value;
         }
 
         // if nothing got set, use the default if that exists
