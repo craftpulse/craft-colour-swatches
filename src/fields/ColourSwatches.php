@@ -4,7 +4,7 @@
  *
  * Let clients choose from a predefined set of colours.
  *
- * @link      https://craftpulse.com
+ * @link      https://craft-pulse.com
  *
  * @copyright Copyright (c) 2024 CraftPulse.
  */
