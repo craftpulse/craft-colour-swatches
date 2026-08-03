@@ -56,8 +56,7 @@
         "developerUrl": "https://github.com/craftpulse",
         "documentationUrl": "https://github.com/craftpulse/craft-colour-swatches/blob/v5/README.md",
         "changelogUrl": "https://github.com/craftpulse/craft-colour-swatches/blob/v5/CHANGELOG.md",
-        "class": "percipiolondon\\colourswatches\\ColourSwatches",
-        "craftcms-claude-skills": "1.2.0"
+        "class": "percipiolondon\\colourswatches\\ColourSwatches"
     },
     "scripts": {
         "phpstan": "phpstan --memory-limit=1G",
