@@ -2,11 +2,14 @@
 
 namespace percipiolondon\colourswatches\migrations;
 
-use Craft;
 use craft\db\Migration;
 
 /**
- * m240402_112820_namespace migration.
+ * Ensures any remaining `percipioglobal` field type class references are updated
+ * to `percipiolondon\colourswatches` for Craft 5 installs.
+ *
+ * @author CraftPulse
+ * @since 5.0.0
  */
 class m240402_112820_namespace extends Migration
 {

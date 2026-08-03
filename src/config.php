@@ -1,12 +1,12 @@
 <?php
 /**
- * color-swatches plugin for Craft CMS 4.x.
+ * colour-swatches plugin for Craft CMS 5.x.
  *
  * Let clients choose from a predefined set of colours.
  *
- * @link      https://percipio.london
+ * @link      https://craft-pulse.com
  *
- * @copyright Copyright (c) 2020 Percipio.London
+ * @copyright Copyright (c) 2024 CraftPulse.
  */
 
 /**
@@ -132,7 +132,7 @@ return [
                 'class' => null, // provide extra classes to go along with this palette
                 'color' => [
                     [
-                        'color' => '#a855f7',               // the colour shown in the fieldtype (required)
+                        'color' => '#ef4444',               // the colour shown in the fieldtype (required)
                         'background' => 'bg-red-500',
                         'backgroundHover' => 'hover:bg-red-700',
                         'text' => 'text-white',

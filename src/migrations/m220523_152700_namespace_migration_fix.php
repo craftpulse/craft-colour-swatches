@@ -5,7 +5,11 @@ namespace percipiolondon\colourswatches\migrations;
 use craft\db\Migration;
 
 /**
- * m220523_152700_namespace_migration_fix migration.
+ * Re-runs the `percipioglobal` to `percipiolondon\colourswatches` namespace update
+ * with correct parameter binding, fixing m220503_104406_namespace_migration.
+ *
+ * @author CraftPulse
+ * @since 3.0.1
  */
 class m220523_152700_namespace_migration_fix extends Migration
 {

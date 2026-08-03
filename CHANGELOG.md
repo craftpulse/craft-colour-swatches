@@ -5,6 +5,55 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
+## 5.2.0 - 2026-07-16
+
+> **Critical:** This release includes security fixes, GraphQL breaking changes, and fixes for long-standing data loss issues. All users should update immediately.
+
+### Security
+- Fixed XSS vulnerability in colour option templates where user-controlled colour values were output with `|parseRefs|raw` in style attributes
+- Fixed potential JS injection via unescaped field handle in `registerJs()` call
+- Fixed unescaped colour values in element index preview HTML
+
+### Added
+- **GraphQL Mode setting** — new "GraphQL Mode" select in field settings (when GQL is enabled) to toggle between "Full data" (returns `ColourSwatches_SwatchData` object with label, handle, color, class) and "Label only" (returns plain string). Defaults to full data for all fields.
+- `handle` field exposed in the GraphQL `ColourSwatches_SwatchData` type
+- Search keyword support — entries can now be found via Craft search by swatch label, handle, CSS class, or colour value ([#113](https://github.com/craftpulse/craft-colour-swatches/issues/113))
+- Validation rules on the colour swatch value model ([#148](https://github.com/craftpulse/craft-colour-swatches/issues/148))
+- Swatch values now store a stable `handle`, so palette labels can be renamed in the config file or field settings without existing selections losing their value ([#141](https://github.com/craftpulse/craft-colour-swatches/issues/141))
+- Existing swatch values are upgraded automatically on update: a migration queues batched resave jobs that write the stable handle and search keywords for every element type using a Colour Swatches field
+
+### Deprecated
+- Deprecated the `colors()`, `labels()`, `default()`, and `class()` accessor methods on the value model, access the `color`, `label`, `default`, and `class` properties directly. These methods will be removed in 6.0.0.
+
+### Fixed
+- Fixed `serializeValue()` mutating field state (`$this->options`, `$this->default`) as a side effect, causing inconsistent behaviour on multi-site saves
+- Fixed handle generation inconsistency between PHP (`toCamelCase`) and Twig template (`|kebab` changed to `|camel`), which caused handles to be `null` after resave (#141)
+- Fixed double-JSON-encoding of colour values in GraphQL resolver that produced `"\"#ef4444\""` instead of `"#ef4444"`
+- Fixed duplicate `$paletteOptions` block in field settings (dead code)
+- Fixed loose `== 1` comparisons for default detection replaced with `!empty()`
+- Fixed double-compound DOM ID on hidden input (`id ~ namespacedId` changed to `id`)
+- Fixed translation file named `color-swatches.php` not matching plugin handle `colour-swatches` (translations were silently ignored)
+- Fixed dead `if ($this)` guard in `collection()` method
+- Fixed `validateJson()` decoding JSON twice redundantly
+- Fixed swatch CSS class and default flag being dropped on save: the CP input only posts label, colour, and handle, so saved values are now enriched from the field's option definitions again
+- Fixed string-colour swatch options not including the stable `handle` in their saved value, unlike array-colour options
+- Fixed the Red/Amber example palette in `config.php` starting with a purple colour value instead of red
+- Fixed `m220503_104406_namespace_migration::safeDown()` echoing the wrong migration name, and completed migration docblocks ([#154](https://github.com/craftpulse/craft-colour-swatches/issues/154))
+- Fixed deprecated DOM ID generation in the field input
+
+### Changed
+- **Breaking (GraphQL):** GraphQL type name changed from per-field-handle names to a single shared `ColourSwatches_SwatchData` type. Queries using inline fragments on the old type names will need updating.
+- **Breaking (GraphQL):** Colour values in GraphQL responses are no longer double-encoded. If your client-side code was double-parsing JSON, remove the extra parse step.
+- Moved `Collection::macro('recursive')` registration from model constructor to plugin `init()` where global state registration belongs
+- Extracted `_resolveOptions()` method to centralize config file palette resolution (was duplicated in `normalizeValue` and `serializeValue`)
+- Removed unnecessary `beforeSave()` override that was a fragile no-op
+- Updated PHP requirement from `^8.0.2` to `^8.2` to match Craft 5
+- Updated all file headers from Craft CMS 3.x/4.x to 5.x with current CraftPulse branding
+- Updated support and documentation URLs from `percipio.london`/`v4` to `craftpulse.com`/`v5`
+- Added `aria-label` to colour swatch buttons for screen reader accessibility
+- Annotated broken migration `m220503` with `@deprecated` pointing to its fix migration
+- Rebranded plugin icons and updated the example config
+
 ## 5.1.0 - 2024-10-28
 ### Added
 - Added a `collection` function to the field that will return a recursive laravel collection for easier use in twig templates and to do manipulations.

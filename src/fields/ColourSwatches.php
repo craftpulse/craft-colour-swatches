@@ -1,12 +1,12 @@
 <?php
 /**
- * colour-swatches plugin for Craft CMS 3.x.
+ * colour-swatches plugin for Craft CMS 5.x.
  *
  * Let clients choose from a predefined set of colours.
  *
- * @link      https://percipio.london
+ * @link      https://craft-pulse.com
  *
- * @copyright Copyright (c) 2020 Percipio Global Ltd.
+ * @copyright Copyright (c) 2024 CraftPulse.
  */
 
 namespace percipiolondon\colourswatches\fields;
@@ -18,6 +18,7 @@ use craft\base\PreviewableFieldInterface;
 use craft\base\SortableFieldInterface;
 use craft\gql\GqlEntityRegistry;
 use craft\gql\TypeLoader;
+use craft\helpers\Cp;
 use craft\helpers\Html;
 use craft\helpers\Json;
 
@@ -69,6 +70,32 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
     /** @var int|string|null */
     public string|int|null $default = null;
 
+    /**
+     * Whether the GraphQL type should return full swatch data (label, color, class, handle)
+     * or just the label string.
+     *
+     * @var bool
+     * @since 5.2.0
+     */
+    public bool $fullGraphqlData = true;
+
+    // Public Methods
+    // =========================================================================
+
+    /**
+     * @inheritdoc
+     */
+    public function __construct($config = [])
+    {
+        // Convert graphqlMode select value to boolean property
+        if (isset($config['graphqlMode'])) {
+            $config['fullGraphqlData'] = $config['graphqlMode'] === 'full';
+            unset($config['graphqlMode']);
+        }
+
+        parent::__construct($config);
+    }
+
     // Static Methods
     // =========================================================================
 
@@ -110,12 +137,6 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
         return array_merge($rules, [['options', 'each', 'rule' => ['required']], ]);
     }
 
-    public function beforeSave(bool $isNew): bool
-    {
-        $this->options = $this->settings['options'] ?? [];
-        return parent::beforeSave($isNew);
-    }
-
     /**
      * @return array|string
      */
@@ -142,22 +163,14 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
         }
 
         if (is_null($value) || $value === '') {
-
-            // if useConfigFile is set, fetch the objects from that file
-            if ($this->useConfigFile) {
-                if (ColorSwatches::$plugin->settings->palettes[$this->palette] ?? false) {
-                    // if the palette with the value exists, return this as the settings palette
-                    $this->options = ColorSwatches::$plugin->settings->palettes[$this->palette];
-                } else {
-                    // if it doesn't exist, set it to the default colors
-                    $this->options = ColorSwatches::$plugin->settings->colors ?: [];
-                }
-            }
+            $resolvedOptions = $this->_resolveOptions();
 
             // if default is set --> return default
-            $default = array_filter($this->options, function($option) {return $option['default'] == 1;});
+            $default = array_filter($resolvedOptions, function($option) {
+                return !empty($option['default']);
+            });
 
-            if (is_array($default) && count($default) > 0) {
+            if (count($default) > 0) {
                 return new ColourSwatchesModel(Json::encode(array_values($default)[0]));
             }
 
@@ -176,33 +189,27 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
      */
     public function serializeValue(mixed $value, ?ElementInterface $element = null): mixed
     {
+        // Craft normalizes before serializing, so the value is usually a model.
+        // Convert it to an array and run it through the option matching below,
+        // so settings-defined class/color/default enrich the stored value (the
+        // CP input only posts label, color, and handle).
+        $fromModel = false;
+
         if ($value instanceof ColourSwatchesModel) {
-            return [
+            $value = [
                 'handle' => $value->handle,
                 'label' => $value->label,
                 'color' => $value->color,
                 'class' => $value->class,
                 'default' => $value->default,
             ];
+            $fromModel = true;
         }
 
-        $settingsPalette = $this->options;
+        $resolvedOptions = $this->_resolveOptions();
         $saveValue = null;
 
-        // if useConfigFile is set, fetch the objects from that file
-        if ($this->useConfigFile) {
-            if (ColorSwatches::$plugin->settings->palettes[$this->palette] ?? false) {
-                // if the palette with the value exists, return this as the settings palette
-                $settingsPalette = ColorSwatches::$plugin->settings->palettes[$this->palette];
-            } else {
-                // if it doesn't exist, set it to the default colors
-                $settingsPalette = ColorSwatches::$plugin->settings->colors ?: [];
-            }
-        }
-
-        $this->options = $settingsPalette;
-
-        foreach ($settingsPalette as $palette) {
+        foreach ($resolvedOptions as $palette) {
             $matched = false;
 
             // get or generate handle
@@ -210,7 +217,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
 
             // if handle is already saved, match by handle
             if ($value && !empty($value['handle'])) {
-                if($paletteHandle == $value['handle']) {
+                if ($paletteHandle === $value['handle']) {
                     $matched = true;
                 }
             } elseif ($value && ($palette['label'] === $value['label'])) {
@@ -239,19 +246,28 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
             }
         }
 
+        // preserve model values that no longer match any option (e.g. the
+        // option was removed from the config) instead of swapping to default
+        if (!$saveValue && $fromModel && !empty($value['label'])) {
+            return $value;
+        }
+
         // if nothing got set, use the default if that exists
         if (!$saveValue) {
+            $defaultLabel = $this->default;
 
-            if (is_null($this->default)) {
-                $default = array_filter($settingsPalette, function($option) {return $option['default'] == true;});
+            if (is_null($defaultLabel)) {
+                $default = array_filter($resolvedOptions, function($option) {
+                    return !empty($option['default']);
+                });
 
-                if (!is_null($default) && count($default) > 0) {
-                    $this->default = array_values($default)[0]['label'];
+                if (count($default) > 0) {
+                    $defaultLabel = array_values($default)[0]['label'];
                 }
             }
 
-            foreach ($settingsPalette as $palette) {
-                if (is_array($palette) && $palette['label'] === $this->default) {
+            foreach ($resolvedOptions as $palette) {
+                if (is_array($palette) && $palette['label'] === $defaultLabel) {
                     $saveValue = $palette;
                     $saveValue['handle'] = $palette['handle'] ?? $this->_generateHandle($palette['label']);
                 }
@@ -260,17 +276,78 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
 
         // if no default is defined and random is set, pick a random colour
         if (!$saveValue && $this->setRandom) {
-            $random = array_rand($settingsPalette, 1);
-            $saveValue = $settingsPalette[$random];
-            $saveValue['handle'] = $settingsPalette[$random]['handle'] ?? $this->_generateHandle($saveValue['label']);
+            $random = array_rand($resolvedOptions, 1);
+            $saveValue = $resolvedOptions[$random];
+            $saveValue['handle'] = $resolvedOptions[$random]['handle'] ?? $this->_generateHandle($saveValue['label']);
         }
 
         return $saveValue;
     }
 
+    // Protected Methods
+    // =========================================================================
+
     /**
-     * Generate a stable handle from a label
-     * Handles are never exposed to users but allow for label changes
+     * Returns the search keywords for this field's value, so entries can be
+     * found by swatch label, handle, CSS class, or colour value.
+     *
+     * @param mixed $value
+     * @param ElementInterface $element
+     * @return string
+     *
+     * @author CraftPulse
+     * @since 5.2.0
+     */
+    protected function searchKeywords(mixed $value, ElementInterface $element): string
+    {
+        if (!$value instanceof ColourSwatchesModel) {
+            return '';
+        }
+
+        $keywords = [$value->label, $value->handle, $value->class];
+
+        if (is_string($value->color)) {
+            $keywords[] = $value->color;
+        } elseif (is_array($value->color)) {
+            foreach ($value->color as $color) {
+                if (is_array($color)) {
+                    $keywords[] = $color['color'] ?? null;
+                } elseif (is_string($color)) {
+                    $keywords[] = $color;
+                }
+            }
+        }
+
+        return implode(' ', array_filter($keywords));
+    }
+
+    // Private Methods
+    // =========================================================================
+
+    /**
+     * Resolve the effective options for this field, using config file palettes
+     * when configured or falling back to inline options.
+     *
+     * @return array
+     */
+    private function _resolveOptions(): array
+    {
+        if ($this->useConfigFile) {
+            $settings = ColorSwatches::$plugin->settings;
+
+            if ($settings->palettes[$this->palette] ?? false) {
+                return $settings->palettes[$this->palette];
+            }
+
+            return $settings->colors ?: [];
+        }
+
+        return $this->options;
+    }
+
+    /**
+     * Generate a stable handle from a label.
+     * Handles are never exposed to users but allow for label changes.
      *
      * @param string $label
      * @return string
@@ -324,14 +401,6 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
         ];
 
         $paletteOptions = [];
-        $paletteOptions[] = ['label' => 'Colors', 'value' => null, ];
-        foreach (array_keys(ColorSwatches::$plugin
-            ->settings
-            ->palettes) as $palette) {
-            $paletteOptions[] = ['label' => $palette, 'value' => $palette, ];
-        }
-
-        $paletteOptions = [];
         $paletteOptions[] = ['label' => 'Colour config', 'value' => null, ];
         foreach (array_keys(ColorSwatches::$plugin
             ->settings
@@ -340,7 +409,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
         }
 
         // Render the settings template
-        return Craft::$app->getView()
+        $html = Craft::$app->getView()
             ->renderTemplate('colour-swatches/settings',
                 [
                     'field' => $this,
@@ -350,6 +419,23 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                     'palettes' => ColorSwatches::$plugin->settings->palettes,
                 ]
             );
+
+        if (Craft::$app->getConfig()->getGeneral()->enableGql) {
+            $html .= Html::tag('hr') .
+                Cp::selectFieldHtml([
+                    'label' => Craft::t('colour-swatches', 'GraphQL Mode'),
+                    'id' => 'graphql-mode',
+                    'name' => 'graphqlMode',
+                    'instructions' => Craft::t('colour-swatches', 'Controls whether GraphQL returns just the label string or the full swatch data object.'),
+                    'options' => [
+                        ['label' => Craft::t('colour-swatches', 'Full data'), 'value' => 'full'],
+                        ['label' => Craft::t('colour-swatches', 'Label only'), 'value' => 'label'],
+                    ],
+                    'value' => $this->fullGraphqlData ? 'full' : 'label',
+                ]);
+        }
+
+        return $html;
     }
 
     /**
@@ -374,7 +460,7 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
             ->namespaceInputId($id);
 
         Craft::$app->getView()
-            ->registerJs("new ColourSelectInput('{$namespacedId}');");
+            ->registerJs("new ColourSelectInput(" . Json::encode($namespacedId) . ");");
 
         // Render the input template
         return Craft::$app->getView()
@@ -392,11 +478,15 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
     }
 
     /**
-     * @return Type|array
+     * @inheritdoc
      */
     public function getContentGqlType(): Type|array
     {
-        $typeName = $this->handle;
+        if (!$this->fullGraphqlData) {
+            return parent::getContentGqlType();
+        }
+
+        $typeName = 'ColourSwatches_SwatchData';
 
         $swatchType = GqlEntityRegistry::getEntity($typeName) ?: GqlEntityRegistry::createEntity($typeName, new ObjectType([
             'name' => $typeName,
@@ -404,34 +494,40 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                 'label' => [
                     'name' => 'label',
                     'type' => Type::string(),
-                    'description' => 'The colour label'
+                    'description' => 'The colour label',
+                ],
+                'handle' => [
+                    'name' => 'handle',
+                    'type' => Type::string(),
+                    'description' => 'The stable colour handle',
                 ],
                 'class' => [
                     'name' => 'class',
                     'type' => Type::string(),
-                    'description' => 'The parent class'
+                    'description' => 'The CSS class',
                 ],
                 'color' => [
                     'name' => 'color',
                     'type' => Type::listOf(Type::string()),
-                    'description' => 'Our swatch colors',
+                    'description' => 'The swatch colour values',
                     'resolve' => function($source, array $arguments, $context, ResolveInfo $resolveInfo) {
                         $fieldName = $resolveInfo->fieldName;
                         $data = $source[$fieldName];
-                        $colors = [];
 
-                        if(is_iterable($data)) {
+                        if (is_iterable($data)) {
+                            $colors = [];
                             foreach ($data as $color) {
-                                $colors[] = Json::encode($color);
+                                // Config-file colours are objects with a 'color' key
+                                $colors[] = is_array($color) ? ($color['color'] ?? '') : (string)$color;
                             }
-                        } else {
-                            $colors[] = $data;
+                            return $colors;
                         }
 
-                        return $colors;
-                    }
-                ]
-            ]
+                        // Single colour string — may be comma-separated
+                        return is_string($data) ? explode(',', $data) : [$data];
+                    },
+                ],
+            ],
         ]));
 
         TypeLoader::registerType($typeName, static function() use ($swatchType) {
@@ -471,10 +567,10 @@ class ColourSwatches extends Field implements PreviewableFieldInterface, Sortabl
                     // if we're using the CP values
                 } else {
                     $color = $value->color;
-                    $style = strpos($color, ',') ? "background: linear-gradient(to bottom right, $color);" : "background-color:$color";
+                    $style = str_contains($color, ',') ? "background: linear-gradient(to bottom right, $color);" : "background-color:$color";
                 }
             }
         }
-        return '<div class="color small static"><div class="color-preview" style="' . $style . '"></div></div>';
+        return '<div class="color small static"><div class="color-preview" style="' . Html::encode($style) . '"></div></div>';
     }
 }
